@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: AppColors.primary,
       body: const Center(
         child: Text(
-          "🎉 Juegos con Amigos 🎉",
+          "🎉 Game Bible 🎉",
           style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
         ),
       ),

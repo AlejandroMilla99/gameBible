@@ -1,26 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/pages/games/fast_quiz_page.dart';
+import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
+import 'package:gamebible/pages/games/truth_dare_page.dart';
 import '../models/game.dart';
 import 'game_detail_page.dart';
 import '../constants/app_spacing.dart';
 import '../constants/app_colors.dart';
+import '../constants/app_images.dart';
 
 class GamesPage extends StatelessWidget {
   const GamesPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final games = [
-      Game(
-        title: "Verdad o Reto",
-        description: "Un clásico para animar cualquier reunión.",
-        image: "assets/images/truth_dare.png",
-      ),
-      Game(
-        title: "Yo Nunca",
-        description: "Revela secretos con tus amigos.",
-        image: "assets/images/never_have_i_ever.png",
-      ),
-    ];
+@override
+Widget build(BuildContext context) {
+  final games = [
+    Game(
+      title: "Verdad o Reto",
+      description: "Un clásico para animar cualquier reunión.",
+      image: AppImages.truthDare,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const TruthDarePage(title: "Verdad o Reto")),
+        );
+      },
+    ),
+    Game(
+      title: "Yo Nunca",
+      description: "Revela secretos con tus amigos.",
+      image: AppImages.neverHaveIEver,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const NeverHaveIEverPage(title: "Yo nunca",)),
+        );
+      },
+    ),
+        Game(
+      title: "Test rápido",
+      description: "Test de cultura general.",
+      image: AppImages.neverHaveIEver,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const FastQuizPage(title: "Test rápido",)),
+        );
+      },
+    ),
+        Game(
+      title: "Yo Nunca",
+      description: "Revela secretos con tus amigos.",
+      image: AppImages.neverHaveIEver,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const NeverHaveIEverPage(title: "Yo nunca",)),
+        );
+      },
+    ),
+        Game(
+      title: "Yo Nunca",
+      description: "Revela secretos con tus amigos.",
+      image: AppImages.neverHaveIEver,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const NeverHaveIEverPage(title: "Yo nunca",)),
+        );
+      },
+    ),
+  ];
 
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.md),

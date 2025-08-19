@@ -55,11 +55,27 @@ class GameDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
 
-            // Botón para volver
+            // Botón para Jugar
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () => game.play(context),
+              child: const Text(
+                "Jugar",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            // Botón para volver
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.secondary,
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
