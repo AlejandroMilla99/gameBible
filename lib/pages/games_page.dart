@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/pages/games/emoji_challenge_page.dart';
 import 'package:gamebible/pages/games/fast_quiz_page.dart';
 import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
 import 'package:gamebible/pages/games/truth_dare_page.dart';
@@ -48,13 +49,13 @@ Widget build(BuildContext context) {
       },
     ),
         Game(
-      title: "Yo Nunca",
-      description: "Revela secretos con tus amigos.",
+      title: "Emoji challenge",
+      description: "Acierta películas, libros o conceptos a partir de una descripción basada sólo en emojis.",
       image: AppImages.neverHaveIEver,
       play: (ctx) {
         Navigator.push(
           ctx,
-          MaterialPageRoute(builder: (_) => const NeverHaveIEverPage(title: "Yo nunca",)),
+          MaterialPageRoute(builder: (_) => const EmojiChallengePage(title: "Emoji challenge")),
         );
       },
     ),

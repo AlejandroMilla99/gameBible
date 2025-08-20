@@ -30,7 +30,7 @@ class PrimaryButton extends StatelessWidget {
         elevation: 4,
       ),
       onPressed: onPressed,
-      icon: icon != null ? Icon(icon, size: 20) : const SizedBox.shrink(),
+      icon: icon != null ? Icon(icon, size: 20) : null,
       label: Text(
         text,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
