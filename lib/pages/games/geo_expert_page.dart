@@ -212,7 +212,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
   Future<void> _saveScore(int score) async {
     final prefs = await SharedPreferences.getInstance();
     topScores.add(score);
-    topScores.sort((b, a) => a.compareTo(b));
+    topScores.sort((a, b) => a.compareTo(b));
     if (topScores.length > 3) {
       topScores = topScores.sublist(0, 3);
     } else {
