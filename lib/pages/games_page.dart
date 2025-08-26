@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebible/pages/games/emoji_challenge_page.dart';
 import 'package:gamebible/pages/games/fast_quiz_page.dart';
+import 'package:gamebible/pages/games/geo_expert_page.dart';
 import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
 import 'package:gamebible/pages/games/truth_dare_page.dart';
 import '../models/game.dart';
@@ -60,13 +61,13 @@ Widget build(BuildContext context) {
       },
     ),
         Game(
-      title: "Yo Nunca",
+      title: "Geo Expert",
       description: "Revela secretos con tus amigos.",
       image: AppImages.neverHaveIEver,
       play: (ctx) {
         Navigator.push(
           ctx,
-          MaterialPageRoute(builder: (_) => const NeverHaveIEverPage(title: "Yo nunca",)),
+          MaterialPageRoute(builder: (_) => const GeoExpertPage(title: "GeoExpert",)),
         );
       },
     ),
