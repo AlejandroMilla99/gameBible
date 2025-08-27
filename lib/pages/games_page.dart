@@ -62,12 +62,12 @@ Widget build(BuildContext context) {
     ),
         Game(
       title: "Geo Expert",
-      description: "Revela secretos con tus amigos.",
+      description: "Rankea países en función de diferentes índices.",
       image: AppImages.neverHaveIEver,
       play: (ctx) {
         Navigator.push(
           ctx,
-          MaterialPageRoute(builder: (_) => const GeoExpertPage(title: "GeoExpert",)),
+          MaterialPageRoute(builder: (_) => const GeoExpertPage(title: "Geo Expert",)),
         );
       },
     ),
