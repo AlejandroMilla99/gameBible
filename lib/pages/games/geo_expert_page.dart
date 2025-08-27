@@ -99,7 +99,7 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                         final enabled = (vm.currentCountry != null && rank == null && !vm.isRolling);
 
                         // Colores del gradiente según ranking
-                        List<Color> gradientColors = [Colors.grey.shade300, Colors.grey.shade500];
+                        List<Color> gradientColors = [Colors.grey.shade700, Colors.grey.shade400];
                         if (rank != null) {
                           if (rank <= 10) {
                             gradientColors = [Colors.green.shade300, Colors.green.shade600];
@@ -187,6 +187,7 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                               ),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
                                   backgroundColor: Colors.transparent,
                                   shadowColor: Colors.transparent,
                                   padding: const EdgeInsets.symmetric(vertical: 16),
