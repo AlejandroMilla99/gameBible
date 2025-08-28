@@ -5,8 +5,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import '../../models/country.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import '../../services/country_service.dart';
 
 class GeoExpertViewModel extends ChangeNotifier {
@@ -30,120 +28,7 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Technology": "💻",
   };
 
-   List<Country> countries = [
-    Country(
-      name: "Argentina",
-      flag: "🇦🇷",
-      rankings: {
-        "GDP": 30,
-        "Population": 20,
-        "Safety": 40,
-        "Football": 1,
-        "Happiness": 25,
-        "Tourism": 10,
-        "Education": 15,
-        "Technology": 22,
-      },
-    ),
-    Country(
-      name: "Brazil",
-      flag: "🇧🇷",
-      rankings: {
-        "GDP": 15,
-        "Population": 6,
-        "Safety": 50,
-        "Football": 2,
-        "Happiness": 30,
-        "Tourism": 5,
-        "Education": 20,
-        "Technology": 18,
-      },
-    ),
-    Country(
-      name: "Spain",
-      flag: "🇪🇸",
-      rankings: {
-        "GDP": 12,
-        "Population": 30,
-        "Safety": 18,
-        "Football": 3,
-        "Happiness": 12,
-        "Tourism": 4,
-        "Education": 9,
-        "Technology": 16,
-      },
-    ),
-    Country(
-      name: "Germany",
-      flag: "🇩🇪",
-      rankings: {
-        "GDP": 4,
-        "Population": 19,
-        "Safety": 10,
-        "Football": 5,
-        "Happiness": 14,
-        "Tourism": 6,
-        "Education": 5,
-        "Technology": 7,
-      },
-    ),
-    Country(
-      name: "USA",
-      flag: "🇺🇸",
-      rankings: {
-        "GDP": 1,
-        "Population": 3,
-        "Safety": 25,
-        "Football": 20,
-        "Happiness": 17,
-        "Tourism": 2,
-        "Education": 6,
-        "Technology": 1,
-      },
-    ),
-    Country(
-      name: "Japan",
-      flag: "🇯🇵",
-      rankings: {
-        "GDP": 3,
-        "Population": 11,
-        "Safety": 5,
-        "Football": 25,
-        "Happiness": 20,
-        "Tourism": 8,
-        "Education": 4,
-        "Technology": 2,
-      },
-    ),
-    Country(
-      name: "France",
-      flag: "🇫🇷",
-      rankings: {
-        "GDP": 6,
-        "Population": 22,
-        "Safety": 12,
-        "Football": 4,
-        "Happiness": 10,
-        "Tourism": 1,
-        "Education": 7,
-        "Technology": 10,
-      },
-    ),
-    Country(
-      name: "Italy",
-      flag: "🇮🇹",
-      rankings: {
-        "GDP": 8,
-        "Population": 23,
-        "Safety": 15,
-        "Football": 6,
-        "Happiness": 11,
-        "Tourism": 3,
-        "Education": 8,
-        "Technology": 12,
-      },
-    ),
-  ];
+  late List<Country> countries;
 
   final List<String> categories = [
     "GDP",
@@ -217,7 +102,7 @@ class GeoExpertViewModel extends ChangeNotifier {
     isRolling = false;
     notifyListeners();
 
-    Future.delayed(const Duration(milliseconds: 175), () => startRolling());
+    Future.delayed(const Duration(milliseconds: 100), () => startRolling());
   }
 
   Future<void> startRolling() async {
