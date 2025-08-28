@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import '../../models/country.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import '../../services/country_service.dart';
 
 class GeoExpertViewModel extends ChangeNotifier {
   final Random _random = Random();
@@ -28,7 +30,7 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Technology": "💻",
   };
 
-  final List<Country> countries = [
+   List<Country> countries = [
     Country(
       name: "Argentina",
       flag: "🇦🇷",
@@ -165,6 +167,7 @@ class GeoExpertViewModel extends ChangeNotifier {
       ConfettiController(duration: const Duration(seconds: 3));
 
   GeoExpertViewModel(this.context) {
+    _loadCountries();
     _initGame();
   }
 
@@ -177,6 +180,14 @@ class GeoExpertViewModel extends ChangeNotifier {
     isRolling = false;
     await _loadHighScores();
   }
+
+    Future<void> _loadCountries() async {
+
+    countries = await CountryService.loadCountries();
+
+    notifyListeners();
+  }
+
 
   Future<void> _loadHighScores() async {
     final prefs = await SharedPreferences.getInstance();
