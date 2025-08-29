@@ -4,6 +4,7 @@ import 'package:gamebible/pages/games/fast_quiz_page.dart';
 import 'package:gamebible/pages/games/geo_expert_page.dart';
 import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
 import 'package:gamebible/pages/games/truth_dare_page.dart';
+import 'package:gamebible/pages/games/wordayPage.dart';
 import '../models/game.dart';
 import 'game_detail_page.dart';
 import '../constants/app_spacing.dart';
@@ -41,7 +42,7 @@ Widget build(BuildContext context) {
         Game(
       title: "Test rápido",
       description: "Test de cultura general.",
-      image: AppImages.neverHaveIEver,
+      image: AppImages.quickTest,
       play: (ctx) {
         Navigator.push(
           ctx,
@@ -52,7 +53,7 @@ Widget build(BuildContext context) {
         Game(
       title: "Emoji challenge",
       description: "Acierta películas, libros o conceptos a partir de una descripción basada sólo en emojis.",
-      image: AppImages.neverHaveIEver,
+      image: AppImages.emojiChallenge,
       play: (ctx) {
         Navigator.push(
           ctx,
@@ -63,11 +64,22 @@ Widget build(BuildContext context) {
         Game(
       title: "Geo Expert",
       description: "Rankea países en función de diferentes índices.",
-      image: AppImages.neverHaveIEver,
+      image: AppImages.geoExpert,
       play: (ctx) {
         Navigator.push(
           ctx,
           MaterialPageRoute(builder: (_) => const GeoExpertPage(title: "Geo Expert",)),
+        );
+      },
+    ),
+        Game(
+      title: "Worday",
+      description: "Adivina la palabra diaria orientándola a través de probar otras palabras teniendo en cuenta la posición de sus letras",
+      image: AppImages.worday,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const WordayPage(title: "Worday",)),
         );
       },
     ),
