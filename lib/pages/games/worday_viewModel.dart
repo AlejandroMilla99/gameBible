@@ -1,5 +1,8 @@
 import 'dart:math';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import '../../components/dialogs/custom_snackbar.dart';
 
 enum LetterState { unused, correct, misplaced, notInWord, fullyCorrect }
 
@@ -7,16 +10,7 @@ class WordayViewModel extends ChangeNotifier {
   static const int maxAttempts = 6;
   static const int wordLength = 5;
 
-  final List<String> _dictionary = [
-    "perro",
-    "gatos",
-    "luzco",
-    "silla",
-    "raton",
-    "verde",
-    "claro",
-    "mango",
-  ];
+  List<String> _dictionary = []; // ahora cargado desde assets
 
   late String _targetWord;
   int _currentAttempt = 0;
@@ -30,10 +24,18 @@ class WordayViewModel extends ChangeNotifier {
   bool _won = false;
 
   WordayViewModel() {
-    _pickRandomWord();
+    _loadDictionary().then((_) => _pickRandomWord());
+  }
+
+  /// Cargar palabras válidas desde assets/data/words.json
+  Future<void> _loadDictionary() async {
+    final String response = await rootBundle.loadString('assets/data/words.json');
+    final List<dynamic> data = json.decode(response);
+    _dictionary = data.cast<String>();
   }
 
   void _pickRandomWord() {
+    if (_dictionary.isEmpty) return; // por si no ha cargado aún
     final random = Random();
     _targetWord = _dictionary[random.nextInt(_dictionary.length)];
   }
@@ -73,11 +75,23 @@ class WordayViewModel extends ChangeNotifier {
     }
   }
 
-  void submitGuess() {
+  /// Envía el guess y valida si es palabra existente
+  void submitGuess(BuildContext context) {
     if (_gameOver) return;
     if (_guesses[_currentAttempt].length != wordLength) return;
 
     final guess = _guesses[_currentAttempt].join();
+
+    // 🔑 Nueva validación: palabra debe estar en diccionario
+    if (!_dictionary.contains(guess)) {
+      CustomSnackBar.show(
+        context,
+        message: "Palabra inválida, haga otro intento",
+        type: SnackBarType.warning,
+      );
+      return; // no avanza el intento
+    }
+
 
     final targetLetters = _targetWord.split('');
     final guessLetters = guess.split('');

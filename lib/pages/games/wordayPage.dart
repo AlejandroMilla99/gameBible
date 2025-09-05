@@ -75,11 +75,8 @@ class WordayPage extends StatelessWidget {
                   ),
                 ),
 
-                // Reducir espacio entre cuadrícula y teclado
-
-
                 // Teclado fijo (sticky)
-                buildKeyboard(vm),
+                buildKeyboard(vm, context),
 
                 // Pequeño espaciado inferior del teclado
                 const SizedBox(height: 100),
@@ -108,7 +105,7 @@ class WordayPage extends StatelessWidget {
     );
   }
 
-  Widget buildKeyboard(WordayViewModel vm) {
+  Widget buildKeyboard(WordayViewModel vm, BuildContext context) {
     const rows = [
       "QWERTYUIOP",
       "ASDFGHJKLÑ",
@@ -124,9 +121,9 @@ class WordayPage extends StatelessWidget {
           children: [
             if (row == "ZXCVBNM")
               _KeyboardButton(
-                child: const Icon(Icons.check, color: Colors.white, size: 18),
-                onPressed: vm.gameOver ? null : vm.submitGuess,
+                onPressed: vm.gameOver ? null : () => vm.submitGuess(context),
                 backgroundColor: AppColors.primary,
+                child: const Icon(Icons.check, color: Colors.white, size: 18),
               ),
 
             ...row.split("").map((letter) {
@@ -205,4 +202,3 @@ class _KeyboardButton extends StatelessWidget {
     );
   }
 }
-
