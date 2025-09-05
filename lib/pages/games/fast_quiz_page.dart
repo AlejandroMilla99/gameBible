@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
+import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+
 
 class FastQuizPage extends StatefulWidget {
   final String title;
@@ -104,6 +106,10 @@ class _FastQuizPageState extends State<FastQuizPage> {
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_rounded),
+            onPressed: () => _showInfo(context),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Row(
@@ -212,4 +218,25 @@ class _FastQuizPageState extends State<FastQuizPage> {
       ),
     );
   }
+
+  void _showInfo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => GameInfoDialog(
+        title: "Cómo jugar a FastQuiz",
+        instructions: [
+          "En pantalla aparecerá una pregunta con varias opciones de respuesta.",
+          "Lee atentamente la pregunta y selecciona una de las opciones disponibles.",
+          "Si aciertas, la opción se marcará en verde y sumarás un punto a tu marcador de aciertos.",
+          "Si fallas, tu respuesta se marcará en rojo y no sumarás puntos.",
+          "Después de responder, pulsa 'Siguiente pregunta' para continuar.",
+          "Puedes consultar tu número total de aciertos en la parte superior de la pantalla y restablecerlo en cualquier momento.",
+          "También puedes hacer uso del cronómetro incorporado para retarte en un tiempo determinado."
+        ],
+        example: "Ejemplo: Si aparece la pregunta '¿Cuál es la capital de Francia?' y eliges 'París', tu respuesta será correcta y sumarás un punto.",
+        imageAsset: null, // opcional, podrías poner una ilustración de un quiz
+      ),
+    );
+  }
+
 }

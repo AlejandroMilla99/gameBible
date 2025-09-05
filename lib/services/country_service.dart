@@ -13,6 +13,7 @@ class CountryService {
   static Future<List<Country>> loadCountriesFromAssets() async {
     final String response = await rootBundle.loadString(_assetsPath);
     final List<dynamic> data = json.decode(response);
+    print("✅ Countries loaded from Local");
     return data.map((json) => Country.fromJson(json)).toList();
   }
 
@@ -24,12 +25,16 @@ class CountryService {
     if (finalCountriesList.isNotEmpty) {
       await saveCountries(finalCountriesList); // Cache
       await overwriteLocalJson(finalCountriesList); // Update local assets copy
+      print("✅ Countries loaded from Remote");
       return finalCountriesList;
     }
 
     print("💥 Countries could not be loaded from Remote");
     finalCountriesList = await loadCountriesFromStorage();
-    if (finalCountriesList.isNotEmpty) return finalCountriesList;
+    if (finalCountriesList.isNotEmpty){
+      print("✅ Countries loaded from Storage Cache");
+      return finalCountriesList;
+    }
 
     print("💥 Countries could not be loaded from Storage");
     return await loadCountriesFromAssets();

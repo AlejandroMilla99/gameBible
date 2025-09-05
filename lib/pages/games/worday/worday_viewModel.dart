@@ -2,7 +2,8 @@ import 'dart:math';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import '../../components/dialogs/custom_snackbar.dart';
+import 'package:confetti/confetti.dart';
+import '../../../components/dialogs/custom_snackbar.dart';
 
 enum LetterState { unused, correct, misplaced, notInWord, fullyCorrect }
 
@@ -10,9 +11,11 @@ class WordayViewModel extends ChangeNotifier {
   static const int maxAttempts = 6;
   static const int wordLength = 5;
 
-  List<String> _dictionary = []; // ahora cargado desde assets
+  List<String> _dictionary = []; // palabras originales con tildes
+  List<String> _dictionaryNormalized = []; // mismas palabras sin tildes
 
-  late String _targetWord;
+  late String _targetWord; // palabra con tildes (para mostrar al usuario)
+  late String _targetWordNormalized; // versión sin tildes (para lógica)
   int _currentAttempt = 0;
   List<List<String>> _guesses = List.generate(maxAttempts, (_) => []);
   List<List<Color>> _colors =
@@ -23,21 +26,39 @@ class WordayViewModel extends ChangeNotifier {
   bool _gameOver = false;
   bool _won = false;
 
+  final ConfettiController confettiController =
+      ConfettiController(duration: const Duration(seconds: 2));
+
   WordayViewModel() {
     _loadDictionary().then((_) => _pickRandomWord());
   }
 
+  /// Quita tildes de una palabra
+  String _normalizeWord(String word) {
+    const withAccents = 'áéíóúÁÉÍÓÚüÜ';
+    const withoutAccents = 'aeiouAEIOUuU';
+    String result = word;
+    for (int i = 0; i < withAccents.length; i++) {
+      result = result.replaceAll(withAccents[i], withoutAccents[i]);
+    }
+    return result;
+  }
+
   /// Cargar palabras válidas desde assets/data/words.json
   Future<void> _loadDictionary() async {
-    final String response = await rootBundle.loadString('assets/data/words.json');
+    final String response =
+        await rootBundle.loadString('assets/data/words.json');
     final List<dynamic> data = json.decode(response);
     _dictionary = data.cast<String>();
+    _dictionaryNormalized =
+        _dictionary.map((w) => _normalizeWord(w)).toList();
   }
 
   void _pickRandomWord() {
     if (_dictionary.isEmpty) return; // por si no ha cargado aún
     final random = Random();
     _targetWord = _dictionary[random.nextInt(_dictionary.length)];
+    _targetWordNormalized = _normalizeWord(_targetWord);
   }
 
   String get targetWord => _targetWord;
@@ -81,9 +102,10 @@ class WordayViewModel extends ChangeNotifier {
     if (_guesses[_currentAttempt].length != wordLength) return;
 
     final guess = _guesses[_currentAttempt].join();
+    final normalizedGuess = _normalizeWord(guess);
 
-    // 🔑 Nueva validación: palabra debe estar en diccionario
-    if (!_dictionary.contains(guess)) {
+    // 🔑 Nueva validación: palabra debe estar en diccionario (normalizado)
+    if (!_dictionaryNormalized.contains(normalizedGuess)) {
       CustomSnackBar.show(
         context,
         message: "Palabra inválida, haga otro intento",
@@ -92,9 +114,8 @@ class WordayViewModel extends ChangeNotifier {
       return; // no avanza el intento
     }
 
-
-    final targetLetters = _targetWord.split('');
-    final guessLetters = guess.split('');
+    final targetLetters = _targetWordNormalized.split('');
+    final guessLetters = normalizedGuess.split('');
 
     // Para manejar letras repetidas
     final Map<String, int> targetCounts = {};
@@ -105,7 +126,7 @@ class WordayViewModel extends ChangeNotifier {
     // Primera pasada -> verdes
     for (int i = 0; i < wordLength; i++) {
       final letter = guessLetters[i];
-      if (_targetWord[i] == letter) {
+      if (_targetWordNormalized[i] == letter) {
         _colors[_currentAttempt][i] = Colors.green;
         targetCounts[letter] = (targetCounts[letter] ?? 0) - 1;
         letterStates[letter] = LetterState.correct;
@@ -139,17 +160,91 @@ class WordayViewModel extends ChangeNotifier {
       }
     }
 
-    if (guess == _targetWord) {
+    if (normalizedGuess == _targetWordNormalized) {
       _gameOver = true;
       _won = true;
+      _showGameOver(context);
     } else if (_currentAttempt == maxAttempts - 1) {
       _gameOver = true;
       _won = false;
+      _showGameOver(context);
     } else {
       _currentAttempt++;
     }
 
     notifyListeners();
+  }
+
+  /// Mostrar el diálogo de fin de juego
+  void _showGameOver(BuildContext context) {
+    final validAttempts =
+        _guesses.take(_currentAttempt + 1).where((g) => g.length == wordLength);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: Colors.white,
+              title: Text(
+                _won ? "🎉 ¡Has acertado! 🎉" : "😢 Fin del juego 😢",
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (_won)
+                    Text(
+                      "¡Felicidades! Acertaste en ${validAttempts.length} intentos.",
+                      style: const TextStyle(color: Colors.black),
+                      textAlign: TextAlign.center,
+                    )
+                  else
+                    Text(
+                      "No acertaste la palabra.\nLa correcta era: ${_targetWord.toUpperCase()}",
+                      style: const TextStyle(color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                ],
+              ),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    resetGame();
+                  },
+                  child: const Text("Jugar de nuevo"),
+                )
+              ],
+            ),
+            if (_won)
+              ConfettiWidget(
+                confettiController: confettiController,
+                blastDirectionality: BlastDirectionality.explosive,
+                shouldLoop: false,
+                colors: const [
+                  Colors.red,
+                  Colors.green,
+                  Colors.blue,
+                  Colors.orange,
+                  Colors.purple
+                ],
+              ),
+          ],
+        );
+      },
+    );
+
+    if (_won) confettiController.play();
   }
 
   void resetGame() {

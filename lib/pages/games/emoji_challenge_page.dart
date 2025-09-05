@@ -4,6 +4,8 @@ import '../../constants/app_spacing.dart';
 import '../../components/buttons/primary_button.dart';
 import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
+import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+
 
 class EmojiChallengePage extends StatefulWidget {
   final String title;
@@ -138,6 +140,10 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           actions: [
+            IconButton(
+              icon: const Icon(Icons.info_rounded),
+              onPressed: () => _showInfo(context),
+          ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
@@ -247,4 +253,26 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
       ),
     );
   }
+
+  void _showInfo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => GameInfoDialog(
+        title: "Cómo jugar a EmojiChallenge",
+        instructions: [
+          "En pantalla verás una combinación de emojis que representan un concepto, una película, un libro o algo conocido.",
+          "Tu objetivo es adivinar qué significa esa combinación y escribir la respuesta en el cuadro de texto.",
+          "Pulsa 'Enviar' para comprobar si tu respuesta es correcta.",
+          "Si aciertas, sumarás un punto a tu marcador de aciertos. Si fallas, se mostrará un mensaje indicando que la respuesta es incorrecta.",
+          "Puedes pasar al siguiente reto pulsando el botón 'Siguiente'.",
+          "Si te quedas bloqueado, puedes inspirarte con el sistema de sugerencias que aparece al escribir.",
+          "También puedes retarte con el cronómetro para medir cuánto tardas en resolver cada desafío.",
+          "Tu número de aciertos acumulados aparece en la parte superior, y puedes restablecerlo en cualquier momento."
+        ],
+        example: "Ejemplo: Si ves los emojis '🦁👑', la respuesta correcta sería 'The Lion King'.",
+        imageAsset: null, // opcional, por ejemplo un emoji grande decorativo
+      ),
+    );
+  }
+
 }

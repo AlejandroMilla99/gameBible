@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
+import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+
 
 class NeverHaveIEverPage extends StatefulWidget {
   final String title;
@@ -48,6 +50,12 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
         title: Text(widget.title),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_rounded),
+            onPressed: () => _showInfo(context),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -112,4 +120,23 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
       ),
     );
   }
+
+  void _showInfo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => GameInfoDialog(
+        title: "Cómo jugar a Yo Nunca",
+        instructions: [
+          "Cada jugador, por turnos, pulsa uno de los dos botones inferiores: 'Normal' o '+18'.",
+          "Se mostrará en pantalla una frase que empieza por 'Nunca he...'.",
+          "Todos los jugadores deben pensar si alguna vez han hecho lo que aparece en la frase.",
+          "Si un jugador SÍ lo ha hecho, debe reconocerlo (por ejemplo, levantando la mano, tomando un sorbo de bebida, o como acuerde el grupo).",
+          "El juego continúa mientras los jugadores quieran, alternando frases entre la categoría Normal y la +18."
+        ],
+        example: "Ejemplo: Si aparece la frase 'Nunca he perdido un vuelo' y un jugador sí lo ha perdido, deberá admitirlo.",
+        imageAsset: null, // opcional, puedes añadir una ilustración temática
+      ),
+    );
+  }
+
 }

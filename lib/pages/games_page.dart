@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gamebible/pages/games/emoji_challenge_page.dart';
 import 'package:gamebible/pages/games/fast_quiz_page.dart';
-import 'package:gamebible/pages/games/geo_expert_page.dart';
+import 'package:gamebible/pages/games/geoExpert/geo_expert_page.dart';
 import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
 import 'package:gamebible/pages/games/truth_dare_page.dart';
-import 'package:gamebible/pages/games/wordayPage.dart';
+import 'package:gamebible/pages/games/worday/wordayPage.dart';
 import '../models/game.dart';
 import 'game_detail_page.dart';
 import '../constants/app_spacing.dart';

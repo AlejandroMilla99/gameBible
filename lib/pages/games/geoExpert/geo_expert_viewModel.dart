@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import '../../models/country.dart';
-import '../../services/country_service.dart';
+import '../../../models/country.dart';
+import '../../../services/country_service.dart';
 
 class GeoExpertViewModel extends ChangeNotifier {
   final Random _random = Random();

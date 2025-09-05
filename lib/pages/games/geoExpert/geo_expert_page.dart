@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:gamebible/constants/app_colors.dart';
 import 'geo_expert_viewModel.dart';
+import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 
 class GeoExpertPage extends StatefulWidget {
   const GeoExpertPage({super.key, required this.title});
@@ -24,6 +25,10 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               actions: [
+                IconButton(
+                  icon: const Icon(Icons.info_rounded),
+                  onPressed: () => _showInfo(context),
+                ),
                 IconButton(
                   icon: const Icon(Icons.emoji_events),
                   onPressed: () => _showHighScores(context, vm.topScores),
@@ -214,84 +219,125 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
     );
   }
 
+void _showInfo(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => GameInfoDialog(
+      title: "Cómo jugar a GeoExpert",
+      instructions: [
+        "Visualiza las categorías de rankings, que serán los botones inferiores.",
+        "Pulsa empezar a jugar y verás la bandera que representa a tu primer país.",
+        "Asigna ese país a la categoría en la que creas que tiene mejor ranking internacional (cuanto más bajo, mejor).",
+        "Haz lo mismo con los siguientes países, el juego acabará cuando rellenes todas las categorías.",
+        "Cuanto menor sea tu puntuación acumulada mejor lo habrás hecho, podrás visualizar tu top 3 en el botón del trofeo en la parte superior derecha."
+      ],
+      example: "Ejemplo: Si el juego te muestra la bandera de Estados Unidos y tienes libre la categoría de tecnología, es buena opción asigarla ya que en ella Estados Unidos se encuentra en el Top 1.",
+      imageAsset: null, // opcional
+    ),
+  );
+}
+
+
   void _showHighScores(BuildContext context, List<int> topScores) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (_) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "🏆 High Scores",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: "HighScores",
+    barrierColor: Colors.black54, // fondo semitransparente
+    transitionDuration: const Duration(milliseconds: 400),
+    pageBuilder: (_, __, ___) {
+      // Este builder devuelve el diálogo como tal
+      return Center(
+        child: Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "🏆 High Scores",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              if (topScores.isEmpty)
-                const Text(
-                  "No has acabado ningún juego aún",
-                  style: TextStyle(fontSize: 16),
-                )
-              else
-                Column(
-                  children: List.generate(topScores.length, (index) {
-                    return AnimatedContainer(
-                      duration: Duration(milliseconds: 500 + 100 * index),
-                      curve: Curves.easeOut,
-                      margin: const EdgeInsets.symmetric(vertical: 6),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.deepPurple.shade200,
-                            Colors.deepPurple.shade400,
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                if (topScores.isEmpty)
+                  const Text(
+                    "No has acabado ningún juego aún",
+                    style: TextStyle(fontSize: 16),
+                  )
+                else
+                  Column(
+                    children: List.generate(topScores.length, (index) {
+                      return AnimatedContainer(
+                        duration: Duration(milliseconds: 500 + 100 * index),
+                        curve: Curves.easeOut,
+                        margin: const EdgeInsets.symmetric(vertical: 6),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.deepPurple.shade200,
+                              Colors.deepPurple.shade400,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "#${index + 1}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              "${topScores[index]} pts",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            "#${index + 1}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            "${topScores[index]} pts",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
-            ],
+                      );
+                    }),
+                  ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+    transitionBuilder: (_, animation, __, child) {
+      // Definimos animación de aparición/desaparición
+      final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+      final scale = Tween<double>(begin: 0.9, end: 1.0).animate(fade);
+
+      return FadeTransition(
+        opacity: fade,
+        child: ScaleTransition(
+          scale: scale,
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
 }
