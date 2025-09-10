@@ -1,0 +1,210 @@
+[
+  {
+    "word": "Perro",
+    "forbidden": ["Animal", "Ladrar", "Mascota", "Gato"]
+  },
+  {
+    "word": "Gato",
+    "forbidden": ["Animal", "Maullar", "Bigotes", "Ronronear"]
+  },
+  {
+    "word": "Caballo",
+    "forbidden": ["Animal", "Montar", "Carrera", "Granja"]
+  },
+  {
+    "word": "León",
+    "forbidden": ["Animal", "Selva", "Rugido", "Rey"]
+  },
+  {
+    "word": "Elefante",
+    "forbidden": ["Animal", "Grande", "Trompa", "África"]
+  },
+  {
+    "word": "Avión",
+    "forbidden": ["Volar", "Ala", "Piloto", "Aeropuerto"]
+  },
+  {
+    "word": "Coche",
+    "forbidden": ["Conducir", "Ruedas", "Motor", "Gasolina"]
+  },
+  {
+    "word": "Tren",
+    "forbidden": ["Vías", "Estación", "Conductor", "Vagón"]
+  },
+  {
+    "word": "Barco",
+    "forbidden": ["Mar", "Navegar", "Capitán", "Puerto"]
+  },
+  {
+    "word": "Bicicleta",
+    "forbidden": ["Pedalear", "Ruedas", "Cascos", "Carril"]
+  },
+  {
+    "word": "Pizza",
+    "forbidden": ["Comida", "Queso", "Horno", "Italiana"]
+  },
+  {
+    "word": "Hamburguesa",
+    "forbidden": ["Carne", "Pan", "Lechuga", "Tomate"]
+  },
+  {
+    "word": "Helado",
+    "forbidden": ["Frío", "Verano", "Nieve", "Postre"]
+  },
+  {
+    "word": "Cerveza",
+    "forbidden": ["Alcohol", "Botella", "Amigos", "Fiesta"]
+  },
+  {
+    "word": "Vino",
+    "forbidden": ["Alcohol", "Uvas", "Copa", "Bodega"]
+  },
+  {
+    "word": "Agua",
+    "forbidden": ["Beber", "Líquido", "Transparente", "Sed"]
+  },
+  {
+    "word": "Discoteca",
+    "forbidden": ["Bailar", "Música", "Luces", "Fiesta"]
+  },
+  {
+    "word": "Concierto",
+    "forbidden": ["Música", "Cantante", "Escenario", "Gente"]
+  },
+  {
+    "word": "Teatro",
+    "forbidden": ["Obra", "Actores", "Escenario", "Público"]
+  },
+  {
+    "word": "Cine",
+    "forbidden": ["Película", "Pantalla", "Palomitas", "Butaca"]
+  },
+  {
+    "word": "Beso",
+    "forbidden": ["Amor", "Labios", "Romántico", "Pareja"]
+  },
+  {
+    "word": "Abrazo",
+    "forbidden": ["Afecto", "Amigos", "Familia", "Cariño"]
+  },
+  {
+    "word": "Lágrima",
+    "forbidden": ["Ojo", "Tristeza", "Llorar", "Emoción"]
+  },
+  {
+    "word": "Risa",
+    "forbidden": ["Alegría", "Chiste", "Felicidad", "Sonrisa"]
+  },
+  {
+    "word": "Computadora",
+    "forbidden": ["Pantalla", "Teclado", "Ratón", "Internet"]
+  },
+  {
+    "word": "Teléfono",
+    "forbidden": ["Llamada", "Móvil", "Mensajes", "Número"]
+  },
+  {
+    "word": "Televisión",
+    "forbidden": ["Canal", "Pantalla", "Series", "Noticias"]
+  },
+  {
+    "word": "Internet",
+    "forbidden": ["Red", "Conexión", "Página", "Navegar"]
+  },
+  {
+    "word": "Libro",
+    "forbidden": ["Leer", "Páginas", "Escritor", "Biblioteca"]
+  },
+  {
+    "word": "Escuela",
+    "forbidden": ["Profesor", "Clase", "Alumnos", "Estudiar"]
+  },
+  {
+    "word": "Examen",
+    "forbidden": ["Notas", "Estudiar", "Preguntas", "Profesor"]
+  },
+  {
+    "word": "Lápiz",
+    "forbidden": ["Escribir", "Borrar", "Madera", "Grafito"]
+  },
+  {
+    "word": "Fútbol",
+    "forbidden": ["Balón", "Portería", "Equipo", "Gol"]
+  },
+  {
+    "word": "Baloncesto",
+    "forbidden": ["Canasta", "Balón", "Jugador", "NBA"]
+  },
+  {
+    "word": "Tenis",
+    "forbidden": ["Raqueta", "Pelota", "Red", "Pista"]
+  },
+  {
+    "word": "Natación",
+    "forbidden": ["Agua", "Piscina", "Bañador", "Deporte"]
+  },
+  {
+    "word": "Montaña",
+    "forbidden": ["Alta", "Escalar", "Nieve", "Naturaleza"]
+  },
+  {
+    "word": "Playa",
+    "forbidden": ["Arena", "Agua", "Verano", "Sol"]
+  },
+  {
+    "word": "Bosque",
+    "forbidden": ["Árboles", "Naturaleza", "Animales", "Verde"]
+  },
+  {
+    "word": "Desierto",
+    "forbidden": ["Arena", "Calor", "Camello", "Sed"]
+  },
+  {
+    "word": "Luna",
+    "forbidden": ["Noche", "Cielo", "Satélite", "Brillar"]
+  },
+  {
+    "word": "Sol",
+    "forbidden": ["Día", "Calor", "Brillar", "Luz"]
+  },
+  {
+    "word": "Estrella",
+    "forbidden": ["Cielo", "Brillar", "Noche", "Constelación"]
+  },
+  {
+    "word": "Planeta",
+    "forbidden": ["Espacio", "Tierra", "Marte", "Sistema Solar"]
+  },
+  {
+    "word": "Doctor",
+    "forbidden": ["Hospital", "Medicina", "Paciente", "Curar"]
+  },
+  {
+    "word": "Policía",
+    "forbidden": ["Crimen", "Arrestar", "Leyes", "Uniforme"]
+  },
+  {
+    "word": "Bombero",
+    "forbidden": ["Incendio", "Agua", "Rescatar", "Fuego"]
+  },
+  {
+    "word": "Profesor",
+    "forbidden": ["Escuela", "Enseñar", "Clase", "Alumno"]
+  },
+  {
+    "word": "Pan",
+    "forbidden": ["Harina", "Horno", "Masa", "Comer"]
+  },
+  {
+    "word": "Chocolate",
+    "forbidden": ["Dulce", "Cacao", "Postre", "Tableta"]
+  },
+  {
+    "word": "Arroz",
+    "forbidden": ["Cereal", "Comida", "China", "Blanco"]
+  },
+  {
+    "word": "Café",
+    "forbidden": ["Bebida", "Taza", "Mañana", "Caliente"]
+  }
+]

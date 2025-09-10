@@ -5,6 +5,7 @@ import 'package:gamebible/pages/games/geoExpert/geo_expert_page.dart';
 import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
 import 'package:gamebible/pages/games/truth_dare_page.dart';
 import 'package:gamebible/pages/games/worday/wordayPage.dart';
+import 'package:gamebible/pages/games/tabu_word.dart';
 import '../models/game.dart';
 import 'game_detail_page.dart';
 import '../constants/app_spacing.dart';
@@ -80,6 +81,17 @@ Widget build(BuildContext context) {
         Navigator.push(
           ctx,
           MaterialPageRoute(builder: (_) => const WordayPage(title: "Worday",)),
+        );
+      },
+    ),
+        Game(
+      title: "Palabra tabú",
+      description: "Describe la palabra a tus amigos sin usar una lista de palabras prohibidas",
+      image: AppImages.worday,
+      play: (ctx) {
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (_) => const TabuWordPage(title: "Palabra tabú",)),
         );
       },
     ),
