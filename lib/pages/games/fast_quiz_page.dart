@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
-
 
 class FastQuizPage extends StatefulWidget {
   final String title;
@@ -16,29 +17,8 @@ class FastQuizPage extends StatefulWidget {
 }
 
 class _FastQuizPageState extends State<FastQuizPage> {
-  final List<Map<String, dynamic>> questions = [
-    {
-      "question": "¿Cuál es la capital de Francia?",
-      "options": ["París", "Londres", "Berlín", "Roma"],
-      "answer": "París"
-    },
-    {
-      "question": "¿Cuál es el planeta más cercano al sol?",
-      "options": ["Mercurio", "Venus", "Marte", "Júpiter"],
-      "answer": "Mercurio"
-    },
-    {
-      "question": "¿Quién escribió 'Cien años de soledad'?",
-      "options": [
-        "Gabriel García Márquez",
-        "Pablo Neruda",
-        "Isabel Allende",
-        "Mario Vargas Llosa"
-      ],
-      "answer": "Gabriel García Márquez"
-    },
-  ];
-
+  List<Map<String, dynamic>> questions = [];
+  List<Map<String, dynamic>> _remainingQuestions = [];
   Map<String, dynamic>? currentQuestion;
   String? selectedAnswer;
   bool answered = false;
@@ -47,9 +27,34 @@ class _FastQuizPageState extends State<FastQuizPage> {
 
   int correctAnswers = 0;
 
-  void _pickQuestion() {
+  @override
+  void initState() {
+    super.initState();
+    _loadQuestions();
+  }
+
+  Future<void> _loadQuestions() async {
+    final String response =
+        await rootBundle.loadString('assets/data/quiz.json');
+    final List<dynamic> data = jsonDecode(response);
     setState(() {
-      currentQuestion = questions[_random.nextInt(questions.length)];
+      questions = data.map((e) => Map<String, dynamic>.from(e)).toList();
+      _resetIteration();
+      _pickQuestion();
+    });
+  }
+
+  void _resetIteration() {
+    _remainingQuestions = List<Map<String, dynamic>>.from(questions);
+    _remainingQuestions.shuffle(_random);
+  }
+
+  void _pickQuestion() {
+    if (_remainingQuestions.isEmpty) {
+      _resetIteration(); // Nueva iteración si se acabaron todas
+    }
+    setState(() {
+      currentQuestion = _remainingQuestions.removeLast();
       selectedAnswer = null;
       answered = false;
       showFeedback = false;
@@ -62,13 +67,11 @@ class _FastQuizPageState extends State<FastQuizPage> {
       setState(() {
         selectedAnswer = answer;
         answered = true;
-        // Solo mostramos feedback si es correcto
         showFeedback = answer == correct;
         if (answer == correct) correctAnswers++;
       });
 
       if (answer == correct) {
-        // Ocultar feedback automáticamente después de 2 segundos solo si es correcto
         Timer(const Duration(seconds: 2), () {
           setState(() {
             showFeedback = false;
@@ -90,12 +93,6 @@ class _FastQuizPageState extends State<FastQuizPage> {
     if (option == correct) return Colors.green;
     if (option == selectedAnswer && selectedAnswer != correct) return Colors.red;
     return AppColors.primary;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _pickQuestion();
   }
 
   @override
@@ -131,88 +128,129 @@ class _FastQuizPageState extends State<FastQuizPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
           children: [
-            currentQuestion != null
-                ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        currentQuestion!["question"],
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      IntrinsicWidth(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: List.generate(
-                            (currentQuestion!["options"] as List).length,
-                            (index) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              child: ElevatedButton(
-                                onPressed: () => _selectAnswer(
-                                    currentQuestion!["options"][index]),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: _getButtonColor(
-                                      currentQuestion!["options"][index]),
-                                      foregroundColor: Colors.white
+            Expanded(
+              child: Stack(
+                children: [
+                  // Sección de preguntas centrada verticalmente
+                  Center(
+                    child: currentQuestion != null
+                        ? SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Texto de aciertos centrado encima de la pregunta
+                                Text(
+                                  'Aciertos: $correctAnswers',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textDark,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                child:
-                                    Text(currentQuestion!["options"][index]),
-                              ),
+                                const SizedBox(height: AppSpacing.lg),
+
+                                // Pregunta
+                                Text(
+                                  currentQuestion!["question"],
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: AppSpacing.lg),
+
+                                // Opciones
+                                IntrinsicWidth(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: List.generate(
+                                      (currentQuestion!["options"] as List)
+                                          .length,
+                                      (index) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 6),
+                                        child: ElevatedButton(
+                                          onPressed: () => _selectAnswer(
+                                              currentQuestion!["options"]
+                                                  [index]),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: _getButtonColor(
+                                                currentQuestion!["options"]
+                                                    [index]),
+                                            foregroundColor: Colors.white,
+                                          ),
+                                          child: Text(currentQuestion!["options"]
+                                              [index]),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 80), // espacio para el botón
+                              ],
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+
+                  // Feedback overlay centrado
+                  if (currentQuestion != null &&
+                      selectedAnswer == currentQuestion?["answer"])
+                    IgnorePointer(
+                      ignoring: true,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: AnimatedOpacity(
+                          opacity: showFeedback ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 100),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 24),
+                            decoration: BoxDecoration(
+                              color: Colors.green.withOpacity(0.9),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Text(
+                              "¡Correcto!",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.lg),
-                      // Mostrar botón solo cuando ya respondió
-                      if (answered && !showFeedback)
-                        ElevatedButton(
+                    ),
+
+                  // Botón siguiente pregunta fijo, fuera del scroll
+                  if (answered && !showFeedback)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+                        child: ElevatedButton(
                           onPressed: _pickQuestion,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white
+                            foregroundColor: Colors.white,
                           ),
                           child: const Text("Siguiente pregunta"),
                         ),
-                      const SizedBox(height: AppSpacing.lg),
-                      const StopwatchTimer(),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-
-            // Feedback overlay SOLO si es correcto
-            if (currentQuestion != null &&
-                selectedAnswer == currentQuestion?["answer"])
-              IgnorePointer(
-                ignoring: true,
-                child: AnimatedOpacity(
-                  opacity: showFeedback ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 200),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 24),
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    child: const Text(
-                      "¡Correcto!",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+                ],
               ),
+            ),
+
+            // Cronómetro fijo al final
+            const StopwatchTimer(),
           ],
         ),
       ),
@@ -233,10 +271,10 @@ class _FastQuizPageState extends State<FastQuizPage> {
           "Puedes consultar tu número total de aciertos en la parte superior de la pantalla y restablecerlo en cualquier momento.",
           "También puedes hacer uso del cronómetro incorporado para retarte en un tiempo determinado."
         ],
-        example: "Ejemplo: Si aparece la pregunta '¿Cuál es la capital de Francia?' y eliges 'París', tu respuesta será correcta y sumarás un punto.",
-        imageAsset: null, // opcional, podrías poner una ilustración de un quiz
+        example:
+            "Ejemplo: Si aparece la pregunta '¿Cuál es la capital de Francia?' y eliges 'París', tu respuesta será correcta y sumarás un punto.",
+        imageAsset: null,
       ),
     );
   }
-
 }

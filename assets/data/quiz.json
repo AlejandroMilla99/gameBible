@@ -1,0 +1,192 @@
+[
+  {
+    "question": "¿Cuál es la capital de Francia?",
+    "options": ["París", "Londres", "Berlín", "Roma"],
+    "answer": "París"
+  },
+  {
+    "question": "¿Cuál es el planeta más cercano al sol?",
+    "options": ["Mercurio", "Venus", "Marte", "Júpiter"],
+    "answer": "Mercurio"
+  },
+  {
+    "question": "¿Quién escribió 'Cien años de soledad'?",
+    "options": ["Gabriel García Márquez", "Pablo Neruda", "Isabel Allende", "Mario Vargas Llosa"],
+    "answer": "Gabriel García Márquez"
+  },
+  {
+    "question": "¿En qué año llegó Cristóbal Colón a América?",
+    "options": ["1492", "1500", "1485", "1512"],
+    "answer": "1492"
+  },
+  {
+    "question": "¿Cuál es el río más largo del mundo?",
+    "options": ["Amazonas", "Nilo", "Yangtsé", "Misisipi"],
+    "answer": "Amazonas"
+  },
+  {
+    "question": "¿Qué elemento químico tiene el símbolo 'O'?",
+    "options": ["Oxígeno", "Oro", "Osmio", "Oxalato"],
+    "answer": "Oxígeno"
+  },
+  {
+    "question": "¿Quién pintó la Mona Lisa?",
+    "options": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Vincent van Gogh"],
+    "answer": "Leonardo da Vinci"
+  },
+  {
+    "question": "¿Cuál es la montaña más alta del mundo?",
+    "options": ["Everest", "K2", "Kangchenjunga", "Makalu"],
+    "answer": "Everest"
+  },
+  {
+    "question": "¿Quién es conocido como el 'Padre de la Física Moderna'?",
+    "options": ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
+    "answer": "Albert Einstein"
+  },
+  {
+    "question": "¿Cuál es el idioma más hablado en el mundo?",
+    "options": ["Chino mandarín", "Inglés", "Español", "Hindi"],
+    "answer": "Chino mandarín"
+  },
+  {
+    "question": "¿En qué país se originó el fútbol?",
+    "options": ["Inglaterra", "España", "Italia", "Alemania"],
+    "answer": "Inglaterra"
+  },
+  {
+    "question": "¿Qué año se fundó la ONU?",
+    "options": ["1945", "1919", "1939", "1950"],
+    "answer": "1945"
+  },
+  {
+    "question": "¿Cuál es el océano más grande del mundo?",
+    "options": ["Pacífico", "Atlántico", "Índico", "Ártico"],
+    "answer": "Pacífico"
+  },
+  {
+    "question": "¿Quién escribió 'Don Quijote de la Mancha'?",
+    "options": ["Miguel de Cervantes", "Lope de Vega", "Francisco de Quevedo", "Góngora"],
+    "answer": "Miguel de Cervantes"
+  },
+  {
+    "question": "¿Cuál es la capital de Japón?",
+    "options": ["Tokio", "Kioto", "Osaka", "Hiroshima"],
+    "answer": "Tokio"
+  },
+  {
+    "question": "¿Qué gas es esencial para la respiración humana?",
+    "options": ["Oxígeno", "Nitrógeno", "Dióxido de carbono", "Hidrógeno"],
+    "answer": "Oxígeno"
+  },
+  {
+    "question": "¿Qué país tiene la mayor población del mundo?",
+    "options": ["China", "India", "Estados Unidos", "Brasil"],
+    "answer": "China"
+  },
+  {
+    "question": "¿En qué continente se encuentra Egipto?",
+    "options": ["África", "Asia", "Europa", "Oceanía"],
+    "answer": "África"
+  },
+  {
+    "question": "¿Quién inventó la bombilla eléctrica?",
+    "options": ["Thomas Edison", "Nikola Tesla", "Alexander Graham Bell", "Benjamin Franklin"],
+    "answer": "Thomas Edison"
+  },
+  {
+    "question": "¿Cuál es el país conocido como la Tierra del Sol Naciente?",
+    "options": ["Japón", "China", "Corea del Sur", "Tailandia"],
+    "answer": "Japón"
+  },
+  {
+    "question": "¿Qué instrumento mide la presión atmosférica?",
+    "options": ["Barómetro", "Termómetro", "Higrómetro", "Anemómetro"],
+    "answer": "Barómetro"
+  },
+  {
+    "question": "¿Cuál es el metal más pesado?",
+    "options": ["Osmio", "Plomo", "Mercurio", "Platino"],
+    "answer": "Osmio"
+  },
+  {
+    "question": "¿Qué científico formuló la teoría de la evolución?",
+    "options": ["Charles Darwin", "Gregor Mendel", "Louis Pasteur", "Isaac Newton"],
+    "answer": "Charles Darwin"
+  },
+  {
+    "question": "¿En qué país se encuentran las pirámides de Giza?",
+    "options": ["Egipto", "México", "Perú", "Sudán"],
+    "answer": "Egipto"
+  },
+  {
+    "question": "¿Quién escribió 'Romeo y Julieta'?",
+    "options": ["William Shakespeare", "Miguel de Cervantes", "Jane Austen", "Mark Twain"],
+    "answer": "William Shakespeare"
+  },
+  {
+    "question": "¿Cuál es el deporte más popular del mundo?",
+    "options": ["Fútbol", "Baloncesto", "Tenis", "Críquet"],
+    "answer": "Fútbol"
+  },
+  {
+    "question": "¿Cuál es la moneda de Estados Unidos?",
+    "options": ["Dólar", "Euro", "Libra", "Peso"],
+    "answer": "Dólar"
+  },
+  {
+    "question": "¿Cuál es el animal terrestre más rápido?",
+    "options": ["Guepardo", "León", "Antílope", "Caballo"],
+    "answer": "Guepardo"
+  },
+  {
+    "question": "¿Qué continente tiene más países?",
+    "options": ["África", "Asia", "Europa", "América"],
+    "answer": "África"
+  },
+  {
+    "question": "¿Qué día se celebra la independencia de México?",
+    "options": ["16 de septiembre", "5 de mayo", "20 de noviembre", "1 de enero"],
+    "answer": "16 de septiembre"
+  },
+  {
+    "question": "¿Cuál es la capital de Canadá?",
+    "options": ["Ottawa", "Toronto", "Montreal", "Vancouver"],
+    "answer": "Ottawa"
+  },
+  {
+    "question": "¿Quién pintó 'La noche estrellada'?",
+    "options": ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Salvador Dalí"],
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "question": "¿Cuál es el continente más pequeño?",
+    "options": ["Oceanía", "Europa", "Antártida", "América"],
+    "answer": "Oceanía"
+  },
+  {
+    "question": "¿Qué océano baña las costas de España?",
+    "options": ["Atlántico", "Pacífico", "Índico", "Ártico"],
+    "answer": "Atlántico"
+  },
+  {
+    "question": "¿En qué país se encuentra Machu Picchu?",
+    "options": ["Perú", "México", "Chile", "Bolivia"],
+    "answer": "Perú"
+  },
+  {
+    "question": "¿Quién fue el primer hombre en la luna?",
+    "options": ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Michael Collins"],
+    "answer": "Neil Armstrong"
+  },
+  {
+    "question": "¿Qué gas utilizan las plantas para la fotosíntesis?",
+    "options": ["Dióxido de carbono", "Oxígeno", "Nitrógeno", "Hidrógeno"],
+    "answer": "Dióxido de carbono"
+  },
+  {
+    "question": "¿Qué país tiene la mayor cantidad de islas en el mundo?",
+    "options": ["Suecia", "Indonesia", "Filipinas", "Canadá"],
+    "answer": "Suecia"
+  }
+]
