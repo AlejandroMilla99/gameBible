@@ -5,6 +5,7 @@ import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/stopwatch_timer.dart';
+import '../../components/corrects_counter.dart';
 
 class TabuWordPage extends StatefulWidget {
   final String title;
@@ -76,6 +77,10 @@ class _TabuWordPageState extends State<TabuWordPage>
             ? const Center(child: CircularProgressIndicator())
             : Column(
                 children: [
+                              CorrectCounter(
+              correctAnswers: correctCount,
+              onReset: _resetCorrectCount,
+            ),
                   Expanded(
                     child: Center(
                       child: AnimatedSwitcher(
@@ -209,28 +214,6 @@ class _TabuWordPageState extends State<TabuWordPage>
                       ],
                     ),
                   ],
-
-                  const SizedBox(height: AppSpacing.lg),
-
-                  /// --- Contador de aciertos con reset ---
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Aciertos: $correctCount",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textDark,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.refresh,
-                            color: AppColors.secondary),
-                        onPressed: _resetCorrectCount,
-                      ),
-                    ],
-                  ),
 
                   /// --- Cronómetro en parte inferior ---
                   const SizedBox(height: AppSpacing.sm),

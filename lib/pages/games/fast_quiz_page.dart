@@ -7,6 +7,8 @@ import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+import '../../components/corrects_counter.dart';
+
 
 class FastQuizPage extends StatefulWidget {
   final String title;
@@ -26,6 +28,7 @@ class _FastQuizPageState extends State<FastQuizPage> {
   final _random = Random();
 
   int correctAnswers = 0;
+  bool _showQuestion = true;
 
   @override
   void initState() {
@@ -51,13 +54,19 @@ class _FastQuizPageState extends State<FastQuizPage> {
 
   void _pickQuestion() {
     if (_remainingQuestions.isEmpty) {
-      _resetIteration(); // Nueva iteración si se acabaron todas
+      _resetIteration();
     }
     setState(() {
-      currentQuestion = _remainingQuestions.removeLast();
-      selectedAnswer = null;
-      answered = false;
-      showFeedback = false;
+      _showQuestion = false;
+    });
+    Future.delayed(const Duration(milliseconds: 200), () {
+      setState(() {
+        currentQuestion = _remainingQuestions.removeLast();
+        selectedAnswer = null;
+        answered = false;
+        showFeedback = false;
+        _showQuestion = true;
+      });
     });
   }
 
@@ -107,99 +116,80 @@ class _FastQuizPageState extends State<FastQuizPage> {
             icon: const Icon(Icons.info_rounded),
             onPressed: () => _showInfo(context),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Row(
-              children: [
-                Text(
-                  'Aciertos: $correctAnswers',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: _resetCorrectAnswers,
-                  icon: const Icon(Icons.refresh),
-                  tooltip: "Restablecer",
-                ),
-              ],
-            ),
-          ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           children: [
+            CorrectCounter(
+              correctAnswers: correctAnswers,
+              onReset: _resetCorrectAnswers,
+            ),
+            const SizedBox(height: AppSpacing.lg),
             Expanded(
               child: Stack(
                 children: [
-                  // Sección de preguntas centrada verticalmente
                   Center(
                     child: currentQuestion != null
-                        ? SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                // Texto de aciertos centrado encima de la pregunta
-                                Text(
-                                  'Aciertos: $correctAnswers',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textDark,
+                        ? AnimatedOpacity(
+                            opacity: _showQuestion ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeInOut,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    currentQuestion!["question"],
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: AppSpacing.lg),
-
-                                // Pregunta
-                                Text(
-                                  currentQuestion!["question"],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: AppSpacing.lg),
-
-                                // Opciones
-                                IntrinsicWidth(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: List.generate(
-                                      (currentQuestion!["options"] as List)
-                                          .length,
-                                      (index) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 6),
-                                        child: ElevatedButton(
-                                          onPressed: () => _selectAnswer(
-                                              currentQuestion!["options"]
-                                                  [index]),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: _getButtonColor(
-                                                currentQuestion!["options"]
-                                                    [index]),
-                                            foregroundColor: Colors.white,
-                                          ),
-                                          child: Text(currentQuestion!["options"]
-                                              [index]),
-                                        ),
+                                  const SizedBox(height: AppSpacing.lg),
+                                  IntrinsicWidth(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: List.generate(
+                                        (currentQuestion!["options"] as List)
+                                            .length,
+                                        (index) {
+                                          final option = currentQuestion![
+                                              "options"][index];
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 6),
+                                            child: AnimatedContainer(
+                                              duration: const Duration(
+                                                  milliseconds: 400),
+                                              curve: Curves.easeInOut,
+                                              child: ElevatedButton(
+                                                onPressed: () =>
+                                                    _selectAnswer(option),
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      _getButtonColor(option),
+                                                  foregroundColor: Colors.white,
+                                                ),
+                                                child: Text(option),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 80), // espacio para el botón
-                              ],
+                                  const SizedBox(height: 80),
+                                ],
+                              ),
                             ),
                           )
                         : const SizedBox.shrink(),
                   ),
-
-                  // Feedback overlay centrado
                   if (currentQuestion != null &&
                       selectedAnswer == currentQuestion?["answer"])
                     IgnorePointer(
@@ -228,28 +218,35 @@ class _FastQuizPageState extends State<FastQuizPage> {
                         ),
                       ),
                     ),
-
-                  // Botón siguiente pregunta fijo, fuera del scroll
-                  if (answered && !showFeedback)
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-                        child: ElevatedButton(
-                          onPressed: _pickQuestion,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                          ),
-                          child: const Text("Siguiente pregunta"),
-                        ),
-                      ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      transitionBuilder: (child, animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ScaleTransition(scale: animation, child: child),
+                        );
+                      },
+                      child: (answered && !showFeedback)
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: AppSpacing.lg),
+                              child: ElevatedButton(
+                                onPressed: _pickQuestion,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text("Siguiente pregunta"),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ),
+                  ),
                 ],
               ),
             ),
-
-            // Cronómetro fijo al final
             const StopwatchTimer(),
           ],
         ),
