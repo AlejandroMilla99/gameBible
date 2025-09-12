@@ -1,11 +1,12 @@
 import 'dart:math';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import '../../constants/app_spacing.dart';
 import '../../components/buttons/primary_button.dart';
 import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
-
 
 class EmojiChallengePage extends StatefulWidget {
   final String title;
@@ -17,13 +18,10 @@ class EmojiChallengePage extends StatefulWidget {
 
 class _EmojiChallengePageState extends State<EmojiChallengePage>
     with SingleTickerProviderStateMixin {
-  final List<Map<String, String>> challenges = [
-    {"emoji": "🐍🍎", "answer": "Python"},
-    {"emoji": "👑💍", "answer": "The Lord of the Rings"},
-    {"emoji": "🦁👑", "answer": "The Lion King"},
-  ];
-
+  List<Map<String, String>> allChallenges = [];
+  List<Map<String, String>> remainingChallenges = [];
   Map<String, String>? currentChallenge;
+
   final _random = Random();
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -31,20 +29,49 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
   int correctAnswers = 0;
   String? feedbackMessage;
   bool _showFeedback = false;
+  bool _isSubmitting = false; // NUEVO: controla el estado del botón
 
   List<String> _suggestions = [];
   bool _showSuggestions = false;
 
+  Future<void> _loadChallenges() async {
+    final jsonString =
+        await rootBundle.loadString("assets/data/emojiGame.json");
+    final List<dynamic> jsonData = json.decode(jsonString);
+
+    setState(() {
+      allChallenges = jsonData
+          .map((item) =>
+              {"emoji": item["emoji"] as String, "answer": item["answer"] as String})
+          .toList();
+      _resetIteration();
+      _pickChallenge();
+    });
+  }
+
+  void _resetIteration() {
+    remainingChallenges = List.from(allChallenges)..shuffle(_random);
+  }
+
   void _pickChallenge() {
     setState(() {
-      currentChallenge = challenges[_random.nextInt(challenges.length)];
+      if (remainingChallenges.isEmpty) {
+        _resetIteration();
+      }
+      currentChallenge = remainingChallenges.removeAt(0);
       _controller.clear();
       _suggestions = [];
       _showSuggestions = false;
+      _isSubmitting = false; // habilitar de nuevo el botón al cargar challenge
     });
   }
 
   void _submitAnswer() {
+    if (_isSubmitting) return; // evita pulsaciones dobles
+    setState(() {
+      _isSubmitting = true; // deshabilita el botón
+    });
+
     final answer = _controller.text.trim();
     final correct = currentChallenge!["answer"];
     final isCorrect = answer.toLowerCase() == correct!.toLowerCase();
@@ -59,11 +86,18 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
       _showFeedback = true;
     });
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
         setState(() {
           _showFeedback = false;
         });
+        if (isCorrect && mounted) {
+          _pickChallenge(); // pasa automáticamente al siguiente si acierta
+        } else {
+          setState(() {
+            _isSubmitting = false; // reactivar si falló
+          });
+        }
       }
     });
 
@@ -85,10 +119,9 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
       return;
     }
 
-    final matches = challenges
+    final matches = allChallenges
         .map((c) => c["answer"]!)
-        .where((answer) =>
-            answer.toLowerCase().contains(input.toLowerCase()))
+        .where((answer) => answer.toLowerCase().contains(input.toLowerCase()))
         .toList();
 
     setState(() {
@@ -106,10 +139,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _pickChallenge();
-      _hideKeyboard();
-    });
+    _loadChallenges();
 
     _controller.addListener(() {
       if (mounted) {
@@ -143,7 +173,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
             IconButton(
               icon: const Icon(Icons.info_rounded),
               onPressed: () => _showInfo(context),
-          ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
@@ -236,15 +266,28 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                     : const SizedBox.shrink(),
               ),
               const SizedBox(height: AppSpacing.md),
-              PrimaryButton(
-                onPressed: _submitAnswer,
-                text: "Enviar",
+             ElevatedButton(
+              onPressed: _isSubmitting ? null : _submitAnswer,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 48),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-              const SizedBox(height: AppSpacing.sm),
-              PrimaryButton(
-                onPressed: _pickChallenge,
-                text: "Siguiente",
+              child: const Text("Enviar"),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            ElevatedButton(
+              onPressed: _pickChallenge,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 48),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
+              child: const Text("Siguiente"),
+            ),
+
               const SizedBox(height: AppSpacing.lg),
               const StopwatchTimer(),
             ],
@@ -269,10 +312,10 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
           "También puedes retarte con el cronómetro para medir cuánto tardas en resolver cada desafío.",
           "Tu número de aciertos acumulados aparece en la parte superior, y puedes restablecerlo en cualquier momento."
         ],
-        example: "Ejemplo: Si ves los emojis '🦁👑', la respuesta correcta sería 'The Lion King'.",
-        imageAsset: null, // opcional, por ejemplo un emoji grande decorativo
+        example:
+            "Ejemplo: Si ves los emojis '🦁👑', la respuesta correcta sería 'The Lion King'.",
+        imageAsset: null,
       ),
     );
   }
-
 }

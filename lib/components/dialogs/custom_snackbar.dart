@@ -178,6 +178,7 @@ class _SnackBarWidgetState extends State<_SnackBarWidget>
           Icons.warning
         );
       case SnackBarType.info:
+      // ignore: unreachable_switch_default
       default:
         return (
           const LinearGradient(
