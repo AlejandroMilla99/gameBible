@@ -16,7 +16,6 @@ class CustomSnackBar {
     Duration duration = const Duration(seconds: 2),
   }) {
     final overlay = Overlay.of(context);
-    if (overlay == null) return;
 
     // ✅ Remove previous snackbar if still visible
     _currentEntry?.remove();

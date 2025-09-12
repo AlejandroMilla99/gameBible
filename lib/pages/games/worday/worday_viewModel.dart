@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import '../../../components/dialogs/custom_snackbar.dart';
+import '../../../components/dialogs/general_dialog.dart';
 
 enum LetterState { unused, correct, misplaced, notInWord, fullyCorrect }
 
@@ -175,77 +176,33 @@ class WordayViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Mostrar el diálogo de fin de juego
-  void _showGameOver(BuildContext context) {
-    final validAttempts =
-        _guesses.take(_currentAttempt + 1).where((g) => g.length == wordLength);
+/// Mostrar el diálogo de fin de juego
+void _showGameOver(BuildContext context) {
+  final validAttempts =
+      _guesses.take(_currentAttempt + 1).where((g) => g.length == wordLength);
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              backgroundColor: Colors.white,
-              title: Text(
-                _won ? "🎉 ¡Has acertado! 🎉" : "😢 Fin del juego 😢",
-                textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (_won)
-                    Text(
-                      "¡Felicidades! Acertaste en ${validAttempts.length} intentos.",
-                      style: const TextStyle(color: Colors.black),
-                      textAlign: TextAlign.center,
-                    )
-                  else
-                    Text(
-                      "No acertaste la palabra.\nLa correcta era: ${_targetWord.toUpperCase()}",
-                      style: const TextStyle(color: Colors.black),
-                      textAlign: TextAlign.center,
-                    ),
-                ],
-              ),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    resetGame();
-                  },
-                  child: const Text("Jugar de nuevo"),
-                )
-              ],
-            ),
-            if (_won)
-              ConfettiWidget(
-                confettiController: confettiController,
-                blastDirectionality: BlastDirectionality.explosive,
-                shouldLoop: false,
-                colors: const [
-                  Colors.red,
-                  Colors.green,
-                  Colors.blue,
-                  Colors.orange,
-                  Colors.purple
-                ],
-              ),
-          ],
-        );
-      },
-    );
+  GeneralDialogWidget.show(
+    context,
+    title: _won ? "🎉 ¡Has acertado! 🎉" : "😢 Fin del juego 😢",
+    description: _won
+        ? "¡Felicidades! La palabra era ${_targetWord.toUpperCase()}.\n Acertaste en ${validAttempts.length} intentos."
+        : "No acertaste la palabra.\nLa correcta era: ${_targetWord.toUpperCase()}",
+    actions: [
+      GeneralDialogAction(
+        label: "Jugar de nuevo",
+        onPressed: () {
+          Navigator.of(context).pop();
+          resetGame();
+        },
+      ),
+    ],
+    showConfetti: _won,
+    confettiController: confettiController,
+  );
 
-    if (_won) confettiController.play();
-  }
+  if (_won) confettiController.play();
+}
+
 
   void resetGame() {
     _currentAttempt = 0;

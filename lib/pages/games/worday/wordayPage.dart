@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../constants/app_colors.dart';
-import '../worday_ViewModel.dart';
+import 'worday_ViewModel.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 
 class WordayPage extends StatelessWidget {
