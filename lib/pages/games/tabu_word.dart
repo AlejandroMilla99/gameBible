@@ -150,13 +150,22 @@ class _TabuWordPageState extends State<TabuWordPage>
                                       crossAxisCount: 2,
                                       shrinkWrap: true,
                                       mainAxisSpacing: 8,
-                                      crossAxisSpacing: 8,
+                                      crossAxisSpacing: 4, // menos espacio horizontal entre columnas
                                       physics: const NeverScrollableScrollPhysics(),
-                                      childAspectRatio: 3,
+                                      childAspectRatio: 3.5, // recuadros más uniformes y adaptables a palabras largas
                                       children: (currentCard!["forbidden"] as List<dynamic>)
-                                          .map((word) => Chip(
-                                                label: Text(word.toString(), textAlign: TextAlign.center),
-                                                backgroundColor: Colors.red[100],
+                                          .map((word) => Container(
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red[100],
+                                                  borderRadius: BorderRadius.circular(16),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                child: Text(
+                                                  word.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(fontSize: 14),
+                                                ),
                                               ))
                                           .toList(),
                                     ),

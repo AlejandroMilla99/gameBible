@@ -143,7 +143,7 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
                   child: currentStatement == null
                       ? const Text(
                           key: ValueKey("empty"),
-                          "Elige Normal o +18 para comenzar",
+                           "Elige categoría para comenzar: Normal, +18 o sentimental",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,

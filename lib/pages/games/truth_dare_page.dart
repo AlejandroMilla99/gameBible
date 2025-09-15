@@ -130,7 +130,7 @@ class _TruthDarePageState extends State<TruthDarePage> {
                   child: currentChallenge == null
                       ? const Text(
                           key: ValueKey("empty"),
-                          "Elige categoría para comenzar: Normal, +18 o sentimental",
+                          "Elige Verdad o Reto para comenzar",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
