@@ -17,8 +17,8 @@ class TabuWordPage extends StatefulWidget {
 
 class _TabuWordPageState extends State<TabuWordPage>
     with SingleTickerProviderStateMixin {
-  List<Map<String, dynamic>> allCards = []; // todas las cartas cargadas del JSON
-  List<Map<String, dynamic>> availableCards = []; // cartas que quedan por usar
+  List<Map<String, dynamic>> allCards = [];
+  List<Map<String, dynamic>> availableCards = [];
   Map<String, dynamic>? currentCard;
   int correctCount = 0;
 
@@ -34,19 +34,18 @@ class _TabuWordPageState extends State<TabuWordPage>
     final List<dynamic> data = jsonDecode(response);
     setState(() {
       allCards = data.map((e) => Map<String, dynamic>.from(e)).toList();
-      availableCards = List.from(allCards); // copia inicial
-      availableCards.shuffle(); // barajamos al inicio
+      availableCards = List.from(allCards);
+      availableCards.shuffle();
     });
   }
 
   void _pickCard({bool increment = false}) {
     if (availableCards.isEmpty) {
-      // si se acaban, reiniciamos y volvemos a barajar
       availableCards = List.from(allCards);
       availableCards.shuffle();
     }
     setState(() {
-      currentCard = availableCards.removeAt(0); // siempre saca la primera
+      currentCard = availableCards.removeAt(0);
       if (increment) correctCount++;
     });
   }
@@ -147,12 +146,16 @@ class _TabuWordPageState extends State<TabuWordPage>
                                       ),
                                     ),
                                     const SizedBox(height: 8),
-                                    Wrap(
-                                      spacing: 8,
-                                      children: (currentCard!["forbidden"]
-                                              as List<dynamic>)
+                                    GridView.count(
+                                      crossAxisCount: 2,
+                                      shrinkWrap: true,
+                                      mainAxisSpacing: 8,
+                                      crossAxisSpacing: 8,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      childAspectRatio: 3,
+                                      children: (currentCard!["forbidden"] as List<dynamic>)
                                           .map((word) => Chip(
-                                                label: Text(word.toString()),
+                                                label: Text(word.toString(), textAlign: TextAlign.center),
                                                 backgroundColor: Colors.red[100],
                                               ))
                                           .toList(),
@@ -163,8 +166,6 @@ class _TabuWordPageState extends State<TabuWordPage>
                       ),
                     ),
                   ),
-
-                  /// --- Botones dinámicos ---
                   if (currentCard == null) ...[
                     ElevatedButton(
                       onPressed: () => _pickCard(),
@@ -214,10 +215,9 @@ class _TabuWordPageState extends State<TabuWordPage>
                       ],
                     ),
                   ],
-
-                  /// --- Cronómetro en parte inferior ---
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: AppSpacing.bottomPadding),
                   const StopwatchTimer(),
+                  const SizedBox(height: AppSpacing.xl),
                 ],
               ),
       ),

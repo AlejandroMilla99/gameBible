@@ -87,7 +87,7 @@ Widget build(BuildContext context) {
         Game(
       title: "Palabra tabú",
       description: "Describe la palabra a tus amigos sin usar una lista de palabras prohibidas",
-      image: AppImages.worday,
+      image: AppImages.taboo,
       play: (ctx) {
         Navigator.push(
           ctx,
