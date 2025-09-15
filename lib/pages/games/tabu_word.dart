@@ -77,10 +77,10 @@ class _TabuWordPageState extends State<TabuWordPage>
             ? const Center(child: CircularProgressIndicator())
             : Column(
                 children: [
-                              CorrectCounter(
-              correctAnswers: correctCount,
-              onReset: _resetCorrectCount,
-            ),
+                  CorrectCounter(
+                    correctAnswers: correctCount,
+                    onReset: _resetCorrectCount,
+                  ),
                   Expanded(
                     child: Center(
                       child: AnimatedSwitcher(

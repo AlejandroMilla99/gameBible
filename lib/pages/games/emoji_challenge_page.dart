@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import '../../constants/app_spacing.dart';
-import '../../components/buttons/primary_button.dart';
 import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+import '../../components/corrects_counter.dart';
 
 class EmojiChallengePage extends StatefulWidget {
   final String title;
@@ -29,7 +29,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
   int correctAnswers = 0;
   String? feedbackMessage;
   bool _showFeedback = false;
-  bool _isSubmitting = false; // NUEVO: controla el estado del botón
+  bool _isSubmitting = false; // controla el estado del botón
 
   List<String> _suggestions = [];
   bool _showSuggestions = false;
@@ -66,22 +66,34 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
     });
   }
 
+/// Normaliza cadenas eliminando acentos, mayúsculas, espacios, puntuación y símbolos no alfanuméricos
+  String _normalize(String text) {
+    const accents = 'áéíóúÁÉÍÓÚ';
+    const replacements = 'aeiouAEIOU';
+    for (int i = 0; i < accents.length; i++) {
+      text = text.replaceAll(accents[i], replacements[i]);
+    }
+    // Eliminar todo lo que no sea letra o número
+    text = text.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '');
+    return text.toLowerCase();
+  }
+
   void _submitAnswer() {
     if (_isSubmitting) return; // evita pulsaciones dobles
     setState(() {
       _isSubmitting = true; // deshabilita el botón
     });
 
-    final answer = _controller.text.trim();
-    final correct = currentChallenge!["answer"];
-    final isCorrect = answer.toLowerCase() == correct!.toLowerCase();
+    final answer = _normalize(_controller.text.trim());
+    final correct = _normalize(currentChallenge!["answer"]!);
+    final isCorrect = answer == correct;
 
     setState(() {
       if (isCorrect) {
         correctAnswers++;
         feedbackMessage = "¡Correcto!";
       } else {
-        feedbackMessage = "Incorrecto";
+        feedbackMessage = "¡Incorrecto!";
       }
       _showFeedback = true;
     });
@@ -119,15 +131,19 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
       return;
     }
 
+    final normalizedInput = _normalize(input);
+
     final matches = allChallenges
         .map((c) => c["answer"]!)
-        .where((answer) => answer.toLowerCase().contains(input.toLowerCase()))
+        .where((answer) =>
+            _normalize(answer).contains(normalizedInput))
         .toList();
 
     setState(() {
       _suggestions = matches;
       _showSuggestions = matches.isNotEmpty &&
-          !matches.any((m) => m.toLowerCase() == input.toLowerCase());
+          !matches.any(
+              (m) => _normalize(m) == normalizedInput);
     });
   }
 
@@ -173,24 +189,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
             IconButton(
               icon: const Icon(Icons.info_rounded),
               onPressed: () => _showInfo(context),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Aciertos: $correctAnswers',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    onPressed: _resetCorrectAnswers,
-                    icon: const Icon(Icons.refresh),
-                    tooltip: "Restablecer",
-                  ),
-                ],
-              ),
-            ),
+            )
           ],
         ),
         body: SingleChildScrollView(
@@ -198,34 +197,88 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              CorrectCounter(
+                correctAnswers: correctAnswers,
+                onReset: _resetCorrectAnswers,
+              ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.35,
+                height: MediaQuery.of(context).size.height * 0.25,
                 child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Stack(
+                    alignment: Alignment.center,
                     children: [
-                      if (currentChallenge != null)
-                        Text(
-                          currentChallenge!["emoji"]!,
-                          style: const TextStyle(fontSize: 48),
-                        )
-                      else
-                        const Text(
-                          "Adivina el emoji",
-                          textAlign: TextAlign.center,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (currentChallenge != null)
+                            Text(
+                              currentChallenge!["emoji"]!,
+                              style: const TextStyle(fontSize: 48),
+                            )
+                          else
+                            const Text(
+                              "Adivina el emoji",
+                              textAlign: TextAlign.center,
+                            ),
+                        ],
+                      ),
+                      // Feedback positivo
+                      IgnorePointer(
+                        ignoring: true,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: AnimatedOpacity(
+                            opacity: _showFeedback &&
+                                    feedbackMessage == "¡Correcto!"
+                                ? 1.0
+                                : 0.0,
+                            duration: const Duration(milliseconds: 100),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 24),
+                              decoration: BoxDecoration(
+                                color: Colors.green.withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Text(
+                                "¡Correcto!",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
                         ),
-                      const SizedBox(height: 20),
-                      AnimatedOpacity(
-                        opacity: _showFeedback ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 300),
-                        child: Text(
-                          feedbackMessage ?? "",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: feedbackMessage == "¡Correcto!"
-                                ? Colors.green
-                                : Colors.red,
+                      ),
+                      // Feedback negativo
+                      IgnorePointer(
+                        ignoring: true,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: AnimatedOpacity(
+                            opacity: _showFeedback &&
+                                    feedbackMessage == "¡Incorrecto!"
+                                ? 1.0
+                                : 0.0,
+                            duration: const Duration(milliseconds: 100),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 24),
+                              decoration: BoxDecoration(
+                                color: Colors.red.withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Text(
+                                "¡Incorrecto!",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -266,29 +319,33 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                     : const SizedBox.shrink(),
               ),
               const SizedBox(height: AppSpacing.md),
-             ElevatedButton(
-              onPressed: _isSubmitting ? null : _submitAnswer,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+              ElevatedButton(
+                onPressed: _isSubmitting ? null : _submitAnswer,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  backgroundColor:
+                      _isSubmitting ? Colors.grey : AppColors.primary,
+                  foregroundColor: Colors.white,
                 ),
+                child: const Text("Enviar"),
               ),
-              child: const Text("Enviar"),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            ElevatedButton(
-              onPressed: _pickChallenge,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+              const SizedBox(height: AppSpacing.sm),
+              ElevatedButton(
+                onPressed: _pickChallenge,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  backgroundColor: AppColors.secondary,
+                  foregroundColor: Colors.white,
                 ),
+                child: const Text("Siguiente"),
               ),
-              child: const Text("Siguiente"),
-            ),
-
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: 85),
               const StopwatchTimer(),
             ],
           ),
@@ -303,7 +360,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
       builder: (context) => GameInfoDialog(
         title: "Cómo jugar a EmojiChallenge",
         instructions: [
-          "En pantalla verás una combinación de emojis que representan un concepto, una película, un libro o algo conocido.",
+          "En pantalla verás una combinación de emojis que representan un concepto, una película, un libro o alguien conocido.",
           "Tu objetivo es adivinar qué significa esa combinación y escribir la respuesta en el cuadro de texto.",
           "Pulsa 'Enviar' para comprobar si tu respuesta es correcta.",
           "Si aciertas, sumarás un punto a tu marcador de aciertos. Si fallas, se mostrará un mensaje indicando que la respuesta es incorrecta.",
@@ -312,8 +369,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
           "También puedes retarte con el cronómetro para medir cuánto tardas en resolver cada desafío.",
           "Tu número de aciertos acumulados aparece en la parte superior, y puedes restablecerlo en cualquier momento."
         ],
-        example:
-            "Ejemplo: Si ves los emojis '🦁👑', la respuesta correcta sería 'The Lion King'.",
+        example: "Ejemplo: Si ves los emojis '🦁👑', la respuesta correcta sería 'El rey león'.",
         imageAsset: null,
       ),
     );
