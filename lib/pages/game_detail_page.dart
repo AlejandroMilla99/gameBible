@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 import '../models/game.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_spacing.dart';
@@ -10,6 +11,8 @@ class GameDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!; // 👈 Acceso seguro a traducciones
+
     return Scaffold(
       appBar: AppBar(
         title: Text(game.title),
@@ -65,13 +68,13 @@ class GameDetailPage extends StatelessWidget {
                 ),
               ),
               onPressed: () => game.play(context),
-              child: const Text(
-                "Jugar",
-                style: TextStyle(fontSize: 18, color: Colors.white),
+              child: Text(
+                loc.play, 
+                style: const TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            // Botón para volver
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.secondary,
@@ -81,9 +84,9 @@ class GameDetailPage extends StatelessWidget {
                 ),
               ),
               onPressed: () => Navigator.pop(context),
-              child: const Text(
-                "Volver",
-                style: TextStyle(fontSize: 18, color: Colors.white),
+              child: Text(
+                loc.back, 
+                style: const TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
           ],

@@ -7,6 +7,7 @@ import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import '../../components/corrects_counter.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 class EmojiChallengePage extends StatefulWidget {
   final String title;
@@ -29,23 +30,29 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
   int correctAnswers = 0;
   String? feedbackMessage;
   bool _showFeedback = false;
-  bool _isSubmitting = false; // controla el estado del botón
+  bool _isSubmitting = false;
 
   List<String> _suggestions = [];
   bool _showSuggestions = false;
 
   Future<void> _loadChallenges() async {
-    final jsonString =
-        await rootBundle.loadString("assets/data/emojiGame.json");
-    final List<dynamic> jsonData = json.decode(jsonString);
+    // Garantizar que AppLocalizations ya esté disponible
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final locale = AppLocalizations.of(context)!.localeName;
+      final jsonString =
+          await rootBundle.loadString("assets/data/$locale/emojiGame.json");
+      final List<dynamic> jsonData = json.decode(jsonString);
 
-    setState(() {
-      allChallenges = jsonData
-          .map((item) =>
-              {"emoji": item["emoji"] as String, "answer": item["answer"] as String})
-          .toList();
-      _resetIteration();
-      _pickChallenge();
+      if (!mounted) return;
+
+      setState(() {
+        allChallenges = jsonData
+            .map((item) =>
+                {"emoji": item["emoji"] as String, "answer": item["answer"] as String})
+            .toList();
+        _resetIteration();
+        _pickChallenge();
+      });
     });
   }
 
@@ -62,38 +69,38 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
       _controller.clear();
       _suggestions = [];
       _showSuggestions = false;
-      _isSubmitting = false; // habilitar de nuevo el botón al cargar challenge
+      _isSubmitting = false;
     });
   }
 
-/// Normaliza cadenas eliminando acentos, mayúsculas, espacios, puntuación y símbolos no alfanuméricos
   String _normalize(String text) {
     const accents = 'áéíóúÁÉÍÓÚ';
     const replacements = 'aeiouAEIOU';
     for (int i = 0; i < accents.length; i++) {
       text = text.replaceAll(accents[i], replacements[i]);
     }
-    // Eliminar todo lo que no sea letra o número
     text = text.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '');
     return text.toLowerCase();
   }
 
   void _submitAnswer() {
-    if (_isSubmitting) return; // evita pulsaciones dobles
+    if (_isSubmitting) return;
     setState(() {
-      _isSubmitting = true; // deshabilita el botón
+      _isSubmitting = true;
     });
 
     final answer = _normalize(_controller.text.trim());
     final correct = _normalize(currentChallenge!["answer"]!);
     final isCorrect = answer == correct;
 
+    final t = AppLocalizations.of(context)!;
+
     setState(() {
       if (isCorrect) {
         correctAnswers++;
-        feedbackMessage = "¡Correcto!";
+        feedbackMessage = t.correct;
       } else {
-        feedbackMessage = "¡Incorrecto!";
+        feedbackMessage = t.incorrect;
       }
       _showFeedback = true;
     });
@@ -104,10 +111,10 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
           _showFeedback = false;
         });
         if (isCorrect && mounted) {
-          _pickChallenge(); // pasa automáticamente al siguiente si acierta
+          _pickChallenge();
         } else {
           setState(() {
-            _isSubmitting = false; // reactivar si falló
+            _isSubmitting = false;
           });
         }
       }
@@ -135,15 +142,13 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
 
     final matches = allChallenges
         .map((c) => c["answer"]!)
-        .where((answer) =>
-            _normalize(answer).contains(normalizedInput))
+        .where((answer) => _normalize(answer).contains(normalizedInput))
         .toList();
 
     setState(() {
       _suggestions = matches;
       _showSuggestions = matches.isNotEmpty &&
-          !matches.any(
-              (m) => _normalize(m) == normalizedInput);
+          !matches.any((m) => _normalize(m) == normalizedInput);
     });
   }
 
@@ -177,6 +182,8 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: _hideKeyboard,
       child: Scaffold(
@@ -216,20 +223,19 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                               style: const TextStyle(fontSize: 48),
                             )
                           else
-                            const Text(
-                              "Adivina el emoji",
+                            Text(
+                              t.guessEmoji,
                               textAlign: TextAlign.center,
                             ),
                         ],
                       ),
-                      // Feedback positivo
                       IgnorePointer(
                         ignoring: true,
                         child: Align(
                           alignment: Alignment.center,
                           child: AnimatedOpacity(
                             opacity: _showFeedback &&
-                                    feedbackMessage == "¡Correcto!"
+                                    feedbackMessage == t.correct
                                 ? 1.0
                                 : 0.0,
                             duration: const Duration(milliseconds: 100),
@@ -240,9 +246,9 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                                 color: Colors.green.withOpacity(0.9),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Text(
-                                "¡Correcto!",
-                                style: TextStyle(
+                              child: Text(
+                                t.correct,
+                                style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white),
@@ -252,14 +258,13 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                           ),
                         ),
                       ),
-                      // Feedback negativo
                       IgnorePointer(
                         ignoring: true,
                         child: Align(
                           alignment: Alignment.center,
                           child: AnimatedOpacity(
                             opacity: _showFeedback &&
-                                    feedbackMessage == "¡Incorrecto!"
+                                    feedbackMessage == t.incorrect
                                 ? 1.0
                                 : 0.0,
                             duration: const Duration(milliseconds: 100),
@@ -270,9 +275,9 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                                 color: Colors.red.withOpacity(0.9),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Text(
-                                "¡Incorrecto!",
-                                style: TextStyle(
+                              child: Text(
+                                t.incorrect,
+                                style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white),
@@ -289,9 +294,9 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
               TextField(
                 controller: _controller,
                 focusNode: _focusNode,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Escribe tu respuesta",
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: t.writeAnswer,
                 ),
               ),
               AnimatedSize(
@@ -330,7 +335,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                       _isSubmitting ? Colors.grey : AppColors.primary,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text("Enviar"),
+                child: Text(t.send),
               ),
               const SizedBox(height: AppSpacing.sm),
               ElevatedButton(
@@ -343,7 +348,7 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
                   backgroundColor: AppColors.secondary,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text("Siguiente"),
+                child: Text(t.next),
               ),
               const SizedBox(height: 85),
               const StopwatchTimer(),
@@ -355,21 +360,23 @@ class _EmojiChallengePageState extends State<EmojiChallengePage>
   }
 
   void _showInfo(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => GameInfoDialog(
-        title: "Cómo jugar a EmojiChallenge",
+        title: t.howToPlayEmoji,
         instructions: [
-          "En pantalla verás una combinación de emojis que representan un concepto, una película, un libro o alguien conocido.",
-          "Tu objetivo es adivinar qué significa esa combinación y escribir la respuesta en el cuadro de texto.",
-          "Pulsa 'Enviar' para comprobar si tu respuesta es correcta.",
-          "Si aciertas, sumarás un punto a tu marcador de aciertos. Si fallas, se mostrará un mensaje indicando que la respuesta es incorrecta.",
-          "Puedes pasar al siguiente reto pulsando el botón 'Siguiente'.",
-          "Si te quedas bloqueado, puedes inspirarte con el sistema de sugerencias que aparece al escribir.",
-          "También puedes retarte con el cronómetro para medir cuánto tardas en resolver cada desafío.",
-          "Tu número de aciertos acumulados aparece en la parte superior, y puedes restablecerlo en cualquier momento."
+          t.emojiInstruction1,
+          t.emojiInstruction2,
+          t.emojiInstruction3,
+          t.emojiInstruction4,
+          t.emojiInstruction5,
+          t.emojiInstruction6,
+          t.emojiInstruction7,
+          t.emojiInstruction8,
         ],
-        example: "Ejemplo: Si ves los emojis '🦁👑', la respuesta correcta sería 'El rey león'.",
+        example: t.emojiExample,
         imageAsset: null,
       ),
     );

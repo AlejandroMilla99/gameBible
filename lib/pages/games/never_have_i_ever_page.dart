@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 enum Category { normal, plus18, sentimental }
 
@@ -27,22 +28,24 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
 
   String? currentStatement;
   final _random = Random();
-  bool _swipeRight = true; // controla la dirección del swipe
-  Category? _currentCategory; // nueva variable para categoría actual
+  bool _swipeRight = true;
+  Category? _currentCategory;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _loadQuestions();
   }
 
   Future<void> _loadQuestions() async {
+    final locale = AppLocalizations.of(context)!.localeName;
+
     final normalString =
-        await rootBundle.loadString("assets/data/questions.json");
+        await rootBundle.loadString("assets/data/$locale/questions.json");
     final plus18String =
-        await rootBundle.loadString("assets/data/questions18.json");
+        await rootBundle.loadString("assets/data/$locale/questions18.json");
     final sentimentalsString =
-        await rootBundle.loadString("assets/data/sentimentals.json");
+        await rootBundle.loadString("assets/data/$locale/sentimentals.json");
 
     final List<dynamic> normalData = json.decode(normalString);
     final List<dynamic> plus18Data = json.decode(plus18String);
@@ -112,6 +115,8 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -141,10 +146,10 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
                         position: offsetAnimation, child: child);
                   },
                   child: currentStatement == null
-                      ? const Text(
-                          key: ValueKey("empty"),
-                           "Elige categoría para comenzar: Normal, +18 o sentimental",
-                          style: TextStyle(
+                      ? Text(
+                          t.chooseCategory,
+                          key: const ValueKey("empty"),
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             color: AppColors.textDark,
@@ -189,19 +194,19 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
                   onPressed: _pickNormal,
                   icon: const Icon(Icons.sentiment_satisfied,
                       color: Colors.green),
-                  tooltip: "Normal",
+                  tooltip: t.normal,
                 ),
                 IconButton(
                   iconSize: 64,
                   onPressed: _pick18,
                   icon: const Icon(Icons.explicit, color: AppColors.secondary),
-                  tooltip: "+18",
+                  tooltip: t.plus18,
                 ),
                 IconButton(
                   iconSize: 64,
                   onPressed: _pickSentimentals,
                   icon: const Icon(Icons.book, color: AppColors.primary),
-                  tooltip: "Sentimental",
+                  tooltip: t.sentimental,
                 ),
               ],
             ),
@@ -213,21 +218,22 @@ class _NeverHaveIEverPageState extends State<NeverHaveIEverPage> {
   }
 
   void _showInfo(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => GameInfoDialog(
-        title: "Cómo jugar a Yo Nunca",
+        title: t.howToPlayNeverHaveIEver,
         instructions: [
-          "Podrás elegir una categoría de pregunta pulsando en uno de los tres botones inferiores: 'Normal', '+18' o 'Sentimental'.",
-          "Se mostrará en pantalla una frase que empieza por 'Nunca he...'.",
-          "Todos los jugadores deben pensar si alguna vez han hecho lo que aparece en la frase.",
-          "Si un jugador SÍ lo ha hecho, debe reconocerlo (por ejemplo, levantando la mano, tomando un sorbo de bebida, o como acuerde el grupo).",
-          "El juego continúa mientras los jugadores quieran, pudiendo alternar entre categorías.",
-          "AVISO: La categoría +18 contiene preguntas muy explícitas que pueden no ser aptas para todo el mundo.",
-          "AVISO: La categoría Sentimental está destinada a una gran introspección y puede contener preguntas muy duras que no son aptas para todo el mundo."
+          t.nhieInstruction1,
+          t.nhieInstruction2,
+          t.nhieInstruction3,
+          t.nhieInstruction4,
+          t.nhieInstruction5,
+          t.nhieInstruction6,
+          t.nhieInstruction7,
         ],
-        example:
-            "Ejemplo: Si aparece la frase 'Nunca he perdido un vuelo' y un jugador sí lo ha perdido, deberá admitirlo.",
+        example: t.nhieExample,
         imageAsset: null,
       ),
     );

@@ -1,0 +1,210 @@
+[
+  {
+    "word": "Dog",
+    "forbidden": ["Animal", "Bark", "Pet", "Cat"]
+  },
+  {
+    "word": "Cat",
+    "forbidden": ["Animal", "Meow", "Whiskers", "Purr"]
+  },
+  {
+    "word": "Horse",
+    "forbidden": ["Animal", "Ride", "Race", "Farm"]
+  },
+  {
+    "word": "Lion",
+    "forbidden": ["Animal", "Jungle", "Roar", "King"]
+  },
+  {
+    "word": "Elephant",
+    "forbidden": ["Animal", "Big", "Trunk", "Africa"]
+  },
+  {
+    "word": "Airplane",
+    "forbidden": ["Fly", "Wing", "Pilot", "Airport"]
+  },
+  {
+    "word": "Car",
+    "forbidden": ["Drive", "Wheels", "Engine", "Gasoline"]
+  },
+  {
+    "word": "Train",
+    "forbidden": ["Tracks", "Station", "Driver", "Wagon"]
+  },
+  {
+    "word": "Boat",
+    "forbidden": ["Sea", "Sail", "Captain", "Port"]
+  },
+  {
+    "word": "Bicycle",
+    "forbidden": ["Pedal", "Wheels", "Helmet", "Lane"]
+  },
+  {
+    "word": "Pizza",
+    "forbidden": ["Food", "Cheese", "Oven", "Italian"]
+  },
+  {
+    "word": "Hamburger",
+    "forbidden": ["Meat", "Bread", "Lettuce", "Tomato"]
+  },
+  {
+    "word": "Ice cream",
+    "forbidden": ["Cold", "Summer", "Snow", "Dessert"]
+  },
+  {
+    "word": "Beer",
+    "forbidden": ["Alcohol", "Bottle", "Friends", "Party"]
+  },
+  {
+    "word": "Wine",
+    "forbidden": ["Alcohol", "Grapes", "Glass", "Cellar"]
+  },
+  {
+    "word": "Water",
+    "forbidden": ["Drink", "Liquid", "Transparent", "Thirst"]
+  },
+  {
+    "word": "Nightclub",
+    "forbidden": ["Dance", "Music", "Lights", "Party"]
+  },
+  {
+    "word": "Concert",
+    "forbidden": ["Music", "Singer", "Stage", "People"]
+  },
+  {
+    "word": "Theater",
+    "forbidden": ["Play", "Actors", "Stage", "Audience"]
+  },
+  {
+    "word": "Cinema",
+    "forbidden": ["Movie", "Screen", "Popcorn", "Seat"]
+  },
+  {
+    "word": "Kiss",
+    "forbidden": ["Love", "Lips", "Romantic", "Couple"]
+  },
+  {
+    "word": "Hug",
+    "forbidden": ["Affection", "Friends", "Family", "Love"]
+  },
+  {
+    "word": "Tear",
+    "forbidden": ["Eye", "Sadness", "Cry", "Emotion"]
+  },
+  {
+    "word": "Laughter",
+    "forbidden": ["Joy", "Joke", "Happiness", "Smile"]
+  },
+  {
+    "word": "Computer",
+    "forbidden": ["Screen", "Keyboard", "Mouse", "Internet"]
+  },
+  {
+    "word": "Phone",
+    "forbidden": ["Call", "Mobile", "Messages", "Number"]
+  },
+  {
+    "word": "Television",
+    "forbidden": ["Channel", "Screen", "Series", "News"]
+  },
+  {
+    "word": "Internet",
+    "forbidden": ["Network", "Connection", "Page", "Browse"]
+  },
+  {
+    "word": "Book",
+    "forbidden": ["Read", "Pages", "Writer", "Library"]
+  },
+  {
+    "word": "School",
+    "forbidden": ["Teacher", "Class", "Students", "Study"]
+  },
+  {
+    "word": "Exam",
+    "forbidden": ["Grades", "Study", "Questions", "Teacher"]
+  },
+  {
+    "word": "Pencil",
+    "forbidden": ["Write", "Erase", "Wood", "Graphite"]
+  },
+  {
+    "word": "Soccer",
+    "forbidden": ["Ball", "Goal", "Team", "Score"]
+  },
+  {
+    "word": "Basketball",
+    "forbidden": ["Basket", "Ball", "Player", "NBA"]
+  },
+  {
+    "word": "Tennis",
+    "forbidden": ["Racket", "Ball", "Net", "Court"]
+  },
+  {
+    "word": "Swimming",
+    "forbidden": ["Water", "Pool", "Swimsuit", "Sport"]
+  },
+  {
+    "word": "Mountain",
+    "forbidden": ["High", "Climb", "Snow", "Nature"]
+  },
+  {
+    "word": "Beach",
+    "forbidden": ["Sand", "Water", "Summer", "Sun"]
+  },
+  {
+    "word": "Forest",
+    "forbidden": ["Trees", "Nature", "Animals", "Green"]
+  },
+  {
+    "word": "Desert",
+    "forbidden": ["Sand", "Heat", "Camel", "Thirst"]
+  },
+  {
+    "word": "Moon",
+    "forbidden": ["Night", "Sky", "Satellite", "Shine"]
+  },
+  {
+    "word": "Sun",
+    "forbidden": ["Day", "Heat", "Shine", "Light"]
+  },
+  {
+    "word": "Star",
+    "forbidden": ["Sky", "Shine", "Night", "Constellation"]
+  },
+  {
+    "word": "Planet",
+    "forbidden": ["Space", "Earth", "Mars", "Solar System"]
+  },
+  {
+    "word": "Doctor",
+    "forbidden": ["Hospital", "Medicine", "Patient", "Heal"]
+  },
+  {
+    "word": "Police",
+    "forbidden": ["Crime", "Arrest", "Laws", "Uniform"]
+  },
+  {
+    "word": "Firefighter",
+    "forbidden": ["Fire", "Water", "Rescue", "Flames"]
+  },
+  {
+    "word": "Teacher",
+    "forbidden": ["School", "Teach", "Class", "Student"]
+  },
+  {
+    "word": "Bread",
+    "forbidden": ["Flour", "Oven", "Dough", "Eat"]
+  },
+  {
+    "word": "Chocolate",
+    "forbidden": ["Sweet", "Cocoa", "Dessert", "Bar"]
+  },
+  {
+    "word": "Rice",
+    "forbidden": ["Cereal", "Food", "China", "White"]
+  },
+  {
+    "word": "Coffee",
+    "forbidden": ["Drink", "Cup", "Morning", "Hot"]
+  }
+]

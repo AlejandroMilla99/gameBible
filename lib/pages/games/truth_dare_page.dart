@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_spacing.dart';
 import '../../constants/app_colors.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 enum ChallengeCategory { truth, dare }
 
@@ -25,18 +26,26 @@ class _TruthDarePageState extends State<TruthDarePage> {
 
   String? currentChallenge;
   final _random = Random();
-  bool _swipeRight = true; // controla la dirección del swipe
-  ChallengeCategory? _currentCategory; // para el borde de color
+  bool _swipeRight = true;
+  ChallengeCategory? _currentCategory;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _loadChallenges();
   }
 
   Future<void> _loadChallenges() async {
-    final truthsString = await rootBundle.loadString("assets/data/truths.json");
-    final daresString = await rootBundle.loadString("assets/data/dares.json");
+    final locale = AppLocalizations.of(context)!.localeName;
+    final truthsString =
+        await rootBundle.loadString("assets/data/$locale/truths.json");
+    final daresString =
+        await rootBundle.loadString("assets/data/$locale/dares.json");
 
     final List<dynamic> truthsData = json.decode(truthsString);
     final List<dynamic> daresData = json.decode(daresString);
@@ -58,31 +67,27 @@ class _TruthDarePageState extends State<TruthDarePage> {
   }
 
   void _pickTruth() {
-    if (truths.isEmpty) return; // evitar crash si lista vacía
+    if (truths.isEmpty) return;
 
     setState(() {
       _swipeRight = !_swipeRight;
       _currentCategory = ChallengeCategory.truth;
 
-      // si la lista de remaining está vacía, reiniciarla
       if (remainingTruths.isEmpty) _resetIterationTruths();
 
-      // ahora sí removemos el primer elemento
       currentChallenge = remainingTruths.removeAt(0);
     });
   }
 
   void _pickDare() {
-    if (dares.isEmpty) return; // evitar crash si lista vacía
+    if (dares.isEmpty) return;
 
     setState(() {
       _swipeRight = !_swipeRight;
       _currentCategory = ChallengeCategory.dare;
 
-      // si la lista de remaining está vacía, reiniciarla
       if (remainingDares.isEmpty) _resetIterationDares();
 
-      // ahora sí removemos el primer elemento
       currentChallenge = remainingDares.removeAt(0);
     });
   }
@@ -100,6 +105,8 @@ class _TruthDarePageState extends State<TruthDarePage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -128,10 +135,10 @@ class _TruthDarePageState extends State<TruthDarePage> {
                     return SlideTransition(position: offsetAnimation, child: child);
                   },
                   child: currentChallenge == null
-                      ? const Text(
-                          key: ValueKey("empty"),
-                          "Elige Verdad o Reto para comenzar",
-                          style: TextStyle(
+                      ? Text(
+                          t.chooseTruthOrDare,
+                          key: const ValueKey("empty"),
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             color: AppColors.textDark,
@@ -175,13 +182,13 @@ class _TruthDarePageState extends State<TruthDarePage> {
                   iconSize: 64,
                   onPressed: _pickTruth,
                   icon: const Icon(Icons.question_answer, color: Colors.blue),
-                  tooltip: "Verdad",
+                  tooltip: t.truth,
                 ),
                 IconButton(
                   iconSize: 64,
                   onPressed: _pickDare,
                   icon: const Icon(Icons.local_fire_department, color: Colors.red),
-                  tooltip: "Reto",
+                  tooltip: t.dare,
                 ),
               ],
             ),
@@ -193,19 +200,20 @@ class _TruthDarePageState extends State<TruthDarePage> {
   }
 
   void _showInfo(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => GameInfoDialog(
-        title: "Cómo jugar a Verdad o Reto",
+        title: t.howToPlayTruthOrDare,
         instructions: [
-          "Elige entre 'Verdad' o 'Reto' pulsando uno de los dos botones inferiores.",
-          "Si eliges 'Verdad', deberás responder con sinceridad a la pregunta que aparezca en pantalla.",
-          "Si eliges 'Reto', tendrás que realizar la acción que se te proponga.",
-          "El juego continúa turnándose entre los jugadores, alternando preguntas y retos.",
-          "El objetivo es divertirse, descubrir cosas nuevas y aceptar los desafíos."
+          t.instruction1,
+          t.instruction2,
+          t.instruction3,
+          t.instruction4,
+          t.instruction5,
         ],
-        example:
-            "Ejemplo: Si eliges 'Verdad', puede tocarte responder '¿Cuál ha sido tu mayor vergüenza?'. Si eliges 'Reto', puede salirte 'Imita a alguien del grupo durante 1 minuto'.",
+        example: t.example,
         imageAsset: null,
       ),
     );

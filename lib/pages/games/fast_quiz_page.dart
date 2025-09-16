@@ -8,7 +8,7 @@ import '../../constants/app_colors.dart';
 import '../../components/stopwatch_timer.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import '../../components/corrects_counter.dart';
-
+import 'package:gamebible/l10n/app_localizations.dart';
 
 class FastQuizPage extends StatefulWidget {
   final String title;
@@ -33,12 +33,16 @@ class _FastQuizPageState extends State<FastQuizPage> {
   @override
   void initState() {
     super.initState();
-    _loadQuestions();
+    // Esperamos al primer frame para poder usar context seguro
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadQuestions();
+    });
   }
 
   Future<void> _loadQuestions() async {
+    final locale = Localizations.localeOf(context).languageCode;
     final String response =
-        await rootBundle.loadString('assets/data/quiz.json');
+        await rootBundle.loadString('assets/data/$locale/quiz.json');
     final List<dynamic> data = jsonDecode(response);
     setState(() {
       questions = data.map((e) => Map<String, dynamic>.from(e)).toList();
@@ -106,6 +110,8 @@ class _FastQuizPageState extends State<FastQuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -206,9 +212,9 @@ class _FastQuizPageState extends State<FastQuizPage> {
                               color: Colors.green.withOpacity(0.9),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Text(
-                              "¡Correcto!",
-                              style: TextStyle(
+                            child: Text(
+                              t.correct!,
+                              style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white),
@@ -238,7 +244,7 @@ class _FastQuizPageState extends State<FastQuizPage> {
                                   backgroundColor: AppColors.primary,
                                   foregroundColor: Colors.white,
                                 ),
-                                child: const Text("Siguiente pregunta"),
+                                child: Text(t.nextQuestion!),
                               ),
                             )
                           : const SizedBox.shrink(),
@@ -255,21 +261,22 @@ class _FastQuizPageState extends State<FastQuizPage> {
   }
 
   void _showInfo(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => GameInfoDialog(
-        title: "Cómo jugar a FastQuiz",
+        title: t.fastQuizHowToPlay!,
         instructions: [
-          "En pantalla aparecerá una pregunta con varias opciones de respuesta.",
-          "Lee atentamente la pregunta y selecciona una de las opciones disponibles.",
-          "Si aciertas, la opción se marcará en verde y sumarás un punto a tu marcador de aciertos.",
-          "Si fallas, tu respuesta se marcará en rojo y no sumarás puntos.",
-          "Después de responder, pulsa 'Siguiente pregunta' para continuar.",
-          "Puedes consultar tu número total de aciertos en la parte superior de la pantalla y restablecerlo en cualquier momento.",
-          "También puedes hacer uso del cronómetro incorporado para retarte en un tiempo determinado."
+          t.fastQuizInstruction1!,
+          t.fastQuizInstruction2!,
+          t.fastQuizInstruction3!,
+          t.fastQuizInstruction4!,
+          t.fastQuizInstruction5!,
+          t.fastQuizInstruction6!,
+          t.fastQuizInstruction7!,
         ],
-        example:
-            "Ejemplo: Si aparece la pregunta '¿Cuál es la capital de Francia?' y eliges 'París', tu respuesta será correcta y sumarás un punto.",
+        example: t.fastQuizExample!,
         imageAsset: null,
       ),
     );

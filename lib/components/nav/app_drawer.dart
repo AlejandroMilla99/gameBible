@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Drawer(
       backgroundColor: Colors.white,
       child: ListView(
@@ -18,45 +21,45 @@ class AppDrawer extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CircleAvatar(
+              children: [
+                const CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white,
                   child: Icon(Icons.person, size: 40, color: AppColors.primary),
                 ),
-                SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
-                  "Juegos con Amigos",
-                  style: TextStyle(
+                  loc.appTitle,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "¡Diviértete en grupo! 🎉",
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  loc.appSubtitle,
+                  style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
               ],
             ),
           ),
           ListTile(
             leading: const Icon(Icons.home, color: AppColors.primary),
-            title: const Text("Inicio"),
+            title: Text(loc.home),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.favorite, color: AppColors.primary),
-            title: const Text("Favoritos"),
+            title: Text(loc.favorites),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.settings, color: AppColors.primary),
-            title: const Text("Configuración"),
+            title: Text(loc.settings),
             onTap: () {
               Navigator.pop(context);
             },
@@ -64,15 +67,14 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.privacy_tip, color: AppColors.primary),
-            title: const Text("Política de Privacidad"),
+            title: Text(loc.privacyPolicy),
             onTap: () {
-              // Aquí podrías abrir un WebView o navegador externo
               Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.info, color: AppColors.primary),
-            title: const Text("Sobre la App"),
+            title: Text(loc.aboutApp),
             onTap: () {
               Navigator.pop(context);
             },

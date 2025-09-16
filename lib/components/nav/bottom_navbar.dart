@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 class BottomNavbar extends StatelessWidget {
   final int currentIndex;
@@ -13,6 +14,8 @@ class BottomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
@@ -21,18 +24,18 @@ class BottomNavbar extends StatelessWidget {
       unselectedItemColor: Colors.grey,
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Inicio",
+          icon: const Icon(Icons.home),
+          label: loc.home,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: "Favoritos",
+          icon: const Icon(Icons.favorite),
+          label: loc.favorites,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: "Perfil",
+          icon: const Icon(Icons.person),
+          label: loc.profile,
         ),
       ],
     );

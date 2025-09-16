@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 import 'package:gamebible/pages/games/emoji_challenge_page.dart';
 import 'package:gamebible/pages/games/fast_quiz_page.dart';
 import 'package:gamebible/pages/games/geoExpert/geo_expert_page.dart';
@@ -15,87 +16,105 @@ import '../constants/app_images.dart';
 class GamesPage extends StatelessWidget {
   const GamesPage({super.key});
 
-@override
-Widget build(BuildContext context) {
-  final games = [
-    Game(
-      title: "Verdad o Reto",
-      description: "Un clásico para animar cualquier reunión.",
-      image: AppImages.truthDare,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const TruthDarePage(title: "Verdad o Reto")),
-        );
-      },
-    ),
-    Game(
-      title: "Yo Nunca",
-      description: "Revela secretos con tus amigos.",
-      image: AppImages.neverHaveIEver,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const NeverHaveIEverPage(title: "Yo nunca",)),
-        );
-      },
-    ),
-        Game(
-      title: "Test rápido",
-      description: "Test de cultura general.",
-      image: AppImages.quickTest,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const FastQuizPage(title: "Test rápido",)),
-        );
-      },
-    ),
-        Game(
-      title: "Emoji challenge",
-      description: "Acierta películas, libros o conceptos a partir de una descripción basada sólo en emojis.",
-      image: AppImages.emojiChallenge,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const EmojiChallengePage(title: "Emoji challenge")),
-        );
-      },
-    ),
-        Game(
-      title: "Geo Expert",
-      description: "Rankea países en función de diferentes índices.",
-      image: AppImages.geoExpert,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const GeoExpertPage(title: "Geo Expert",)),
-        );
-      },
-    ),
-        Game(
-      title: "Worday",
-      description: "Adivina la palabra diaria orientándola a través de probar otras palabras teniendo en cuenta la posición de sus letras",
-      image: AppImages.worday,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const WordayPage(title: "Worday",)),
-        );
-      },
-    ),
-        Game(
-      title: "Palabra tabú",
-      description: "Describe la palabra a tus amigos sin usar una lista de palabras prohibidas",
-      image: AppImages.taboo,
-      play: (ctx) {
-        Navigator.push(
-          ctx,
-          MaterialPageRoute(builder: (_) => const TabuWordPage(title: "Palabra tabú",)),
-        );
-      },
-    ),
-  ];
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    final games = [
+      Game(
+        title: loc.truthOrDareTitle,
+        description: loc.truthOrDareDesc,
+        image: AppImages.truthDare,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) => TruthDarePage(title: loc.truthOrDareTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.neverHaveIEverTitle,
+        description: loc.neverHaveIEverDesc,
+        image: AppImages.neverHaveIEver,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) =>
+                  NeverHaveIEverPage(title: loc.neverHaveIEverTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.fastQuizTitle,
+        description: loc.fastQuizDesc,
+        image: AppImages.quickTest,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) => FastQuizPage(title: loc.fastQuizTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.emojiChallengeTitle,
+        description: loc.emojiChallengeDesc,
+        image: AppImages.emojiChallenge,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) =>
+                  EmojiChallengePage(title: loc.emojiChallengeTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.geoExpertTitle,
+        description: loc.geoExpertDesc,
+        image: AppImages.geoExpert,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) => GeoExpertPage(title: loc.geoExpertTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.wordayTitle,
+        description: loc.wordayDesc,
+        image: AppImages.worday,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) => WordayPage(title: loc.wordayTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.tabuWordTitle,
+        description: loc.tabuWordDesc,
+        image: AppImages.taboo,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) => TabuWordPage(title: loc.tabuWordTitle),
+            ),
+          );
+        },
+      ),
+    ];
 
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.md),

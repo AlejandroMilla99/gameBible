@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_spacing.dart';
 
@@ -66,20 +67,22 @@ class _StopwatchTimerState extends State<StopwatchTimer> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     Color toggleColor;
     String toggleText;
 
     switch (_status) {
       case StopwatchStatus.initial:
-        toggleText = "Iniciar";
+        toggleText = loc.startWatch;
         toggleColor = Colors.green;
         break;
       case StopwatchStatus.running:
-        toggleText = "Parar";
+        toggleText = loc.stop;
         toggleColor = AppColors.secondary;
         break;
       case StopwatchStatus.paused:
-        toggleText = "Reanudar";
+        toggleText = loc.resume;
         toggleColor = AppColors.primary;
         break;
     }
@@ -101,7 +104,7 @@ class _StopwatchTimerState extends State<StopwatchTimer> {
             ElevatedButton(
               onPressed: _resetTimer,
               style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-              child: const Text("Reiniciar"),
+              child: Text(loc.resetTimer),
             ),
             const SizedBox(width: AppSpacing.md),
             ElevatedButton(

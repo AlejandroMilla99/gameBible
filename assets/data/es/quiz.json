@@ -1,0 +1,1141 @@
+[
+  {
+    "question": "¿Cuál es la capital de Francia?",
+    "options": ["París", "Londres", "Berlín", "Roma"],
+    "answer": "París"
+  },
+  {
+    "question": "¿Cuál es el planeta más cercano al sol?",
+    "options": ["Mercurio", "Venus", "Marte", "Júpiter"],
+    "answer": "Mercurio"
+  },
+  {
+    "question": "¿Quién escribió 'Cien años de soledad'?",
+    "options": ["Gabriel García Márquez", "Pablo Neruda", "Isabel Allende", "Mario Vargas Llosa"],
+    "answer": "Gabriel García Márquez"
+  },
+  {
+    "question": "¿En qué año llegó Cristóbal Colón a América?",
+    "options": ["1492", "1500", "1485", "1512"],
+    "answer": "1492"
+  },
+  {
+    "question": "¿Cuál es el río más largo del mundo?",
+    "options": ["Amazonas", "Nilo", "Yangtsé", "Misisipi"],
+    "answer": "Amazonas"
+  },
+  {
+    "question": "¿Qué elemento químico tiene el símbolo 'O'?",
+    "options": ["Oxígeno", "Oro", "Osmio", "Oxalato"],
+    "answer": "Oxígeno"
+  },
+  {
+    "question": "¿Quién pintó la Mona Lisa?",
+    "options": ["Leonardo da Vinci", "Michelangelo", "Rafael", "Vincent van Gogh"],
+    "answer": "Leonardo da Vinci"
+  },
+  {
+    "question": "¿Cuál es la montaña más alta del mundo?",
+    "options": ["Everest", "K2", "Kangchenjunga", "Makalu"],
+    "answer": "Everest"
+  },
+  {
+    "question": "¿Quién es conocido como el 'Padre de la Física Moderna'?",
+    "options": ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
+    "answer": "Albert Einstein"
+  },
+  {
+    "question": "¿Cuál es el idioma más hablado en el mundo?",
+    "options": ["Chino mandarín", "Inglés", "Español", "Hindi"],
+    "answer": "Chino mandarín"
+  },
+  {
+    "question": "¿En qué país se originó el fútbol?",
+    "options": ["Inglaterra", "España", "Italia", "Alemania"],
+    "answer": "Inglaterra"
+  },
+  {
+    "question": "¿Qué año se fundó la ONU?",
+    "options": ["1945", "1919", "1939", "1950"],
+    "answer": "1945"
+  },
+  {
+    "question": "¿Cuál es el océano más grande del mundo?",
+    "options": ["Pacífico", "Atlántico", "Índico", "Ártico"],
+    "answer": "Pacífico"
+  },
+  {
+    "question": "¿Quién escribió 'Don Quijote de la Mancha'?",
+    "options": ["Miguel de Cervantes", "Lope de Vega", "Francisco de Quevedo", "Góngora"],
+    "answer": "Miguel de Cervantes"
+  },
+  {
+    "question": "¿Cuál es la capital de Japón?",
+    "options": ["Tokio", "Kioto", "Osaka", "Hiroshima"],
+    "answer": "Tokio"
+  },
+  {
+    "question": "¿Qué gas es esencial para la respiración humana?",
+    "options": ["Oxígeno", "Nitrógeno", "Dióxido de carbono", "Hidrógeno"],
+    "answer": "Oxígeno"
+  },
+  {
+    "question": "¿Qué país tiene la mayor población del mundo?",
+    "options": ["China", "India", "Estados Unidos", "Brasil"],
+    "answer": "China"
+  },
+  {
+    "question": "¿En qué continente se encuentra Egipto?",
+    "options": ["África", "Asia", "Europa", "Oceanía"],
+    "answer": "África"
+  },
+  {
+    "question": "¿Quién inventó la bombilla eléctrica?",
+    "options": ["Thomas Edison", "Nikola Tesla", "Alexander Graham Bell", "Benjamin Franklin"],
+    "answer": "Thomas Edison"
+  },
+  {
+    "question": "¿Cuál es el país conocido como la Tierra del Sol Naciente?",
+    "options": ["Japón", "China", "Corea del Sur", "Tailandia"],
+    "answer": "Japón"
+  },
+  {
+    "question": "¿Qué instrumento mide la presión atmosférica?",
+    "options": ["Barómetro", "Termómetro", "Higrómetro", "Anemómetro"],
+    "answer": "Barómetro"
+  },
+  {
+    "question": "¿Cuál es el metal más pesado?",
+    "options": ["Osmio", "Plomo", "Mercurio", "Platino"],
+    "answer": "Osmio"
+  },
+  {
+    "question": "¿Qué científico formuló la teoría de la evolución?",
+    "options": ["Charles Darwin", "Gregor Mendel", "Louis Pasteur", "Isaac Newton"],
+    "answer": "Charles Darwin"
+  },
+  {
+    "question": "¿En qué país se encuentran las pirámides de Giza?",
+    "options": ["Egipto", "México", "Perú", "Sudán"],
+    "answer": "Egipto"
+  },
+  {
+    "question": "¿Quién escribió 'Romeo y Julieta'?",
+    "options": ["William Shakespeare", "Miguel de Cervantes", "Jane Austen", "Mark Twain"],
+    "answer": "William Shakespeare"
+  },
+  {
+    "question": "¿Cuál es el deporte más popular del mundo?",
+    "options": ["Fútbol", "Baloncesto", "Tenis", "Críquet"],
+    "answer": "Fútbol"
+  },
+  {
+    "question": "¿Cuál es la moneda de Estados Unidos?",
+    "options": ["Dólar", "Euro", "Libra", "Peso"],
+    "answer": "Dólar"
+  },
+  {
+    "question": "¿Cuál es el animal terrestre más rápido?",
+    "options": ["Guepardo", "León", "Antílope", "Caballo"],
+    "answer": "Guepardo"
+  },
+  {
+    "question": "¿Qué continente tiene más países?",
+    "options": ["África", "Asia", "Europa", "América"],
+    "answer": "África"
+  },
+  {
+    "question": "¿Qué día se celebra la independencia de México?",
+    "options": ["16 de septiembre", "5 de mayo", "20 de noviembre", "1 de enero"],
+    "answer": "16 de septiembre"
+  },
+  {
+    "question": "¿Cuál es la capital de Canadá?",
+    "options": ["Ottawa", "Toronto", "Montreal", "Vancouver"],
+    "answer": "Ottawa"
+  },
+  {
+    "question": "¿Quién pintó 'La noche estrellada'?",
+    "options": ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Salvador Dalí"],
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "question": "¿Cuál es el continente más pequeño?",
+    "options": ["Oceanía", "Europa", "Antártida", "América"],
+    "answer": "Oceanía"
+  },
+  {
+    "question": "¿Qué océano baña las costas de España?",
+    "options": ["Atlántico", "Pacífico", "Índico", "Ártico"],
+    "answer": "Atlántico"
+  },
+  {
+    "question": "¿En qué país se encuentra Machu Picchu?",
+    "options": ["Perú", "México", "Chile", "Bolivia"],
+    "answer": "Perú"
+  },
+  {
+    "question": "¿Quién fue el primer hombre en la luna?",
+    "options": ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Michael Collins"],
+    "answer": "Neil Armstrong"
+  },
+  {
+    "question": "¿Qué gas utilizan las plantas para la fotosíntesis?",
+    "options": ["Dióxido de carbono", "Oxígeno", "Nitrógeno", "Hidrógeno"],
+    "answer": "Dióxido de carbono"
+  },
+  {
+    "question": "¿Qué país tiene la mayor cantidad de islas en el mundo?",
+    "options": ["Suecia", "Indonesia", "Filipinas", "Canadá"],
+    "answer": "Suecia"
+  },
+
+
+  {
+    "question": "¿Cuál es el idioma oficial de Brasil?",
+    "options": ["Portugués", "Español", "Inglés", "Francés"],
+    "answer": "Portugués"
+  },
+  {
+    "question": "¿Qué planeta es conocido como el planeta rojo?",
+    "options": ["Marte", "Venus", "Júpiter", "Saturno"],
+    "answer": "Marte"
+  },
+  {
+    "question": "¿Cuál es el deporte nacional de Japón?",
+    "options": ["Sumo", "Karate", "Judo", "Beisbol"],
+    "answer": "Sumo"
+  },
+  {
+    "question": "¿Quién descubrió la penicilina?",
+    "options": ["Alexander Fleming", "Louis Pasteur", "Marie Curie", "Joseph Lister"],
+    "answer": "Alexander Fleming"
+  },
+  {
+    "question": "¿Cuál es la capital de Australia?",
+    "options": ["Canberra", "Sídney", "Melbourne", "Brisbane"],
+    "answer": "Canberra"
+  },
+  {
+    "question": "¿Qué país inventó la pizza?",
+    "options": ["Italia", "Francia", "España", "Grecia"],
+    "answer": "Italia"
+  },
+  {
+    "question": "¿Qué animal es conocido por cambiar de color para camuflarse?",
+    "options": ["Camaleón", "Tigre", "Pulpo", "Loro"],
+    "answer": "Camaleón"
+  },
+  {
+    "question": "¿En qué ciudad se encuentra la Estatua de la Libertad?",
+    "options": ["Nueva York", "Washington D.C.", "Boston", "Chicago"],
+    "answer": "Nueva York"
+  },
+  {
+    "question": "¿Qué órgano del cuerpo produce insulina?",
+    "options": ["Páncreas", "Hígado", "Riñón", "Corazón"],
+    "answer": "Páncreas"
+  },
+  {
+    "question": "¿Cuál es el metal más abundante en la Tierra?",
+    "options": ["Aluminio", "Hierro", "Cobre", "Plomo"],
+    "answer": "Aluminio"
+  },
+  {
+    "question": "¿Qué país tiene forma de bota?",
+    "options": ["Italia", "España", "Grecia", "Portugal"],
+    "answer": "Italia"
+  },
+  {
+    "question": "¿Qué instrumento se usa para medir la temperatura?",
+    "options": ["Termómetro", "Barómetro", "Higrómetro", "Anemómetro"],
+    "answer": "Termómetro"
+  },
+  {
+    "question": "¿Cuál es la capital de Argentina?",
+    "options": ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"],
+    "answer": "Buenos Aires"
+  },
+  {
+    "question": "¿Quién fue el primer presidente de Estados Unidos?",
+    "options": ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John Adams"],
+    "answer": "George Washington"
+  },
+  {
+    "question": "¿Qué gas respiramos para vivir?",
+    "options": ["Oxígeno", "Nitrógeno", "Dióxido de carbono", "Hidrógeno"],
+    "answer": "Oxígeno"
+  },
+  {
+    "question": "¿Qué país es famoso por los tulipanes?",
+    "options": ["Países Bajos", "Bélgica", "Alemania", "Suiza"],
+    "answer": "Países Bajos"
+  },
+  {
+    "question": "¿Cuál es el continente más grande?",
+    "options": ["Asia", "África", "América", "Europa"],
+    "answer": "Asia"
+  },
+  {
+    "question": "¿Qué animal produce la seda?",
+    "options": ["Gusano de seda", "Araña", "Mariposa", "Oruga"],
+    "answer": "Gusano de seda"
+  },
+  {
+    "question": "¿Qué país tiene forma de triángulo en América del Sur?",
+    "options": ["Chile", "Perú", "Argentina", "Uruguay"],
+    "answer": "Chile"
+  },
+  {
+    "question": "¿Quién pintó 'El Grito'?",
+    "options": ["Edvard Munch", "Pablo Picasso", "Van Gogh", "Claude Monet"],
+    "answer": "Edvard Munch"
+  },
+
+
+  {
+    "question": "¿Cuál es el río más largo de Sudamérica?",
+    "options": ["Amazonas", "Paraná", "Orinoco", "São Francisco"],
+    "answer": "Amazonas"
+  },
+  {
+    "question": "¿Quién fue el primer hombre en orbitar la Tierra?",
+    "options": ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "Alan Shepard"],
+    "answer": "Yuri Gagarin"
+  },
+  {
+    "question": "¿En qué año cayó el Muro de Berlín?",
+    "options": ["1989", "1991", "1987", "1990"],
+    "answer": "1989"
+  },
+  {
+    "question": "¿Cuál es la capital de Turquía?",
+    "options": ["Ankara", "Estambul", "Esmirna", "Bursa"],
+    "answer": "Ankara"
+  },
+  {
+    "question": "¿Qué científico propuso la teoría de la relatividad?",
+    "options": ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
+    "answer": "Albert Einstein"
+  },
+  {
+    "question": "¿Cuál es el elemento químico con símbolo 'Ag'?",
+    "options": ["Plata", "Oro", "Mercurio", "Aluminio"],
+    "answer": "Plata"
+  },
+  {
+    "question": "¿Cuál es la montaña más alta de África?",
+    "options": ["Kilimanjaro", "Monte Kenia", "Atlas", "Simien"],
+    "answer": "Kilimanjaro"
+  },
+  {
+    "question": "¿Qué guerra terminó en 1945?",
+    "options": ["Segunda Guerra Mundial", "Primera Guerra Mundial", "Guerra de Vietnam", "Guerra de Corea"],
+    "answer": "Segunda Guerra Mundial"
+  },
+  {
+    "question": "¿Quién escribió 'Hamlet'?",
+    "options": ["William Shakespeare", "Charles Dickens", "Jane Austen", "Victor Hugo"],
+    "answer": "William Shakespeare"
+  },
+  {
+    "question": "¿Qué país tiene el mayor número de islas en el mundo?",
+    "options": ["Suecia", "Filipinas", "Indonesia", "Canadá"],
+    "answer": "Suecia"
+  },
+  {
+    "question": "¿Cuál es la lengua oficial de Egipto?",
+    "options": ["Árabe", "Francés", "Inglés", "Hebreo"],
+    "answer": "Árabe"
+  },
+  {
+    "question": "¿Cuál es el satélite natural más grande del sistema solar?",
+    "options": ["Ganimedes", "Titan", "Europa", "Calisto"],
+    "answer": "Ganimedes"
+  },
+  {
+    "question": "¿Qué país se independizó de Portugal en 1975?",
+    "options": ["Angola", "Mozambique", "Brasil", "Guinea-Bissau"],
+    "answer": "Angola"
+  },
+  {
+    "question": "¿Qué pintor es famoso por el cuadro 'La persistencia de la memoria'?",
+    "options": ["Salvador Dalí", "Pablo Picasso", "René Magritte", "Frida Kahlo"],
+    "answer": "Salvador Dalí"
+  },
+  {
+    "question": "¿Cuál es el océano más profundo del mundo?",
+    "options": ["Pacífico", "Atlántico", "Índico", "Ártico"],
+    "answer": "Pacífico"
+  },
+  {
+    "question": "¿En qué ciudad se encuentra la famosa catedral de Notre Dame?",
+    "options": ["París", "Roma", "Londres", "Barcelona"],
+    "answer": "París"
+  },
+  {
+    "question": "¿Quién fue el primer presidente de Sudáfrica tras el apartheid?",
+    "options": ["Nelson Mandela", "Thabo Mbeki", "FW de Klerk", "Jacob Zuma"],
+    "answer": "Nelson Mandela"
+  },
+  {
+    "question": "¿Cuál es la capital de Finlandia?",
+    "options": ["Helsinki", "Estocolmo", "Oslo", "Copenhague"],
+    "answer": "Helsinki"
+  },
+  {
+    "question": "¿Qué gas es necesario para la fotosíntesis?",
+    "options": ["Dióxido de carbono", "Oxígeno", "Nitrógeno", "Hidrógeno"],
+    "answer": "Dióxido de carbono"
+  },
+  {
+    "question": "¿Qué civilización construyó Machu Picchu?",
+    "options": ["Inca", "Maya", "Azteca", "Tolteca"],
+    "answer": "Inca"
+  },
+
+
+
+  {
+    "question": "¿Cuál es la capital de Hungría?",
+    "options": ["Budapest", "Bucarest", "Viena", "Praga"],
+    "answer": "Budapest"
+  },
+  {
+    "question": "¿Quién pintó 'El jardín de las delicias'?",
+    "options": ["Hieronymus Bosch", "Pieter Bruegel", "Leonardo da Vinci", "Michelangelo"],
+    "answer": "Hieronymus Bosch"
+  },
+  {
+    "question": "¿Cuál es el metal más ligero?",
+    "options": ["Litio", "Aluminio", "Magnesio", "Titanio"],
+    "answer": "Litio"
+  },
+  {
+    "question": "¿En qué año comenzó la Revolución Francesa?",
+    "options": ["1789", "1776", "1804", "1799"],
+    "answer": "1789"
+  },
+  {
+    "question": "¿Qué país tiene la mayor extensión de desierto de arena continua?",
+    "options": ["Sahara en Argelia", "Arabia Saudita", "Mongolia", "Australia"],
+    "answer": "Sahara en Argelia"
+  },
+  {
+    "question": "¿Quién fue el autor de '1984'?",
+    "options": ["George Orwell", "Aldous Huxley", "Ray Bradbury", "Philip K. Dick"],
+    "answer": "George Orwell"
+  },
+  {
+    "question": "¿Cuál es el planeta más grande del sistema solar?",
+    "options": ["Júpiter", "Saturno", "Neptuno", "Urano"],
+    "answer": "Júpiter"
+  },
+  {
+    "question": "¿Cuál es la lengua oficial de Etiopía?",
+    "options": ["Amárico", "Somalí", "Oromo", "Tigrinya"],
+    "answer": "Amárico"
+  },
+  {
+    "question": "¿Quién descubrió la penicilina?",
+    "options": ["Alexander Fleming", "Louis Pasteur", "Robert Koch", "Marie Curie"],
+    "answer": "Alexander Fleming"
+  },
+  {
+    "question": "¿Cuál es el país más poblado de África?",
+    "options": ["Nigeria", "Etiopía", "Egipto", "Sudáfrica"],
+    "answer": "Nigeria"
+  },
+  {
+    "question": "¿Qué evento histórico ocurrió en 1066?",
+    "options": ["Batalla de Hastings", "Revolución Norman", "Coronación de Guillermo", "Invención de la imprenta"],
+    "answer": "Batalla de Hastings"
+  },
+  {
+    "question": "¿Cuál es la capital de Nueva Zelanda?",
+    "options": ["Wellington", "Auckland", "Christchurch", "Hamilton"],
+    "answer": "Wellington"
+  },
+  {
+    "question": "¿Qué órgano del cuerpo produce insulina?",
+    "options": ["Páncreas", "Hígado", "Riñón", "Bazo"],
+    "answer": "Páncreas"
+  },
+  {
+    "question": "¿Qué civilización construyó la ciudad de Petra?",
+    "options": ["Nabateos", "Romanos", "Fenicios", "Griegos"],
+    "answer": "Nabateos"
+  },
+  {
+    "question": "¿Qué autor escribió 'El retrato de Dorian Gray'?",
+    "options": ["Oscar Wilde", "Bram Stoker", "Mary Shelley", "Edgar Allan Poe"],
+    "answer": "Oscar Wilde"
+  },
+  {
+    "question": "¿Cuál es el lago más profundo del mundo?",
+    "options": ["Baikal", "Tanganyika", "Victoria", "Superior"],
+    "answer": "Baikal"
+  },
+  {
+    "question": "¿Qué país tiene la mayor cantidad de volcanes activos?",
+    "options": ["Indonesia", "Japón", "Chile", "México"],
+    "answer": "Indonesia"
+  },
+  {
+    "question": "¿Qué instrumento mide la presión atmosférica?",
+    "options": ["Barómetro", "Termómetro", "Higrómetro", "Altímetro"],
+    "answer": "Barómetro"
+  },
+  {
+    "question": "¿Quién compuso 'La flauta mágica'?",
+    "options": ["Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Johann Sebastian Bach", "Franz Schubert"],
+    "answer": "Wolfgang Amadeus Mozart"
+  },
+  {
+    "question": "¿En qué país se encuentra la ciudad de Fez?",
+    "options": ["Marruecos", "Túnez", "Argelia", "Egipto"],
+    "answer": "Marruecos"
+  },
+  {
+    "question": "¿Cuál es la capital de Croacia?",
+    "options": ["Zagreb", "Split", "Dubrovnik", "Rijeka"],
+    "answer": "Zagreb"
+  },
+  {
+    "question": "¿Quién formuló las leyes del movimiento?",
+    "options": ["Isaac Newton", "Galileo Galilei", "Johannes Kepler", "Albert Einstein"],
+    "answer": "Isaac Newton"
+  },
+  {
+    "question": "¿Qué país sudamericano tiene la mayor producción de cobre?",
+    "options": ["Chile", "Perú", "Brasil", "Argentina"],
+    "answer": "Chile"
+  },
+  {
+    "question": "¿Cuál es la capital de Lituania?",
+    "options": ["Vilna", "Riga", "Tallin", "Varsovia"],
+    "answer": "Vilna"
+  },
+  {
+    "question": "¿Qué pintor es conocido por su etapa azul y rosa?",
+    "options": ["Pablo Picasso", "Salvador Dalí", "Claude Monet", "Henri Matisse"],
+    "answer": "Pablo Picasso"
+  },
+  {
+    "question": "¿Qué país tiene el mayor número de patrimonios UNESCO?",
+    "options": ["Italia", "China", "España", "Francia"],
+    "answer": "Italia"
+  },
+  {
+    "question": "¿Qué científico descubrió la ley de la gravedad?",
+    "options": ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Niels Bohr"],
+    "answer": "Isaac Newton"
+  },
+  {
+    "question": "¿Qué país de Oceanía no tiene ejército permanente?",
+    "options": ["Nueva Zelanda", "Australia", "Fiyi", "Papúa Nueva Guinea"],
+    "answer": "Nueva Zelanda"
+  },
+  {
+    "question": "¿Cuál es la capital de Kazajistán?",
+    "options": ["Nursultán", "Almatý", "Taskent", "Bishkek"],
+    "answer": "Nursultán"
+  },
+  {
+    "question": "¿Qué elemento tiene el número atómico 79?",
+    "options": ["Oro", "Plata", "Cobre", "Platino"],
+    "answer": "Oro"
+  },
+  {
+    "question": "¿Cuál es el desierto más grande de Asia?",
+    "options": ["Gobi", "Karakum", "Thar", "Taklamakan"],
+    "answer": "Gobi"
+  },
+  {
+    "question": "¿En qué país se encuentra el valle de los Reyes?",
+    "options": ["Egipto", "Sudán", "Israel", "Jordania"],
+    "answer": "Egipto"
+  },
+  {
+    "question": "¿Qué instrumento mide la intensidad del terremoto?",
+    "options": ["Sismógrafo", "Barómetro", "Higrómetro", "Acelerómetro"],
+    "answer": "Sismógrafo"
+  },
+  {
+    "question": "¿Quién fue el primer emperador romano?",
+    "options": ["Augusto", "Julio César", "Nerón", "Trajano"],
+    "answer": "Augusto"
+  },
+  {
+    "question": "¿Cuál es la capital de Kazajistán?",
+    "options": ["Nursultán", "Almatý", "Astana", "Bishkek"],
+    "answer": "Nursultán"
+  },
+  {
+    "question": "¿Cuál es la moneda oficial de Suiza?",
+    "options": ["Franco suizo", "Euro", "Dólar", "Libra"],
+    "answer": "Franco suizo"
+  },
+  {
+    "question": "¿Quién escribió 'El nombre de la rosa'?",
+    "options": ["Umberto Eco", "Gabriel García Márquez", "Jorge Luis Borges", "Dan Brown"],
+    "answer": "Umberto Eco"
+  },
+  {
+    "question": "¿Qué país tiene forma de bota?",
+    "options": ["Italia", "España", "Grecia", "Portugal"],
+    "answer": "Italia"
+  },
+  {
+    "question": "¿Cuál es la capital de Mongolia?",
+    "options": ["Ulán Bator", "Astana", "Tashkent", "Bishkek"],
+    "answer": "Ulán Bator"
+  },
+  {
+    "question": "¿Qué país es famoso por los fjords?",
+    "options": ["Noruega", "Suecia", "Finlandia", "Islandia"],
+    "answer": "Noruega"
+  },
+  {
+    "question": "¿Qué órgano produce bilis?",
+    "options": ["Hígado", "Páncreas", "Estómago", "Intestino delgado"],
+    "answer": "Hígado"
+  },
+  {
+    "question": "¿Qué pintor holandés cortó su propia oreja?",
+    "options": ["Vincent van Gogh", "Rembrandt", "Vermeer", "Mondrian"],
+    "answer": "Vincent van Gogh"
+  },
+  {
+    "question": "¿Cuál es la capital de Myanmar?",
+    "options": ["Naipyidó", "Yangon", "Mandalay", "Rangún"],
+    "answer": "Naipyidó"
+  },
+  {
+    "question": "¿Qué país sudamericano tiene la mayor biodiversidad?",
+    "options": ["Brasil", "Colombia", "Perú", "Ecuador"],
+    "answer": "Brasil"
+  },
+  {
+    "question": "¿Cuál es el segundo planeta más grande del sistema solar?",
+    "options": ["Saturno", "Júpiter", "Urano", "Neptuno"],
+    "answer": "Saturno"
+  },
+  {
+    "question": "¿Qué científico desarrolló la tabla periódica moderna?",
+    "options": ["Dmitri Mendeléyev", "Albert Einstein", "Marie Curie", "Linus Pauling"],
+    "answer": "Dmitri Mendeléyev"
+  },
+  {
+    "question": "¿Cuál es la capital de Bulgaria?",
+    "options": ["Sofía", "Bucarest", "Belgrado", "Skopie"],
+    "answer": "Sofía"
+  },
+  {
+    "question": "¿Qué isla es la más grande del Mediterráneo?",
+    "options": ["Sicilia", "Cerdeña", "Chipre", "Creta"],
+    "answer": "Sicilia"
+  },
+  {
+    "question": "¿Qué país tiene forma de triángulo invertido en Sudamérica?",
+    "options": ["Chile", "Argentina", "Perú", "Bolivia"],
+    "answer": "Chile"
+  },
+  {
+    "question": "¿Qué científico propuso la teoría heliocéntrica?",
+    "options": ["Nicolás Copérnico", "Galileo Galilei", "Tycho Brahe", "Kepler"],
+    "answer": "Nicolás Copérnico"
+  },
+  {
+    "question": "¿Cuál es la capital de Azerbaiyán?",
+    "options": ["Bakú", "Tiflis", "Ereván", "Dushambe"],
+    "answer": "Bakú"
+  },
+  {
+    "question": "¿Qué país africano fue colonizado por Bélgica?",
+    "options": ["República Democrática del Congo", "Sudáfrica", "Nigeria", "Kenia"],
+    "answer": "República Democrática del Congo"
+  },
+  {
+    "question": "¿Cuál es la capital de Uzbekistán?",
+    "options": ["Taskent", "Samarcanda", "Bujara", "Almatý"],
+    "answer": "Taskent"
+  },
+  {
+    "question": "¿Qué famoso matemático griego fue mentor de Alejandro Magno?",
+    "options": ["Aristóteles", "Pitágoras", "Euclides", "Tales"],
+    "answer": "Aristóteles"
+  },
+  {
+    "question": "¿Cuál es la capital de Letonia?",
+    "options": ["Riga", "Tallin", "Vilna", "Helsinki"],
+    "answer": "Riga"
+  },
+  {
+    "question": "¿Qué país tiene la mayor producción de café del mundo?",
+    "options": ["Brasil", "Colombia", "Vietnam", "Etiopía"],
+    "answer": "Brasil"
+  },
+  {
+    "question": "¿Qué país europeo tiene forma de reloj de arena?",
+    "options": ["Eslovaquia", "Eslovenia", "República Checa", "Hungría"],
+    "answer": "Eslovaquia"
+  },
+  {
+    "question": "¿Cuál es la capital de Yemen?",
+    "options": ["Saná", "Aden", "Taiz", "Al Hudaydah"],
+    "answer": "Saná"
+  },
+  {
+    "question": "¿Qué científico formuló la ley de la gravitación universal?",
+    "options": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Johannes Kepler"],
+    "answer": "Isaac Newton"
+  },
+  {
+    "question": "¿Cuál es la capital de Camboya?",
+    "options": ["Nom Pen", "Siem Reap", "Battambang", "Phnom Penh"],
+    "answer": "Nom Pen"
+  },
+  {
+    "question": "¿Qué país es conocido por su arquitectura Gaudí?",
+    "options": ["España", "Italia", "Francia", "Portugal"],
+    "answer": "España"
+  },
+  {
+    "question": "¿Cuál es la capital de Sri Lanka?",
+    "options": ["Sri Jayawardenepura Kotte", "Colombo", "Kandy", "Galle"],
+    "answer": "Sri Jayawardenepura Kotte"
+  },
+  {
+    "question": "¿Qué país es conocido por sus templos de Angkor?",
+    "options": ["Camboya", "Tailandia", "Vietnam", "Laos"],
+    "answer": "Camboya"
+  },
+  {
+    "question": "¿Qué país es famoso por la aurora boreal y los fiordos?",
+    "options": ["Noruega", "Suecia", "Finlandia", "Islandia"],
+    "answer": "Noruega"
+  },
+
+
+  {
+    "question": "¿Quién dirigió 'Ciudadano Kane'?",
+    "options": ["Orson Welles", "Alfred Hitchcock", "Frank Capra", "John Ford"],
+    "answer": "Orson Welles"
+  },
+  {
+    "question": "¿En qué año se estrenó 'Casablanca'?",
+    "options": ["1942", "1939", "1945", "1950"],
+    "answer": "1942"
+  },
+  {
+    "question": "¿Qué película ganó el Oscar a Mejor Película en 1994?",
+    "options": ["Forrest Gump", "Pulp Fiction", "The Shawshank Redemption", "Quiz Show"],
+    "answer": "Forrest Gump"
+  },
+  {
+    "question": "¿Quién interpretó a Jack Sparrow en 'Piratas del Caribe'?",
+    "options": ["Johnny Depp", "Orlando Bloom", "Geoffrey Rush", "Leonardo DiCaprio"],
+    "answer": "Johnny Depp"
+  },
+  {
+    "question": "¿Qué director es conocido por el estilo 'slasher' en los años 70 y 80?",
+    "options": ["John Carpenter", "Stanley Kubrick", "Steven Spielberg", "Ridley Scott"],
+    "answer": "John Carpenter"
+  },
+  {
+    "question": "¿Cuál fue la primera película sonora de la historia?",
+    "options": ["El cantor de jazz", "Metrópolis", "Nosferatu", "King Kong"],
+    "answer": "El cantor de jazz"
+  },
+  {
+    "question": "¿Qué película popularizó la frase 'I'll be back'?",
+    "options": ["Terminator", "RoboCop", "Predator", "Commando"],
+    "answer": "Terminator"
+  },
+  {
+    "question": "¿Qué director creó la saga 'El Padrino'?",
+    "options": ["Francis Ford Coppola", "Martin Scorsese", "Brian De Palma", "George Lucas"],
+    "answer": "Francis Ford Coppola"
+  },
+  {
+    "question": "¿Qué actriz protagonizó 'Breakfast at Tiffany's'?",
+    "options": ["Audrey Hepburn", "Marilyn Monroe", "Elizabeth Taylor", "Grace Kelly"],
+    "answer": "Audrey Hepburn"
+  },
+  {
+    "question": "¿En qué país se originó el cine de animación 'anime'?",
+    "options": ["Japón", "China", "Corea del Sur", "Estados Unidos"],
+    "answer": "Japón"
+  },
+  {
+    "question": "¿Quién compuso la música de 'Star Wars'?",
+    "options": ["John Williams", "Hans Zimmer", "Ennio Morricone", "Danny Elfman"],
+    "answer": "John Williams"
+  },
+  {
+    "question": "¿Qué película ganó el Oscar a Mejor Director en 2010?",
+    "options": ["The Hurt Locker", "Avatar", "Inglourious Basterds", "The Blind Side"],
+    "answer": "The Hurt Locker"
+  },
+  {
+    "question": "¿Qué actor protagonizó 'Gladiator'?",
+    "options": ["Russell Crowe", "Joaquin Phoenix", "Tom Hanks", "Brad Pitt"],
+    "answer": "Russell Crowe"
+  },
+  {
+    "question": "¿Qué película es considerada la primera película de terror moderna?",
+    "options": ["Drácula (1931)", "Frankenstein (1931)", "Nosferatu (1922)", "El gabinete del doctor Caligari (1920)"],
+    "answer": "Nosferatu (1922)"
+  },
+  {
+    "question": "¿Qué director es famoso por las películas de suspenso como 'Psicosis'?",
+    "options": ["Alfred Hitchcock", "Stanley Kubrick", "David Fincher", "Brian De Palma"],
+    "answer": "Alfred Hitchcock"
+  },
+  {
+    "question": "¿Quién interpretó a Forrest Gump?",
+    "options": ["Tom Hanks", "Robin Wright", "Gary Sinise", "Sally Field"],
+    "answer": "Tom Hanks"
+  },
+  {
+    "question": "¿Qué película de 1997 rompió récords de taquilla y fue dirigida por James Cameron?",
+    "options": ["Titanic", "Avatar", "The Abyss", "True Lies"],
+    "answer": "Titanic"
+  },
+  {
+    "question": "¿Qué director es conocido por películas de ciencia ficción como 'Blade Runner'?",
+    "options": ["Ridley Scott", "James Cameron", "Steven Spielberg", "George Lucas"],
+    "answer": "Ridley Scott"
+  },
+  {
+    "question": "¿Qué película de animación de Pixar ganó el Oscar a Mejor Película Animada en 2003?",
+    "options": ["Buscando a Nemo", "Los Increíbles", "Monsters, Inc.", "Toy Story 2"],
+    "answer": "Buscando a Nemo"
+  },
+  {
+    "question": "¿Quién interpretó a Joker en 'The Dark Knight'?",
+    "options": ["Heath Ledger", "Joaquin Phoenix", "Jack Nicholson", "Jared Leto"],
+    "answer": "Heath Ledger"
+  },
+  {
+    "question": "¿Qué película de 1977 lanzó la saga 'Star Wars'?",
+    "options": ["Star Wars: Una nueva esperanza", "El imperio contraataca", "El retorno del Jedi", "La amenaza fantasma"],
+    "answer": "Star Wars: Una nueva esperanza"
+  },
+  {
+    "question": "¿Qué director dirigió 'La naranja mecánica'?",
+    "options": ["Stanley Kubrick", "Alfred Hitchcock", "Francis Ford Coppola", "Orson Welles"],
+    "answer": "Stanley Kubrick"
+  },
+  {
+    "question": "¿Qué actor interpretó a Indiana Jones?",
+    "options": ["Harrison Ford", "Sean Connery", "Tom Selleck", "Mark Hamill"],
+    "answer": "Harrison Ford"
+  },
+  {
+    "question": "¿Qué película ganó el Oscar a Mejor Película en 1999?",
+    "options": ["American Beauty", "The Matrix", "The Sixth Sense", "Fight Club"],
+    "answer": "American Beauty"
+  },
+  {
+    "question": "¿Qué película de 1980 popularizó la frase 'Here's Johnny!'?",
+    "options": ["The Shining", "Carrie", "Halloween", "Alien"],
+    "answer": "The Shining"
+  },
+  {
+    "question": "¿Qué actor protagonizó 'El Padrino' como Michael Corleone?",
+    "options": ["Al Pacino", "Marlon Brando", "Robert De Niro", "James Caan"],
+    "answer": "Al Pacino"
+  },
+  {
+    "question": "¿Qué película animada de Disney estrenada en 1994 se ambienta en África?",
+    "options": ["El Rey León", "Pocahontas", "Aladdín", "Hércules"],
+    "answer": "El Rey León"
+  },
+  {
+    "question": "¿Quién dirigió 'E.T., el extraterrestre'?",
+    "options": ["Steven Spielberg", "George Lucas", "Robert Zemeckis", "John Hughes"],
+    "answer": "Steven Spielberg"
+  },
+  {
+    "question": "¿Qué película de Quentin Tarantino ganó la Palma de Oro en Cannes?",
+    "options": ["Pulp Fiction", "Kill Bill", "Reservoir Dogs", "Django Unchained"],
+    "answer": "Pulp Fiction"
+  },
+  {
+    "question": "¿Quién interpretó a Hannibal Lecter en 'El silencio de los inocentes'?",
+    "options": ["Anthony Hopkins", "Jodie Foster", "Gary Oldman", "Tommy Lee Jones"],
+    "answer": "Anthony Hopkins"
+  },
+  {
+    "question": "¿Qué película de 2008 sobre superhéroes fue dirigida por Christopher Nolan?",
+    "options": ["The Dark Knight", "Iron Man", "Spider-Man", "Batman Begins"],
+    "answer": "The Dark Knight"
+  },
+  {
+    "question": "¿Qué actriz protagonizó 'Titanic' junto a Leonardo DiCaprio?",
+    "options": ["Kate Winslet", "Gloria Stuart", "Helena Bonham Carter", "Frances Fisher"],
+    "answer": "Kate Winslet"
+  },
+  {
+    "question": "¿Qué película de 1999 fue protagonizada por Keanu Reeves y Laurence Fishburne?",
+    "options": ["The Matrix", "Fight Club", "The Sixth Sense", "American Beauty"],
+    "answer": "The Matrix"
+  },
+  {
+    "question": "¿Qué director creó la saga de 'Jurassic Park'?",
+    "options": ["Steven Spielberg", "James Cameron", "Peter Jackson", "Ridley Scott"],
+    "answer": "Steven Spielberg"
+  },
+  {
+    "question": "¿Qué película de animación de 2009 cuenta la historia de un robot llamado WALL-E?",
+    "options": ["WALL-E", "Up", "Ratatouille", "Bolt"],
+    "answer": "WALL-E"
+  },
+  {
+    "question": "¿Qué actor protagonizó 'Fight Club'?",
+    "options": ["Brad Pitt", "Edward Norton", "Helena Bonham Carter", "Jared Leto"],
+    "answer": "Brad Pitt"
+  },
+  {
+    "question": "¿Qué película de terror de 1978 popularizó la figura de Michael Myers?",
+    "options": ["Halloween", "Pesadilla en Elm Street", "Viernes 13", "El exorcista"],
+    "answer": "Halloween"
+  },
+  {
+    "question": "¿Qué director es conocido por películas de ciencia ficción como 'Alien' y 'Gladiator'?",
+    "options": ["Ridley Scott", "James Cameron", "Steven Spielberg", "George Lucas"],
+    "answer": "Ridley Scott"
+  },
+  {
+    "question": "¿Qué actriz protagonizó 'Pretty Woman' junto a Richard Gere?",
+    "options": ["Julia Roberts", "Meg Ryan", "Sandra Bullock", "Demi Moore"],
+    "answer": "Julia Roberts"
+  },
+  {
+    "question": "¿Qué película francesa de 2001 ganó el Oscar a Mejor Película Extranjera?",
+    "options": ["Amélie", "La vida de los otros", "El pianista", "The Artist"],
+    "answer": "Amélie"
+  },
+  {
+    "question": "¿Qué película ganó el Oscar a Mejor Película en 2020?",
+    "options": ["Parasite", "1917", "Joker", "Ford v Ferrari"],
+    "answer": "Parasite"
+  },
+  {
+    "question": "¿Qué director dirigió la trilogía de 'El Señor de los Anillos'?",
+    "options": ["Peter Jackson", "Steven Spielberg", "James Cameron", "George Lucas"],
+    "answer": "Peter Jackson"
+  },
+  {
+    "question": "¿Qué actriz interpretó a Katniss Everdeen en 'Los Juegos del Hambre'?",
+    "options": ["Jennifer Lawrence", "Emma Watson", "Shailene Woodley", "Kristen Stewart"],
+    "answer": "Jennifer Lawrence"
+  },
+
+
+  {
+    "question": "¿En qué año se lanzó el primer juego de la saga 'The Legend of Zelda'?",
+    "options": ["1986", "1984", "1989", "1990"],
+    "answer": "1986"
+  },
+  {
+    "question": "¿Cuál es el personaje principal de la saga 'Halo'?",
+    "options": ["Master Chief", "Marcus Fenix", "Link", "Mario"],
+    "answer": "Master Chief"
+  },
+  {
+    "question": "¿Qué videojuego popular fue creado por Mojang y lanzado en 2011 oficialmente?",
+    "options": ["Minecraft", "Terraria", "Roblox", "Fortnite"],
+    "answer": "Minecraft"
+  },
+  {
+    "question": "¿Cuál es la consola más vendida de todos los tiempos?",
+    "options": ["PlayStation 2", "Nintendo DS", "Xbox 360", "Game Boy"],
+    "answer": "PlayStation 2"
+  },
+  {
+    "question": "¿En qué juego aparece el personaje 'Lara Croft'?",
+    "options": ["Tomb Raider", "Uncharted", "Assassin's Creed", "Prince of Persia"],
+    "answer": "Tomb Raider"
+  },
+  {
+    "question": "¿Qué franquicia es conocida por los personajes Mario y Luigi?",
+    "options": ["Super Mario", "Sonic the Hedgehog", "Donkey Kong", "Mega Man"],
+    "answer": "Super Mario"
+  },
+  {
+    "question": "¿Cuál es el género principal del juego 'League of Legends'?",
+    "options": ["MOBA", "FPS", "RPG", "Plataformas"],
+    "answer": "MOBA"
+  },
+  {
+    "question": "¿Qué videojuego es famoso por el modo 'Battle Royale' y se lanzó en 2017?",
+    "options": ["Fortnite", "PUBG", "Apex Legends", "Call of Duty: Warzone"],
+    "answer": "Fortnite"
+  },
+  {
+    "question": "¿Quién es el creador de 'Metal Gear'?",
+    "options": ["Hideo Kojima", "Shigeru Miyamoto", "Gabe Newell", "Yu Suzuki"],
+    "answer": "Hideo Kojima"
+  },
+  {
+    "question": "¿En qué consola se lanzó por primera vez 'Super Mario 64'?",
+    "options": ["Nintendo 64", "SNES", "GameCube", "Wii"],
+    "answer": "Nintendo 64"
+  },
+  {
+    "question": "¿Qué juego de disparos en primera persona es famoso por los mapas competitivos y tácticos?",
+    "options": ["Counter-Strike", "Overwatch", "Call of Duty", "Halo"],
+    "answer": "Counter-Strike"
+  },
+  {
+    "question": "¿Cuál es el protagonista de la saga 'God of War'?",
+    "options": ["Kratos", "Atreus", "Zeus", "Hercules"],
+    "answer": "Kratos"
+  },
+  {
+    "question": "¿Qué videojuego popular tiene personajes como Pikachu, Bulbasaur y Charizard?",
+    "options": ["Pokémon", "Digimon", "Yu-Gi-Oh", "Monster Hunter"],
+    "answer": "Pokémon"
+  },
+  {
+    "question": "¿Cuál es el juego de lucha más famoso de Nintendo con personajes de varias franquicias?",
+    "options": ["Super Smash Bros.", "Tekken", "Street Fighter", "Mortal Kombat"],
+    "answer": "Super Smash Bros."
+  },
+  {
+    "question": "¿Qué juego de mundo abierto permite construir y explorar libremente con cubos?",
+    "options": ["Minecraft", "Roblox", "Terraria", "Fortnite"],
+    "answer": "Minecraft"
+  },
+  {
+    "question": "¿Cuál es la saga de videojuegos protagonizada por un erizo azul llamado Sonic?",
+    "options": ["Sonic the Hedgehog", "Mega Man", "Kirby", "Donkey Kong"],
+    "answer": "Sonic the Hedgehog"
+  },
+  {
+    "question": "¿Qué juego de la saga 'Resident Evil' introdujo por primera vez a Leon Kennedy?",
+    "options": ["Resident Evil 2", "Resident Evil 3", "Resident Evil 4", "Resident Evil 1"],
+    "answer": "Resident Evil 2"
+  },
+  {
+    "question": "¿Cuál es el objetivo principal en el juego 'Among Us'?",
+    "options": ["Descubrir al impostor", "Construir bases", "Recoger monedas", "Vencer jefes finales"],
+    "answer": "Descubrir al impostor"
+  },
+  {
+    "question": "¿Qué juego de disparos y estrategia se desarrolla en un futuro distópico con clases de personajes?",
+    "options": ["Overwatch", "Team Fortress 2", "Valorant", "Paladins"],
+    "answer": "Overwatch"
+  },
+  {
+    "question": "¿Qué saga de videojuegos de rol japonés tiene personajes como Cloud Strife y Sephiroth?",
+    "options": ["Final Fantasy", "Dragon Quest", "Persona", "Tales of"],
+    "answer": "Final Fantasy"
+  },
+
+
+  {
+    "question": "¿Quién es conocido como 'El Rey del Pop'?",
+    "options": ["Michael Jackson", "Prince", "Elvis Presley", "Freddie Mercury"],
+    "answer": "Michael Jackson"
+  },
+  {
+    "question": "¿Qué banda británica lanzó el álbum 'Abbey Road'?",
+    "options": ["The Beatles", "The Rolling Stones", "Queen", "Pink Floyd"],
+    "answer": "The Beatles"
+  },
+  {
+    "question": "¿Cuál es el nombre real de Lady Gaga?",
+    "options": ["Stefani Germanotta", "Robyn Fenty", "Adele Laurie", "Kesha Rose"],
+    "answer": "Stefani Germanotta"
+  },
+  {
+    "question": "¿Qué grupo es famoso por canciones como 'Bohemian Rhapsody' y 'We Will Rock You'?",
+    "options": ["Queen", "Led Zeppelin", "The Who", "AC/DC"],
+    "answer": "Queen"
+  },
+  {
+    "question": "¿Qué cantante lanzó la canción 'Rolling in the Deep'?",
+    "options": ["Adele", "Beyoncé", "Taylor Swift", "Rihanna"],
+    "answer": "Adele"
+  },
+  {
+    "question": "¿Cuál es el grupo musical de los hermanos Gallagher?",
+    "options": ["Oasis", "Blur", "The Smiths", "Radiohead"],
+    "answer": "Oasis"
+  },
+  {
+    "question": "¿Qué cantante es conocida como 'La Reina del Pop Latino'?",
+    "options": ["Shakira", "Jennifer Lopez", "Gloria Estefan", "Paulina Rubio"],
+    "answer": "Shakira"
+  },
+  {
+    "question": "¿Qué banda lanzó el álbum 'Dark Side of the Moon' en 1973?",
+    "options": ["Pink Floyd", "The Doors", "Led Zeppelin", "Yes"],
+    "answer": "Pink Floyd"
+  },
+  {
+    "question": "¿Qué rapero es conocido por el álbum 'The Marshall Mathers LP'?",
+    "options": ["Eminem", "Jay-Z", "Kanye West", "Dr. Dre"],
+    "answer": "Eminem"
+  },
+  {
+    "question": "¿Qué cantante lanzó la canción 'Shape of You'?",
+    "options": ["Ed Sheeran", "Justin Bieber", "Shawn Mendes", "Bruno Mars"],
+    "answer": "Ed Sheeran"
+  },
+  {
+    "question": "¿Qué grupo de rock estadounidense lanzó 'Hotel California'?",
+    "options": ["Eagles", "Fleetwood Mac", "Aerosmith", "The Doors"],
+    "answer": "Eagles"
+  },
+  {
+    "question": "¿Qué cantante lanzó el álbum '1989'?",
+    "options": ["Taylor Swift", "Katy Perry", "Ariana Grande", "Dua Lipa"],
+    "answer": "Taylor Swift"
+  },
+  {
+    "question": "¿Qué banda de grunge surgió en Seattle y lanzó 'Smells Like Teen Spirit'?",
+    "options": ["Nirvana", "Pearl Jam", "Soundgarden", "Alice in Chains"],
+    "answer": "Nirvana"
+  },
+  {
+    "question": "¿Qué cantante es conocida como 'La Voz' y lanzó 'Rolling in the Deep'?",
+    "options": ["Adele", "Celine Dion", "Whitney Houston", "Beyoncé"],
+    "answer": "Adele"
+  },
+  {
+    "question": "¿Qué banda lanzó la canción 'Stairway to Heaven'?",
+    "options": ["Led Zeppelin", "The Rolling Stones", "Pink Floyd", "Deep Purple"],
+    "answer": "Led Zeppelin"
+  },
+  {
+    "question": "¿Qué cantante tiene el récord de más premios Grammy ganados?",
+    "options": ["Beyoncé", "Quincy Jones", "Adele", "Stevie Wonder"],
+    "answer": "Beyoncé"
+  },
+  {
+    "question": "¿Qué artista lanzó la canción 'Blinding Lights'?",
+    "options": ["The Weeknd", "Bruno Mars", "Justin Timberlake", "Shawn Mendes"],
+    "answer": "The Weeknd"
+  },
+  {
+    "question": "¿Qué banda lanzó 'Sweet Child O’ Mine'?",
+    "options": ["Guns N' Roses", "Metallica", "AC/DC", "Bon Jovi"],
+    "answer": "Guns N' Roses"
+  },
+  {
+    "question": "¿Qué cantante lanzó la canción 'Havana'?",
+    "options": ["Camila Cabello", "Dua Lipa", "Selena Gomez", "Ariana Grande"],
+    "answer": "Camila Cabello"
+  },
+  {
+    "question": "¿Qué banda lanzó el álbum 'The Wall'?",
+    "options": ["Pink Floyd", "Genesis", "Yes", "King Crimson"],
+    "answer": "Pink Floyd"
+  }
+
+]

@@ -6,6 +6,7 @@ import '../../constants/app_colors.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/stopwatch_timer.dart';
 import '../../components/corrects_counter.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 class TabuWordPage extends StatefulWidget {
   final String title;
@@ -25,12 +26,17 @@ class _TabuWordPageState extends State<TabuWordPage>
   @override
   void initState() {
     super.initState();
+  }
+
+    @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _loadCards();
   }
 
   Future<void> _loadCards() async {
-    final String response =
-        await rootBundle.loadString('assets/data/tabu.json');
+    final locale = AppLocalizations.of(context)!.localeName;
+    final response = await rootBundle.loadString("assets/data/$locale/tabu.json");
     final List<dynamic> data = jsonDecode(response);
     setState(() {
       allCards = data.map((e) => Map<String, dynamic>.from(e)).toList();
@@ -58,6 +64,8 @@ class _TabuWordPageState extends State<TabuWordPage>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -101,10 +109,10 @@ class _TabuWordPageState extends State<TabuWordPage>
                           );
                         },
                         child: currentCard == null
-                            ? const Text(
-                                "Pulsa el botón para comenzar",
-                                key: ValueKey("empty"),
-                                style: TextStyle(
+                            ? Text(
+                                t.pressToStart,
+                                key: const ValueKey("empty"),
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.textDark,
@@ -138,9 +146,9 @@ class _TabuWordPageState extends State<TabuWordPage>
                                       textAlign: TextAlign.center,
                                     ),
                                     const SizedBox(height: 16),
-                                    const Text(
-                                      "Palabras prohibidas:",
-                                      style: TextStyle(
+                                    Text(
+                                      t.forbiddenWords,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -150,21 +158,28 @@ class _TabuWordPageState extends State<TabuWordPage>
                                       crossAxisCount: 2,
                                       shrinkWrap: true,
                                       mainAxisSpacing: 8,
-                                      crossAxisSpacing: 4, // menos espacio horizontal entre columnas
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      childAspectRatio: 3.5, // recuadros más uniformes y adaptables a palabras largas
-                                      children: (currentCard!["forbidden"] as List<dynamic>)
+                                      crossAxisSpacing: 4,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      childAspectRatio: 3.5,
+                                      children: (currentCard!["forbidden"]
+                                              as List<dynamic>)
                                           .map((word) => Container(
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                   color: Colors.red[100],
-                                                  borderRadius: BorderRadius.circular(16),
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
                                                 ),
-                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 4),
                                                 child: Text(
                                                   word.toString(),
                                                   textAlign: TextAlign.center,
-                                                  style: const TextStyle(fontSize: 14),
+                                                  style: const TextStyle(
+                                                      fontSize: 14),
                                                 ),
                                               ))
                                           .toList(),
@@ -186,9 +201,9 @@ class _TabuWordPageState extends State<TabuWordPage>
                           horizontal: 32,
                         ),
                       ),
-                      child: const Text(
-                        "Empezar",
-                        style: TextStyle(fontSize: 18),
+                      child: Text(
+                        t.start,
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                   ] else ...[
@@ -205,8 +220,8 @@ class _TabuWordPageState extends State<TabuWordPage>
                               horizontal: 24,
                             ),
                           ),
-                          child: const Text("Descartar",
-                              style: TextStyle(fontSize: 16)),
+                          child: Text(t.discard,
+                              style: const TextStyle(fontSize: 16)),
                         ),
                         ElevatedButton(
                           onPressed: () => _pickCard(increment: true),
@@ -218,8 +233,8 @@ class _TabuWordPageState extends State<TabuWordPage>
                               horizontal: 24,
                             ),
                           ),
-                          child: const Text("Acierto",
-                              style: TextStyle(fontSize: 16)),
+                          child: Text(t.correct,
+                              style: const TextStyle(fontSize: 16)),
                         ),
                       ],
                     ),
@@ -234,19 +249,20 @@ class _TabuWordPageState extends State<TabuWordPage>
   }
 
   void _showInfo(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => GameInfoDialog(
-        title: "Cómo jugar a Palabra tabú",
+        title: t.howToPlayTabu,
         instructions: [
-          "Pulsa el botón 'Empezar' para obtener una palabra.",
-          "Se mostrará en pantalla una palabra principal junto con una lista de palabras prohibidas.",
-          "El jugador debe describir la palabra principal sin mencionar ninguna de las prohibidas.",
-          "El resto del grupo debe intentar adivinar de qué palabra se trata.",
-          "Si el jugador dice una palabra prohibida, pierde el turno.",
+          t.tabuInstruction1,
+          t.tabuInstruction2,
+          t.tabuInstruction3,
+          t.tabuInstruction4,
+          t.tabuInstruction5,
         ],
-        example:
-            "Ejemplo: Si aparece la palabra 'Perro' y las prohibidas son 'Animal', 'Ladrar', 'Mascota' y 'Gato', deberás describirlo diciendo algo como 'un ser vivo que suele acompañar a las personas en casa'.",
+        example: t.tabuExample,
         imageAsset: null,
       ),
     );

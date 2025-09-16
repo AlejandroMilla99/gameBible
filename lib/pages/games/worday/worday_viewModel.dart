@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import '../../../components/dialogs/custom_snackbar.dart';
 import '../../../components/dialogs/general_dialog.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 enum LetterState { unused, correct, misplaced, notInWord, fullyCorrect }
 
@@ -12,11 +13,11 @@ class WordayViewModel extends ChangeNotifier {
   static const int maxAttempts = 6;
   static const int wordLength = 5;
 
-  List<String> _dictionary = []; // palabras originales con tildes
-  List<String> _dictionaryNormalized = []; // mismas palabras sin tildes
+  List<String> _dictionary = [];
+  List<String> _dictionaryNormalized = [];
 
-  late String _targetWord; // palabra con tildes (para mostrar al usuario)
-  late String _targetWordNormalized; // versión sin tildes (para lógica)
+  late String _targetWord;
+  late String _targetWordNormalized;
   int _currentAttempt = 0;
   List<List<String>> _guesses = List.generate(maxAttempts, (_) => []);
   List<List<Color>> _colors =
@@ -30,11 +31,9 @@ class WordayViewModel extends ChangeNotifier {
   final ConfettiController confettiController =
       ConfettiController(duration: const Duration(seconds: 2));
 
-  WordayViewModel() {
-    _loadDictionary().then((_) => _pickRandomWord());
-  }
+  WordayViewModel();
 
-  /// Quita tildes de una palabra
+  /// Normaliza palabra quitando tildes
   String _normalizeWord(String word) {
     const withAccents = 'áéíóúÁÉÍÓÚüÜ';
     const withoutAccents = 'aeiouAEIOUuU';
@@ -45,18 +44,21 @@ class WordayViewModel extends ChangeNotifier {
     return result;
   }
 
-  /// Cargar palabras válidas desde assets/data/words.json
-  Future<void> _loadDictionary() async {
+  /// Carga el diccionario según el locale actual
+  Future<void> loadDictionary(BuildContext context) async {
+    final locale = AppLocalizations.of(context)!.localeName;
     final String response =
-        await rootBundle.loadString('assets/data/words.json');
+        await rootBundle.loadString('assets/data/$locale/words.json');
     final List<dynamic> data = json.decode(response);
     _dictionary = data.cast<String>();
     _dictionaryNormalized =
         _dictionary.map((w) => _normalizeWord(w)).toList();
+    _pickRandomWord();
+    notifyListeners();
   }
 
   void _pickRandomWord() {
-    if (_dictionary.isEmpty) return; // por si no ha cargado aún
+    if (_dictionary.isEmpty) return;
     final random = Random();
     _targetWord = _dictionary[random.nextInt(_dictionary.length)];
     _targetWordNormalized = _normalizeWord(_targetWord);
@@ -69,14 +71,12 @@ class WordayViewModel extends ChangeNotifier {
   bool get gameOver => _gameOver;
   bool get won => _won;
 
-  /// Devuelve el estado de una letra en el teclado
   LetterState letterStatus(String letter) {
     return letterStates[letter] ?? LetterState.unused;
   }
 
-  /// Indica si un botón debe estar deshabilitado
   bool isButtonDisabled(String letter) {
-    if (_gameOver) return true; // deshabilitar todo si terminó
+    if (_gameOver) return true;
     final state = letterStates[letter];
     return state == LetterState.notInWord || state == LetterState.fullyCorrect;
   }
@@ -97,34 +97,32 @@ class WordayViewModel extends ChangeNotifier {
     }
   }
 
-  /// Envía el guess y valida si es palabra existente
   void submitGuess(BuildContext context) {
     if (_gameOver) return;
     if (_guesses[_currentAttempt].length != wordLength) return;
 
+    final t = AppLocalizations.of(context)!;
+
     final guess = _guesses[_currentAttempt].join();
     final normalizedGuess = _normalizeWord(guess);
 
-    // 🔑 Nueva validación: palabra debe estar en diccionario (normalizado)
     if (!_dictionaryNormalized.contains(normalizedGuess)) {
       CustomSnackBar.show(
         context,
-        message: "Palabra inválida, haga otro intento",
+        message: t.invalidWord,
         type: SnackBarType.warning,
       );
-      return; // no avanza el intento
+      return;
     }
 
     final targetLetters = _targetWordNormalized.split('');
     final guessLetters = normalizedGuess.split('');
 
-    // Para manejar letras repetidas
     final Map<String, int> targetCounts = {};
     for (var c in targetLetters) {
       targetCounts[c] = (targetCounts[c] ?? 0) + 1;
     }
 
-    // Primera pasada -> verdes
     for (int i = 0; i < wordLength; i++) {
       final letter = guessLetters[i];
       if (_targetWordNormalized[i] == letter) {
@@ -134,7 +132,6 @@ class WordayViewModel extends ChangeNotifier {
       }
     }
 
-    // Segunda pasada -> naranjas y grises
     for (int i = 0; i < wordLength; i++) {
       final letter = guessLetters[i];
       if (_colors[_currentAttempt][i] == Colors.green) continue;
@@ -154,7 +151,6 @@ class WordayViewModel extends ChangeNotifier {
       }
     }
 
-    // Marcar fullyCorrect cuando ya no queden más instancias de esa letra en la palabra
     for (var entry in targetCounts.entries) {
       if (entry.value == 0 && letterStates[entry.key] == LetterState.correct) {
         letterStates[entry.key] = LetterState.fullyCorrect;
@@ -176,33 +172,33 @@ class WordayViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-/// Mostrar el diálogo de fin de juego
-void _showGameOver(BuildContext context) {
-  final validAttempts =
-      _guesses.take(_currentAttempt + 1).where((g) => g.length == wordLength);
+  void _showGameOver(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
 
-  GeneralDialogWidget.show(
-    context,
-    title: _won ? "🎉 ¡Has acertado! 🎉" : "😢 Fin del juego 😢",
-    description: _won
-        ? "¡Felicidades! La palabra era ${_targetWord.toUpperCase()}.\n Acertaste en ${validAttempts.length} intentos."
-        : "No acertaste la palabra.\nLa correcta era: ${_targetWord.toUpperCase()}",
-    actions: [
-      GeneralDialogAction(
-        label: "Jugar de nuevo",
-        onPressed: () {
-          Navigator.of(context).pop();
-          resetGame();
-        },
-      ),
-    ],
-    showConfetti: _won,
-    confettiController: confettiController,
-  );
+    final validAttempts =
+        _guesses.take(_currentAttempt + 1).where((g) => g.length == wordLength);
 
-  if (_won) confettiController.play();
-}
+    GeneralDialogWidget.show(
+      context,
+      title: _won ? t.winTitle : t.loseTitle,
+      description: _won
+          ? t.winDescription(_targetWord.toUpperCase(), validAttempts.length)
+          : t.loseDescription(_targetWord.toUpperCase()),
+      actions: [
+        GeneralDialogAction(
+          label: t.playAgain,
+          onPressed: () {
+            Navigator.of(context).pop();
+            resetGame();
+          },
+        ),
+      ],
+      showConfetti: _won,
+      confettiController: confettiController,
+    );
 
+    if (_won) confettiController.play();
+  }
 
   void resetGame() {
     _currentAttempt = 0;

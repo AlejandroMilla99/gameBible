@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 import '../constants/app_colors.dart';
 
 class CorrectCounter extends StatelessWidget {
@@ -13,6 +14,8 @@ class CorrectCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -32,9 +35,9 @@ class CorrectCounter extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
-            const Text(
-              'Aciertos: ',
-              style: TextStyle(
+            Text(
+              '${loc.correctAnswers}: ',
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textDark,
@@ -68,14 +71,13 @@ class CorrectCounter extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            // Botón de reset alineado
             Baseline(
               baseline: 20,
               baselineType: TextBaseline.alphabetic,
               child: IconButton(
                 onPressed: onReset,
                 icon: const Icon(Icons.refresh, color: AppColors.textDark),
-                tooltip: "Restablecer",
+                tooltip: loc.reset,
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),

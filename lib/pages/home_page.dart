@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 import '../components/layout/base_scaffold.dart';
 import 'games_page.dart';
 import 'favorites_page.dart';
@@ -9,11 +10,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
     return BaseScaffold(
-      titles: const [
-        "Juegos con Amigos",
-        "Favoritos",
-        "Perfil",
+      titles: [
+        loc.friendsGames,
+        loc.favorites,
+        loc.profile,
       ],
       pages: const [
         GamesPage(),
@@ -21,40 +24,32 @@ class HomePage extends StatelessWidget {
         ProfilePage(),
       ],
       actions: [
-        // 🔎 Acciones para GamesPage
         [
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              // TODO: Implement search
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Buscar juegos")),
+                SnackBar(content: Text(loc.searchGames)),
               );
             },
           ),
         ],
-
-        // ❤️ Acciones para FavoritesPage
         [
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              // TODO: Clear favorites
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Favoritos eliminados")),
+                SnackBar(content: Text(loc.favoritesCleared)),
               );
             },
           ),
         ],
-
-        // ⚙️ Acciones para ProfilePage
         [
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              // TODO: Navigate to settings
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Abrir configuración")),
+                SnackBar(content: Text(loc.openSettings)),
               );
             },
           ),
