@@ -332,4 +332,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutApp => 'About the App';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get spanish => 'Spanish';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get sound => 'Sound';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get save => 'Save';
 }

@@ -119,6 +119,13 @@
   "appSubtitle": "¡Diviértete en grupo! 🎉",
   "settings": "Configuración",
   "privacyPolicy": "Política de Privacidad",
-  "aboutApp": "Sobre la App"
+  "aboutApp": "Sobre la App",
+
+  "language": "Idioma",
+  "spanish": "Español",
+  "english": "Inglés",
+  "sound": "Sonido",
+  "notifications": "Notificaciones",
+  "save": "Guardar"
 
 }

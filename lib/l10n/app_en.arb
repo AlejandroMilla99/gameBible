@@ -120,7 +120,14 @@
   "appSubtitle": "Have fun in group! 🎉",
   "settings": "Settings",
   "privacyPolicy": "Privacy Policy",
-  "aboutApp": "About the App"
+  "aboutApp": "About the App",
+
+  "language": "Language",
+  "spanish": "Spanish",
+  "english": "English",
+  "sound": "Sound",
+  "notifications": "Notifications",
+  "save": "Save"
 
 }
 

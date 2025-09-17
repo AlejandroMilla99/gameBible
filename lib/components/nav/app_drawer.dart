@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_spacing.dart';
 import 'package:gamebible/l10n/app_localizations.dart';
+import 'package:gamebible/pages/settings_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -61,7 +62,11 @@ class AppDrawer extends StatelessWidget {
             leading: const Icon(Icons.settings, color: AppColors.primary),
             title: Text(loc.settings),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(context); // Cierra el drawer primero
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsPage()),
+              );
             },
           ),
           const Divider(),

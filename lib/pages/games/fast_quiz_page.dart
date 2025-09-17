@@ -266,17 +266,17 @@ class _FastQuizPageState extends State<FastQuizPage> {
     showDialog(
       context: context,
       builder: (context) => GameInfoDialog(
-        title: t.fastQuizHowToPlay!,
+        title: t.fastQuizHowToPlay,
         instructions: [
-          t.fastQuizInstruction1!,
-          t.fastQuizInstruction2!,
-          t.fastQuizInstruction3!,
-          t.fastQuizInstruction4!,
-          t.fastQuizInstruction5!,
-          t.fastQuizInstruction6!,
-          t.fastQuizInstruction7!,
+          t.fastQuizInstruction1,
+          t.fastQuizInstruction2,
+          t.fastQuizInstruction3,
+          t.fastQuizInstruction4,
+          t.fastQuizInstruction5,
+          t.fastQuizInstruction6,
+          t.fastQuizInstruction7,
         ],
-        example: t.fastQuizExample!,
+        example: t.fastQuizExample,
         imageAsset: null,
       ),
     );
