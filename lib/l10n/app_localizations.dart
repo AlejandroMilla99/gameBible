@@ -772,6 +772,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @reverseVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse Voice'**
+  String get reverseVoice;
+
+  /// No description provided for @reverseVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Imitate a phrase you record in reverse and observe the result.'**
+  String get reverseVoiceDesc;
+
+  /// No description provided for @reverseVoiceHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'How to play Reverse Voice'**
+  String get reverseVoiceHowToPlay;
+
+  /// No description provided for @reverseVoiceInstruction1.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the green microphone section to record your voice (max 10 seconds).'**
+  String get reverseVoiceInstruction1;
+
+  /// No description provided for @reverseVoiceInstruction2.
+  ///
+  /// In en, this message translates to:
+  /// **'When you stop recording, the blue section will unlock.'**
+  String get reverseVoiceInstruction2;
+
+  /// No description provided for @reverseVoiceInstruction3.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the blue speaker button to hear your recording in reverse.'**
+  String get reverseVoiceInstruction3;
+
+  /// No description provided for @reverseVoiceInstruction4.
+  ///
+  /// In en, this message translates to:
+  /// **'Now, try to imitate what you heard in reverse by recording again!'**
+  String get reverseVoiceInstruction4;
+
+  /// No description provided for @reverseVoiceExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Example: Record \'Hello World\' → hear \'dlroW olleH\' → try to record that and hear your original phrase.'**
+  String get reverseVoiceExample;
+
+  /// No description provided for @record.
+  ///
+  /// In en, this message translates to:
+  /// **'Touch for recording'**
+  String get record;
+
+  /// No description provided for @reproduce.
+  ///
+  /// In en, this message translates to:
+  /// **'Touch for listening'**
+  String get reproduce;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

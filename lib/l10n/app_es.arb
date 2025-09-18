@@ -126,6 +126,19 @@
   "english": "Inglés",
   "sound": "Sonido",
   "notifications": "Notificaciones",
-  "save": "Guardar"
+  "save": "Guardar",
 
+  "reverseVoice": "Voz Inversa",
+  "reverseVoiceDesc": "Imita una frase que grabes a la inversa y observa el resultado.",
+  "reverseVoiceHowToPlay": "Cómo jugar a Voz Inversa",
+  "reverseVoiceInstruction1": "Pulsa la sección verde con el micrófono para grabar tu voz (máximo 10 segundos).",
+  "reverseVoiceInstruction2": "Cuando detengas la grabación, se desbloqueará la sección azul.",
+  "reverseVoiceInstruction3": "Pulsa el botón del altavoz azul para escuchar tu grabación al revés.",
+  "reverseVoiceInstruction4": "Ahora intenta imitar lo que has escuchado al revés volviendo a grabar.",
+  "reverseVoiceExample": "Ejemplo: Graba 'Hola Mundo' → escucha 'odnuM aloH' → graba eso y comprueba si reproduces tu frase original.",
+
+  "record": "Pulsa para grabar",
+  "reproduce": "Pulsa para reproducir"
+
+  
 }

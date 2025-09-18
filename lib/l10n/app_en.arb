@@ -127,7 +127,20 @@
   "english": "English",
   "sound": "Sound",
   "notifications": "Notifications",
-  "save": "Save"
+  "save": "Save",
+
+  "reverseVoice": "Reverse Voice",
+  "reverseVoiceDesc": "Imitate a phrase you record in reverse and observe the result.",
+  "reverseVoiceHowToPlay": "How to play Reverse Voice",
+  "reverseVoiceInstruction1": "Press the green microphone section to record your voice (max 10 seconds).",
+  "reverseVoiceInstruction2": "When you stop recording, the blue section will unlock.",
+  "reverseVoiceInstruction3": "Press the blue speaker button to hear your recording in reverse.",
+  "reverseVoiceInstruction4": "Now, try to imitate what you heard in reverse by recording again!",
+  "reverseVoiceExample": "Example: Record 'Hello World' → hear 'dlroW olleH' → try to record that and hear your original phrase.",
+
+  "record": "Touch for recording",
+  "reproduce": "Touch for listening"
+
 
 }
 

@@ -6,4 +6,5 @@ class AppImages {
   static const String geoExpert = "lib/assets/images/geo_expert.png";
   static const String worday = "lib/assets/images/worday.png";
   static const String taboo = "lib/assets/images/taboo.png";
+  static const String reverseVoice = "lib/assets/images/reverse_voice.png";
 }

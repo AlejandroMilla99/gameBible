@@ -4,6 +4,7 @@ import 'package:gamebible/pages/games/emoji_challenge_page.dart';
 import 'package:gamebible/pages/games/fast_quiz_page.dart';
 import 'package:gamebible/pages/games/geoExpert/geo_expert_page.dart';
 import 'package:gamebible/pages/games/never_have_i_ever_page.dart';
+import 'package:gamebible/pages/games/reverse_voice_page.dart';
 import 'package:gamebible/pages/games/truth_dare_page.dart';
 import 'package:gamebible/pages/games/worday/wordayPage.dart';
 import 'package:gamebible/pages/games/tabu_word.dart';
@@ -110,6 +111,19 @@ class GamesPage extends StatelessWidget {
             ctx,
             MaterialPageRoute(
               builder: (_) => TabuWordPage(title: loc.tabuWordTitle),
+            ),
+          );
+        },
+      ),
+      Game(
+        title: loc.reverseVoice,
+        description: loc.reverseVoiceDesc,
+        image: AppImages.reverseVoice,
+        play: (ctx) {
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(
+              builder: (_) => ReverseVoicePage(title: loc.reverseVoice),
             ),
           );
         },

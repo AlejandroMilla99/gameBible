@@ -350,4 +350,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get reverseVoice => 'Reverse Voice';
+
+  @override
+  String get reverseVoiceDesc => 'Imitate a phrase you record in reverse and observe the result.';
+
+  @override
+  String get reverseVoiceHowToPlay => 'How to play Reverse Voice';
+
+  @override
+  String get reverseVoiceInstruction1 => 'Press the green microphone section to record your voice (max 10 seconds).';
+
+  @override
+  String get reverseVoiceInstruction2 => 'When you stop recording, the blue section will unlock.';
+
+  @override
+  String get reverseVoiceInstruction3 => 'Press the blue speaker button to hear your recording in reverse.';
+
+  @override
+  String get reverseVoiceInstruction4 => 'Now, try to imitate what you heard in reverse by recording again!';
+
+  @override
+  String get reverseVoiceExample => 'Example: Record \'Hello World\' → hear \'dlroW olleH\' → try to record that and hear your original phrase.';
+
+  @override
+  String get record => 'Touch for recording';
+
+  @override
+  String get reproduce => 'Touch for listening';
 }

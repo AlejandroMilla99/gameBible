@@ -350,4 +350,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get save => 'Guardar';
+
+  @override
+  String get reverseVoice => 'Voz Inversa';
+
+  @override
+  String get reverseVoiceDesc => 'Imita una frase que grabes a la inversa y observa el resultado.';
+
+  @override
+  String get reverseVoiceHowToPlay => 'Cómo jugar a Voz Inversa';
+
+  @override
+  String get reverseVoiceInstruction1 => 'Pulsa la sección verde con el micrófono para grabar tu voz (máximo 10 segundos).';
+
+  @override
+  String get reverseVoiceInstruction2 => 'Cuando detengas la grabación, se desbloqueará la sección azul.';
+
+  @override
+  String get reverseVoiceInstruction3 => 'Pulsa el botón del altavoz azul para escuchar tu grabación al revés.';
+
+  @override
+  String get reverseVoiceInstruction4 => 'Ahora intenta imitar lo que has escuchado al revés volviendo a grabar.';
+
+  @override
+  String get reverseVoiceExample => 'Ejemplo: Graba \'Hola Mundo\' → escucha \'odnuM aloH\' → graba eso y comprueba si reproduces tu frase original.';
+
+  @override
+  String get record => 'Pulsa para grabar';
+
+  @override
+  String get reproduce => 'Pulsa para reproducir';
 }
