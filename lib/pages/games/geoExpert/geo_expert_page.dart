@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:gamebible/constants/app_colors.dart';
 import 'geo_expert_viewModel.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
+import 'package:gamebible/components/dialogs/custom_snackbar.dart';
 
 class GeoExpertPage extends StatefulWidget {
   const GeoExpertPage({super.key, required this.title});
@@ -12,7 +13,8 @@ class GeoExpertPage extends StatefulWidget {
   State<GeoExpertPage> createState() => _GeoExpertPageState();
 }
 
-class _GeoExpertPageState extends State<GeoExpertPage> {
+class _GeoExpertPageState extends State<GeoExpertPage>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -103,17 +105,31 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                             final assignedFlag = vm.assignedCountries[cat]?.flag;
                             final emoji = vm.categoryEmojis[cat] ?? "🔹";
 
-                            final enabled = (vm.currentCountry != null && rank == null && !vm.isRolling);
+                            final enabled = (vm.currentCountry != null &&
+                                rank == null &&
+                                !vm.isRolling);
 
                             // Colores del gradiente según ranking
-                            List<Color> gradientColors = [Colors.grey.shade700, Colors.grey.shade400];
+                            List<Color> gradientColors = [
+                              Colors.grey.shade700,
+                              Colors.grey.shade400
+                            ];
                             if (rank != null) {
                               if (rank <= 25) {
-                                gradientColors = [Colors.green.shade300, Colors.green.shade600];
+                                gradientColors = [
+                                  Colors.green.shade300,
+                                  Colors.green.shade600
+                                ];
                               } else if (rank > 25 && rank <= 75) {
-                                gradientColors = [Colors.orange.shade300, Colors.orange.shade600];
+                                gradientColors = [
+                                  Colors.orange.shade300,
+                                  Colors.orange.shade600
+                                ];
                               } else if (rank > 75) {
-                                gradientColors = [Colors.red.shade300, Colors.red.shade600];
+                                gradientColors = [
+                                  Colors.red.shade300,
+                                  Colors.red.shade600
+                                ];
                               }
                             }
 
@@ -128,15 +144,20 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(12),
-                                  onTap: enabled ? () => vm.assignToCategory(cat) : null,
+                                  onTap: enabled
+                                      ? () => vm.assignToCategory(cat)
+                                      : null,
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 14, horizontal: 12),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
-                                            Text(emoji, style: const TextStyle(fontSize: 22)),
+                                            Text(emoji,
+                                                style: const TextStyle(fontSize: 22)),
                                             const SizedBox(width: 8),
                                             Text(
                                               cat,
@@ -162,10 +183,13 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                                                 ),
                                               if (assignedFlag != null)
                                                 Padding(
-                                                  padding: const EdgeInsets.only(left: 6),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 6),
                                                   child: Text(
                                                     assignedFlag,
-                                                    style: const TextStyle(fontSize: 24),
+                                                    style: const TextStyle(
+                                                        fontSize: 24),
                                                   ),
                                                 ),
                                             ],
@@ -180,13 +204,17 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                             // Reset Button
                             if (vm.gameStarted || vm.currentCountry != null) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 400),
                                   curve: Curves.easeInOut,
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
-                                      colors: [Colors.red.shade400, Colors.red.shade700],
+                                      colors: [
+                                        Colors.red.shade400,
+                                        Colors.red.shade700
+                                      ],
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
@@ -195,7 +223,8 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.transparent,
                                       shadowColor: Colors.transparent,
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16),
                                       textStyle: const TextStyle(fontSize: 18),
                                     ),
                                     onPressed: vm.restartGame,
@@ -213,26 +242,24 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
                     const SizedBox(height: 12),
                   ],
                 ),
-
-                // --- POPUP Better Choice ---
-                if (vm.showBetterChoicePopup && vm.betterChoiceMessage != null)
-                  Positioned(
-                    bottom: 30,
-                    left: 20,
-                    right: 20,
-                    child: Material(
-                      elevation: 6,
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.black.withOpacity(0.85),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          vm.betterChoiceMessage!,
-                          style: const TextStyle(color: Colors.white, fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
+                              // --- POPUP Better Choice con animación y gradiente ---
+                if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup)
+                  Builder(
+                    builder: (context) {
+                      // Mostramos el snackbar solo después del frame actual
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup) {
+                          CustomSnackBar.show(
+                            context,
+                            message: vm.betterChoiceMessage!,
+                            type: SnackBarType.exotic,
+                          );
+                          // Marcamos como mostrado para evitar múltiples llamadas
+                          vm.showBetterChoicePopup = false;
+                        }
+                      });
+                      return const SizedBox.shrink(); // No renderiza nada en el stack
+                    },
                   ),
               ],
             ),
@@ -254,7 +281,8 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
           "Haz lo mismo con los siguientes países, el juego acabará cuando rellenes todas las categorías.",
           "Cuanto menor sea tu puntuación acumulada mejor lo habrás hecho, podrás visualizar tu top 3 en el botón del trofeo en la parte superior derecha."
         ],
-        example: "Ejemplo: Si el juego te muestra la bandera de Estados Unidos y tienes libre la categoría de tecnología, es buena opción asigarla ya que en ella Estados Unidos se encuentra en el Top 1.",
+        example:
+            "Ejemplo: Si el juego te muestra la bandera de Estados Unidos y tienes libre la categoría de tecnología, es buena opción asigarla ya que en ella Estados Unidos se encuentra en el Top 3.",
         imageAsset: null, // opcional
       ),
     );
@@ -271,7 +299,8 @@ class _GeoExpertPageState extends State<GeoExpertPage> {
         // Este builder devuelve el diálogo como tal
         return Center(
           child: Dialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Container(
               padding: const EdgeInsets.all(16),
               child: Column(

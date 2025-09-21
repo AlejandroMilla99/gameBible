@@ -17,7 +17,6 @@ class GeoExpertViewModel extends ChangeNotifier {
   Country? currentCountry;
   int totalScore = 0;
 
-  // emojis asignados a cada categoría, únicos
   final Map<String, String> _allCategoryEmojis = const {
     "HDI": "🌐",
     "Population": "👥",
@@ -28,7 +27,7 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Happiness": "😊",
     "Life Expectancy": "⏳",
     "Safety": "🛡️",
-    "Environmental Performance": "🌱",
+    "Environmentally friendly": "🌱",
     "Football": "⚽",
     "Basketball": "🏀",
     "Olympic medals": "🥇",
@@ -47,13 +46,15 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Technology": "💻",
     "Cuisine": "🍽️",
     "Coffee": "☕",
+    "Pollution": "🌫️"
   };
+
 
   late List<Country> countries;
 
-  List<String> categories = []; // categorías seleccionadas aleatoriamente
-  Map<String, String> categoryEmojis = {}; // categorías actuales con sus emojis
-  Map<String, String> categoryLabels = {}; // texto completo (emoji + nombre) para botones
+  List<String> categories = [];
+  Map<String, String> categoryEmojis = {};
+  Map<String, String> categoryLabels = {};
 
   Map<String, int?> assignedRanks = {};
   Map<String, Country?> assignedCountries = {};
@@ -65,11 +66,17 @@ class GeoExpertViewModel extends ChangeNotifier {
   final ConfettiController confettiController =
       ConfettiController(duration: const Duration(seconds: 3));
 
-  // ---  POPUP better choice ---
+  // --- POPUP better choice ---
   bool _showBetterChoicePopup = false;
   String? _betterChoiceMessage;
 
+  // ✅ getter y setter público
   bool get showBetterChoicePopup => _showBetterChoicePopup;
+  set showBetterChoicePopup(bool value) {
+    _showBetterChoicePopup = value;
+    notifyListeners();
+  }
+
   String? get betterChoiceMessage => _betterChoiceMessage;
 
   GeoExpertViewModel(this.context) {
@@ -77,7 +84,6 @@ class GeoExpertViewModel extends ChangeNotifier {
   }
 
   Future<void> _initGame() async {
-    // inicializar asignaciones y puntaje
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
     totalScore = 0;
@@ -94,7 +100,6 @@ class GeoExpertViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // selecciona 8 categorías aleatorias y asigna un emoji único a cada una
   void _selectRandomCategories() {
     if (countries.isEmpty) return;
 
@@ -102,7 +107,6 @@ class GeoExpertViewModel extends ChangeNotifier {
     allKeys.shuffle(_random);
     categories = allKeys.take(8).toList();
 
-    // asignar emojis únicos a las categorías seleccionadas
     final availableEmojis = _allCategoryEmojis.entries.toList();
     availableEmojis.shuffle(_random);
 
@@ -137,7 +141,7 @@ class GeoExpertViewModel extends ChangeNotifier {
   }
 
   void restartGame() {
-    _selectRandomCategories(); // nueva selección aleatoria
+    _selectRandomCategories();
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
     totalScore = 0;
@@ -204,22 +208,28 @@ class GeoExpertViewModel extends ChangeNotifier {
     if (currentCountry == null) return;
     final chosenRank = currentCountry!.rankings[chosenCategory] ?? 100;
 
-    final betterOption = categories.where((c) => assignedRanks[c] == null && c != chosenCategory).map((c) {
+    final betterOption = categories
+        .where((c) => assignedRanks[c] == null && c != chosenCategory)
+        .map((c) {
       return {"cat": c, "rank": currentCountry!.rankings[c] ?? 100};
-    }).where((entry) => (entry["rank"] as int) < chosenRank).toList();
+    }).where((entry) => (entry["rank"] as int) < chosenRank)
+      .toList();
 
     if (betterOption.isNotEmpty) {
-      final best = betterOption.reduce((a, b) => (a["rank"] as int) < (b["rank"] as int) ? a : b);
+      final best = betterOption.reduce(
+          (a, b) => (a["rank"] as int) < (b["rank"] as int) ? a : b);
       _betterChoiceMessage =
           "⚡ Podrías haber elegido mejor: ${best["cat"]} (Rank ${best["rank"]})";
       _showBetterChoicePopup = true;
       notifyListeners();
 
-      // ocultar popup a los 3 segundos
+      // ✅ Ocultar popup a los 3 segundos solo si sigue visible
       Future.delayed(const Duration(seconds: 3), () {
-        _showBetterChoicePopup = false;
-        _betterChoiceMessage = null;
-        notifyListeners();
+        if (_showBetterChoicePopup) {
+          _showBetterChoicePopup = false;
+          _betterChoiceMessage = null;
+          notifyListeners();
+        }
       });
     }
   }

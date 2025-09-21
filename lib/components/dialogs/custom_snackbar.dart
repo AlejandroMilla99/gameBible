@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Types of snackbar
-enum SnackBarType { info, warning, error }
+enum SnackBarType { info, warning, error, exotic }
 
 /// Custom snackbar that slides from bottom, stays for 2s and fades away.
 /// Ensures only one snackbar is visible at a time.
@@ -13,7 +13,7 @@ class CustomSnackBar {
     required String message,
     SnackBarType type = SnackBarType.info,
     IconData? customIcon,
-    Duration duration = const Duration(seconds: 2),
+    Duration duration = const Duration(seconds: 3),
   }) {
     final overlay = Overlay.of(context);
 
@@ -116,43 +116,58 @@ class _SnackBarWidgetState extends State<_SnackBarWidget>
   Widget build(BuildContext context) {
     final (gradient, icon) = _getStyle(widget.type);
 
-    return Positioned.fill(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: SlideTransition(
-          position: slideAnimation,
-          child: FadeTransition(
-            opacity: ReverseAnimation(fadeAnimation),
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 40),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                gradient: gradient,
-              ),
-              constraints: const BoxConstraints(
-                minWidth: 200,
-                maxWidth: 320,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: Text(
-                      widget.message,
-                      style: TextStyle(color: widget.type == SnackBarType.warning ? Colors.black : Colors.white, fontSize: 14),
+    // 🔹 Cambio imprescindible: envolver Positioned en un Stack
+    return Material(
+      type: MaterialType.transparency,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SlideTransition(
+                position: slideAnimation,
+                child: FadeTransition(
+                  opacity: ReverseAnimation(fadeAnimation),
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: gradient,
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 200,
+                      maxWidth: 320,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.message,
+                            style: TextStyle(
+                                color: widget.type == SnackBarType.warning
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontSize: 14),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          widget.customIcon ?? icon,
+                          color: widget.type == SnackBarType.warning
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Icon(
-                    widget.customIcon ?? icon,
-                    color: widget.type == SnackBarType.warning ? Colors.black : Colors.white,
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -179,6 +194,15 @@ class _SnackBarWidgetState extends State<_SnackBarWidget>
         );
       case SnackBarType.info:
       // ignore: unreachable_switch_default
+      case SnackBarType.exotic:
+        return (
+          const LinearGradient(
+            colors: [Color.fromARGB(255, 194, 87, 189), Color.fromARGB(255, 162, 31, 136)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+          Icons.info
+        );
       default:
         return (
           const LinearGradient(
