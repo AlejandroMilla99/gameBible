@@ -100,8 +100,9 @@ class _SnackBarWidgetState extends State<_SnackBarWidget>
     slideController.forward();
 
     Future.delayed(widget.duration, () async {
+      if (!mounted) return;
       await fadeController.forward();
-      widget.onDismissed();
+      if (mounted) widget.onDismissed();
     });
   }
 

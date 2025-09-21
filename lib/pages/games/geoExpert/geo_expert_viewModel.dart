@@ -27,7 +27,7 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Happiness": "😊",
     "Life Expectancy": "⏳",
     "Safety": "🛡️",
-    "Environmentally friendly": "🌱",
+    "Ecofriendly": "🌱",
     "Football": "⚽",
     "Basketball": "🏀",
     "Olympic medals": "🥇",

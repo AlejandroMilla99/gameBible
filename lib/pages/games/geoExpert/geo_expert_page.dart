@@ -156,15 +156,19 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                       children: [
                                         Row(
                                           children: [
-                                            Text(emoji,
-                                                style: const TextStyle(fontSize: 22)),
+                                            Text(emoji, style: const TextStyle(fontSize: 22)),
                                             const SizedBox(width: 8),
-                                            Text(
-                                              cat,
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                            ConstrainedBox(
+                                              constraints: const BoxConstraints(maxWidth: 180), // 🔹 límite seguro
+                                              child: Text(
+                                                cat,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -246,7 +250,6 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup)
                   Builder(
                     builder: (context) {
-                      // Mostramos el snackbar solo después del frame actual
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup) {
                           CustomSnackBar.show(
@@ -254,11 +257,10 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                             message: vm.betterChoiceMessage!,
                             type: SnackBarType.exotic,
                           );
-                          // Marcamos como mostrado para evitar múltiples llamadas
                           vm.showBetterChoicePopup = false;
                         }
                       });
-                      return const SizedBox.shrink(); // No renderiza nada en el stack
+                      return const SizedBox.shrink();
                     },
                   ),
               ],
@@ -283,7 +285,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
         ],
         example:
             "Ejemplo: Si el juego te muestra la bandera de Estados Unidos y tienes libre la categoría de tecnología, es buena opción asigarla ya que en ella Estados Unidos se encuentra en el Top 3.",
-        imageAsset: null, // opcional
+        imageAsset: null,
       ),
     );
   }
@@ -293,10 +295,9 @@ class _GeoExpertPageState extends State<GeoExpertPage>
       context: context,
       barrierDismissible: true,
       barrierLabel: "HighScores",
-      barrierColor: Colors.black54, // fondo semitransparente
+      barrierColor: Colors.black54,
       transitionDuration: const Duration(milliseconds: 400),
       pageBuilder: (_, __, ___) {
-        // Este builder devuelve el diálogo como tal
         return Center(
           child: Dialog(
             shape:
@@ -376,7 +377,6 @@ class _GeoExpertPageState extends State<GeoExpertPage>
         );
       },
       transitionBuilder: (_, animation, __, child) {
-        // Definimos animación de aparición/desaparición
         final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
         final scale = Tween<double>(begin: 0.9, end: 1.0).animate(fade);
 
