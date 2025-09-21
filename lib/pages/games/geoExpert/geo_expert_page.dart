@@ -15,12 +15,23 @@ class GeoExpertPage extends StatefulWidget {
 
 class _GeoExpertPageState extends State<GeoExpertPage>
     with SingleTickerProviderStateMixin {
+  bool revealName = false; // 🔹 controla si se muestra el nombre o el botón
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => GeoExpertViewModel(context),
       child: Consumer<GeoExpertViewModel>(
         builder: (context, vm, child) {
+          // 🔹 Resetear botón al cambiar de país
+          if (vm.currentCountry != null && !vm.isRolling && !revealName) {
+            // no hace falta resetear aquí explícitamente,
+            // pero si cambias de país y quieres forzar reset:
+          }
+          if (vm.isRolling) {
+            revealName = false;
+          }
+
           return Scaffold(
             appBar: AppBar(
               title: Text(widget.title),
@@ -81,12 +92,35 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                     style: const TextStyle(fontSize: 80),
                                   ),
                                   const SizedBox(height: 6),
-                                  Text(
-                                    vm.currentCountry?.name ?? "",
-                                    style: const TextStyle(fontSize: 20),
+                                  SizedBox(
+                                    height: 40, // 🔹 altura fija para botón/nombre
+                                    child: AnimatedSwitcher(
+                                      duration: const Duration(milliseconds: 400),
+                                      transitionBuilder: (child, anim) => FadeTransition(
+                                        opacity: anim,
+                                        child: child,
+                                      ),
+                                      child: (!revealName &&
+                                              vm.currentCountry != null &&
+                                              !vm.isRolling)
+                                          ? ElevatedButton(
+                                              key: const ValueKey("button"),
+                                              onPressed: () {
+                                                setState(() {
+                                                  revealName = true;
+                                                });
+                                              },
+                                              child: const Text("Revelar nombre"),
+                                            )
+                                          : Text(
+                                              vm.isRolling ? "" : vm.currentCountry?.name ?? "",
+                                              key: const ValueKey("name"),
+                                              style: const TextStyle(fontSize: 20),
+                                            ),
+                                    ),
                                   ),
                                 ],
-                              ),
+                              )
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -102,7 +136,8 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                           if (index < vm.categories.length) {
                             final cat = vm.categories[index];
                             final rank = vm.assignedRanks[cat];
-                            final assignedFlag = vm.assignedCountries[cat]?.flag;
+                            final assignedFlag =
+                                vm.assignedCountries[cat]?.flag;
                             final emoji = vm.categoryEmojis[cat] ?? "🔹";
 
                             final enabled = (vm.currentCountry != null &&
@@ -156,14 +191,19 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                       children: [
                                         Row(
                                           children: [
-                                            Text(emoji, style: const TextStyle(fontSize: 22)),
+                                            Text(emoji,
+                                                style: const TextStyle(
+                                                    fontSize: 22)),
                                             const SizedBox(width: 8),
                                             ConstrainedBox(
-                                              constraints: const BoxConstraints(maxWidth: 180), // 🔹 límite seguro
+                                              constraints:
+                                                  const BoxConstraints(
+                                                      maxWidth: 180),
                                               child: Text(
                                                 cat,
                                                 maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
+                                                overflow:
+                                                    TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
@@ -173,7 +213,8 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                             ),
                                           ],
                                         ),
-                                        if (rank != null || assignedFlag != null)
+                                        if (rank != null ||
+                                            assignedFlag != null)
                                           Row(
                                             children: [
                                               if (rank != null)
@@ -246,12 +287,13 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                     const SizedBox(height: 12),
                   ],
                 ),
-                              // --- POPUP Better Choice con animación y gradiente ---
+                // --- POPUP Better Choice con animación y gradiente ---
                 if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup)
                   Builder(
                     builder: (context) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup) {
+                        if (vm.betterChoiceMessage != null &&
+                            vm.showBetterChoicePopup) {
                           CustomSnackBar.show(
                             context,
                             message: vm.betterChoiceMessage!,
