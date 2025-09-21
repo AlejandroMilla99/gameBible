@@ -17,29 +17,43 @@ class GeoExpertViewModel extends ChangeNotifier {
   Country? currentCountry;
   int totalScore = 0;
 
-  final Map<String, String> categoryEmojis = const {
-    "GDP": "💰",
+  // emojis asignados a cada categoría, únicos
+  final Map<String, String> _allCategoryEmojis = const {
+    "HDI": "🌐",
     "Population": "👥",
-    "Safety": "🛡️",
-    "Football": "⚽",
+    "GDP nominal": "💰",
+    "GDP per capita": "💵",
+    "Biggest area": "🌍",
+    "Smallest area": "🗺️",
     "Happiness": "😊",
-    "Tourism": "🧳",
+    "Life Expectancy": "⏳",
+    "Safety": "🛡️",
+    "Environmental Performance": "🌱",
+    "Football": "⚽",
+    "Basketball": "🏀",
+    "Olympic medals": "🥇",
+    "Crime": "🚔",
+    "Healthcare": "🏥",
     "Education": "🎓",
+    "Hottest": "🔥",
+    "Coldest": "❄️",
+    "Weather": "🌤️",
+    "Coastline": "🏖️",
+    "Corruption": "💸",
+    "Poverty": "🥀",
+    "Tourism": "🧳",
+    "Military": "🎖️",
+    "Mobile users": "📱",
     "Technology": "💻",
+    "Cuisine": "🍽️",
+    "Coffee": "☕",
   };
 
   late List<Country> countries;
 
-  final List<String> categories = [
-    "GDP",
-    "Population",
-    "Safety",
-    "Football",
-    "Happiness",
-    "Tourism",
-    "Education",
-    "Technology",
-  ];
+  List<String> categories = []; // categorías seleccionadas aleatoriamente
+  Map<String, String> categoryEmojis = {}; // categorías actuales con sus emojis
+  Map<String, String> categoryLabels = {}; // texto completo (emoji + nombre) para botones
 
   Map<String, int?> assignedRanks = {};
   Map<String, Country?> assignedCountries = {};
@@ -53,10 +67,10 @@ class GeoExpertViewModel extends ChangeNotifier {
 
   GeoExpertViewModel(this.context) {
     _loadCountries();
-    _initGame();
   }
 
   Future<void> _initGame() async {
+    // inicializar asignaciones y puntaje
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
     totalScore = 0;
@@ -66,13 +80,35 @@ class GeoExpertViewModel extends ChangeNotifier {
     await _loadHighScores();
   }
 
-    Future<void> _loadCountries() async {
-
+  Future<void> _loadCountries() async {
     countries = await CountryService.loadCountries();
-
+    _selectRandomCategories();
+    await _initGame();
     notifyListeners();
   }
 
+  // selecciona 8 categorías aleatorias y asigna un emoji único a cada una
+  void _selectRandomCategories() {
+    if (countries.isEmpty) return;
+
+    final allKeys = countries.first.rankings.keys.toList();
+    allKeys.shuffle(_random);
+    categories = allKeys.take(8).toList();
+
+    // asignar emojis únicos a las categorías seleccionadas
+    final availableEmojis = _allCategoryEmojis.entries.toList();
+    availableEmojis.shuffle(_random);
+
+    categoryEmojis = {};
+    categoryLabels = {};
+    for (var i = 0; i < categories.length; i++) {
+      final key = categories[i];
+      final emoji =
+          _allCategoryEmojis[key] ?? availableEmojis[i % availableEmojis.length].value;
+      categoryEmojis[key] = emoji;
+      categoryLabels[key] = "$emoji $key";
+    }
+  }
 
   Future<void> _loadHighScores() async {
     final prefs = await SharedPreferences.getInstance();
@@ -93,7 +129,8 @@ class GeoExpertViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-    void restartGame() {
+  void restartGame() {
+    _selectRandomCategories(); // nueva selección aleatoria
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
     totalScore = 0;
@@ -221,8 +258,6 @@ class GeoExpertViewModel extends ChangeNotifier {
       },
     );
   }
-
-
 
   @override
   void dispose() {
