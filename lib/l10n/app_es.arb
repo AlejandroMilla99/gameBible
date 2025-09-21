@@ -138,7 +138,8 @@
   "reverseVoiceExample": "Ejemplo: Graba 'Hola Mundo' → escucha 'odnuM aloH' → graba eso y comprueba si reproduces tu frase original.",
 
   "record": "Pulsa para grabar",
-  "reproduce": "Pulsa para reproducir"
+  "reproduce": "Pulsa para reproducir",
 
+  "loading": "Cargando..."
   
 }

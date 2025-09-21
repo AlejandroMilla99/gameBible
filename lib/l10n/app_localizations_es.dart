@@ -380,4 +380,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reproduce => 'Pulsa para reproducir';
+
+  @override
+  String get loading => 'Cargando...';
 }

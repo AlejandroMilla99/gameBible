@@ -139,8 +139,9 @@
   "reverseVoiceExample": "Example: Record 'Hello World' → hear 'dlroW olleH' → try to record that and hear your original phrase.",
 
   "record": "Touch for recording",
-  "reproduce": "Touch for listening"
+  "reproduce": "Touch for listening",
 
+  "loading": "Loading..."
 
 }
 

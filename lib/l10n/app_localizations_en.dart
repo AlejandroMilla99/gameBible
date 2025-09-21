@@ -380,4 +380,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reproduce => 'Touch for listening';
+
+  @override
+  String get loading => 'Loading...';
 }
