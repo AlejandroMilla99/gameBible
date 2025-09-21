@@ -6,6 +6,8 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import '../../../models/country.dart';
 import '../../../services/country_service.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 class GeoExpertViewModel extends ChangeNotifier {
   final Random _random = Random();
@@ -16,6 +18,7 @@ class GeoExpertViewModel extends ChangeNotifier {
   bool gameStarted = false;
   Country? currentCountry;
   int totalScore = 0;
+  int skipsLeft = 3;
 
   final Map<String, String> _allCategoryEmojis = const {
     "HDI": "🌐",
@@ -145,12 +148,19 @@ class GeoExpertViewModel extends ChangeNotifier {
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
     totalScore = 0;
+    skipsLeft = 3;
     currentCountry = null;
     gameStarted = false;
     isRolling = false;
     notifyListeners();
 
     Future.delayed(const Duration(milliseconds: 100), () => startRolling());
+  }
+
+    void skipCountry() {
+    skipsLeft -= 1;
+    startRolling();
+    notifyListeners();
   }
 
   Future<void> startRolling() async {
@@ -266,12 +276,12 @@ class GeoExpertViewModel extends ChangeNotifier {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                    "Your total score is:",
-                    style: TextStyle(color: Colors.black),
+                    "Tu puntuación total es:",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "$totalScore",
+                    "$totalScore 🏆",
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -288,7 +298,24 @@ class GeoExpertViewModel extends ChangeNotifier {
                     restartGame();
                   },
                   child: const Text("Play Again"),
-                )
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final shareText = """
+                    🌍 Día #1 en GeoExpert
+                    🏆 Puntuación Total: $totalScore
+                    🎯 ¡Demuestra tus conocimientos geográficos!
+                    📲 Juega ahora: https://link_a_la_app
+                    """;
+
+                    // Copiar al portapapeles
+                    //Clipboard.setData(ClipboardData(text: shareText));
+
+                    // Abrir diálogo nativo de compartir
+                    SharePlus.instance.share(ShareParams(text: shareText));
+                  },
+                  child: const Text("Compartir"),
+                ),
               ],
             ),
             ConfettiWidget(
@@ -307,6 +334,7 @@ class GeoExpertViewModel extends ChangeNotifier {
         );
       },
     );
+
   }
 
   @override

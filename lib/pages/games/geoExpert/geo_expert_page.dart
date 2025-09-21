@@ -21,295 +21,296 @@ class _GeoExpertPageState extends State<GeoExpertPage>
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => GeoExpertViewModel(context),
-      child: Consumer<GeoExpertViewModel>(
-        builder: (context, vm, child) {
-          // 🔹 Resetear botón al cambiar de país
-          if (vm.currentCountry != null && !vm.isRolling && !revealName) {
-            // no hace falta resetear aquí explícitamente,
-            // pero si cambias de país y quieres forzar reset:
-          }
-          if (vm.isRolling) {
-            revealName = false;
-          }
+      child: Consumer<GeoExpertViewModel>(builder: (context, vm, child) {
+        if (vm.isRolling) {
+          revealName = false;
+        }
 
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(widget.title),
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.info_rounded),
-                  onPressed: () => _showInfo(context),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.emoji_events),
-                  onPressed: () => _showHighScores(context, vm.topScores),
-                ),
-              ],
-            ),
-            body: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 12),
-                    Center(
-                      child: Text(
-                        "Total Score: ${vm.totalScore}",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.info_rounded),
+                onPressed: () => _showInfo(context),
+              ),
+              IconButton(
+                icon: const Icon(Icons.emoji_events),
+                onPressed: () => _showHighScores(context, vm.topScores),
+              ),
+            ],
+          ),
+          body: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 24),
+                  Center(
+                    child: Text(
+                      "Total Score: ${vm.totalScore}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 180,
-                      child: Center(
-                        child: vm.currentCountry == null && !vm.isRolling
-                            ? (!vm.gameStarted
-                                ? ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 40,
-                                        vertical: 20,
-                                      ),
-                                      textStyle: const TextStyle(fontSize: 22),
-                                    ),
-                                    onPressed: vm.startRolling,
-                                    child: const Text("Start Game"),
-                                  )
-                                : const Text(
-                                    "",
-                                    style: TextStyle(fontSize: 16),
-                                  ))
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    vm.currentCountry?.flag ?? "",
-                                    style: const TextStyle(fontSize: 80),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  SizedBox(
-                                    height: 40, // 🔹 altura fija para botón/nombre
-                                    child: AnimatedSwitcher(
-                                      duration: const Duration(milliseconds: 400),
-                                      transitionBuilder: (child, anim) => FadeTransition(
-                                        opacity: anim,
-                                        child: child,
-                                      ),
-                                      child: (!revealName &&
-                                              vm.currentCountry != null &&
-                                              !vm.isRolling)
-                                          ? ElevatedButton(
-                                              key: const ValueKey("button"),
-                                              onPressed: () {
-                                                setState(() {
-                                                  revealName = true;
-                                                });
-                                              },
-                                              child: const Text("Revelar nombre"),
-                                            )
-                                          : Text(
-                                              vm.isRolling ? "" : vm.currentCountry?.name ?? "",
-                                              key: const ValueKey("name"),
-                                              style: const TextStyle(fontSize: 20),
-                                            ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        itemCount: vm.categories.length + 1,
-                        separatorBuilder: (_, __) => const SizedBox(height: 8),
-                        itemBuilder: (context, index) {
-                          if (index < vm.categories.length) {
-                            final cat = vm.categories[index];
-                            final rank = vm.assignedRanks[cat];
-                            final assignedFlag =
-                                vm.assignedCountries[cat]?.flag;
-                            final emoji = vm.categoryEmojis[cat] ?? "🔹";
-
-                            final enabled = (vm.currentCountry != null &&
-                                rank == null &&
-                                !vm.isRolling);
-
-                            // Colores del gradiente según ranking
-                            List<Color> gradientColors = [
-                              Colors.grey.shade700,
-                              Colors.grey.shade400
-                            ];
-                            if (rank != null) {
-                              if (rank <= 25) {
-                                gradientColors = [
-                                  Colors.green.shade300,
-                                  Colors.green.shade600
-                                ];
-                              } else if (rank > 25 && rank <= 75) {
-                                gradientColors = [
-                                  Colors.orange.shade300,
-                                  Colors.orange.shade600
-                                ];
-                              } else if (rank > 75) {
-                                gradientColors = [
-                                  Colors.red.shade300,
-                                  Colors.red.shade600
-                                ];
-                              }
-                            }
-
-                            return AnimatedContainer(
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.easeInOut,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(colors: gradientColors),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(12),
-                                  onTap: enabled
-                                      ? () => vm.assignToCategory(cat)
-                                      : null,
-                                  child: Padding(
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 180,
+                    child: Center(
+                      child: vm.currentCountry == null && !vm.isRolling
+                          ? (!vm.gameStarted
+                              ? ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 14, horizontal: 12),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      horizontal: 40,
+                                      vertical: 20,
+                                    ),
+                                    textStyle: const TextStyle(fontSize: 22),
+                                  ),
+                                  onPressed: vm.startRolling,
+                                  child: const Text("Start Game"),
+                                )
+                              : const Text("",
+                                  style: TextStyle(fontSize: 16)))
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  vm.currentCountry?.flag ?? "",
+                                  style: const TextStyle(fontSize: 80),
+                                ),
+                                const SizedBox(height: 6),
+                                SizedBox(
+                                  height: 40,
+                                  child: AnimatedSwitcher(
+                                    duration:
+                                        const Duration(milliseconds: 400),
+                                    transitionBuilder: (child, anim) =>
+                                        FadeTransition(
+                                      opacity: anim,
+                                      child: child,
+                                    ),
+                                    child: (!revealName)
+                                        ? ElevatedButton(
+                                            key: const ValueKey("button"),
+                                            onPressed: vm.isRolling
+                                                ? null
+                                                : () {
+                                                    setState(() {
+                                                      revealName = true;
+                                                    });
+                                                  },
+                                            child:
+                                                const Text("Revelar nombre"),
+                                          )
+                                        : Text(
+                                            vm.isRolling
+                                                ? ""
+                                                : vm.currentCountry?.name ?? "",
+                                            key: const ValueKey("name"),
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      itemCount: vm.categories.length + 1,
+                      separatorBuilder: (_, __) => const SizedBox(height: 8),
+                      itemBuilder: (context, index) {
+                        if (index < vm.categories.length) {
+                          final cat = vm.categories[index];
+                          final rank = vm.assignedRanks[cat];
+                          final assignedFlag = vm.assignedCountries[cat]?.flag;
+                          final emoji = vm.categoryEmojis[cat] ?? "🔹";
+
+                          final enabled = (vm.currentCountry != null &&
+                              rank == null &&
+                              !vm.isRolling);
+
+                          List<Color> gradientColors = [
+                            Colors.grey.shade700,
+                            Colors.grey.shade400
+                          ];
+                          if (rank != null) {
+                            if (rank <= 25) {
+                              gradientColors = [
+                                Colors.green.shade300,
+                                Colors.green.shade600
+                              ];
+                            } else if (rank > 25 && rank <= 75) {
+                              gradientColors = [
+                                Colors.orange.shade300,
+                                Colors.orange.shade600
+                              ];
+                            } else if (rank > 75) {
+                              gradientColors = [
+                                Colors.red.shade300,
+                                Colors.red.shade600
+                              ];
+                            }
+                          }
+
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: gradientColors),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(12),
+                                onTap: enabled
+                                    ? () => vm.assignToCategory(cat)
+                                    : null,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 14, horizontal: 12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(emoji,
+                                              style: const TextStyle(
+                                                  fontSize: 22)),
+                                          const SizedBox(width: 8),
+                                          ConstrainedBox(
+                                            constraints:
+                                                const BoxConstraints(
+                                                    maxWidth: 180),
+                                            child: Text(
+                                              cat,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      if (rank != null || assignedFlag != null)
                                         Row(
                                           children: [
-                                            Text(emoji,
-                                                style: const TextStyle(
-                                                    fontSize: 22)),
-                                            const SizedBox(width: 8),
-                                            ConstrainedBox(
-                                              constraints:
-                                                  const BoxConstraints(
-                                                      maxWidth: 180),
-                                              child: Text(
-                                                cat,
-                                                maxLines: 1,
-                                                overflow:
-                                                    TextOverflow.ellipsis,
+                                            if (rank != null)
+                                              Text(
+                                                "#$rank",
                                                 style: const TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
                                                 ),
                                               ),
-                                            ),
+                                            if (assignedFlag != null)
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 6),
+                                                child: Text(
+                                                  assignedFlag,
+                                                  style: const TextStyle(
+                                                      fontSize: 24),
+                                                ),
+                                              ),
                                           ],
                                         ),
-                                        if (rank != null ||
-                                            assignedFlag != null)
-                                          Row(
-                                            children: [
-                                              if (rank != null)
-                                                Text(
-                                                  "#$rank",
-                                                  style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              if (assignedFlag != null)
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 6),
-                                                  child: Text(
-                                                    assignedFlag,
-                                                    style: const TextStyle(
-                                                        fontSize: 24),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                      ],
-                                    ),
+                                    ],
                                   ),
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          if (vm.gameStarted || vm.currentCountry != null) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.red.shade400,
+                                      Colors.red.shade700
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16),
+                                    textStyle: const TextStyle(fontSize: 18),
+                                  ),
+                                  onPressed: vm.restartGame,
+                                  child: const Text("Reset Game"),
                                 ),
                               ),
                             );
                           } else {
-                            // Reset Button
-                            if (vm.gameStarted || vm.currentCountry != null) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 400),
-                                  curve: Curves.easeInOut,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.red.shade400,
-                                        Colors.red.shade700
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 16),
-                                      textStyle: const TextStyle(fontSize: 18),
-                                    ),
-                                    onPressed: vm.restartGame,
-                                    child: const Text("Reset Game"),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
+                            return const SizedBox.shrink();
                           }
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                ),
-                // --- POPUP Better Choice con animación y gradiente ---
-                if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup)
-                  Builder(
-                    builder: (context) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (vm.betterChoiceMessage != null &&
-                            vm.showBetterChoicePopup) {
-                          CustomSnackBar.show(
-                            context,
-                            message: vm.betterChoiceMessage!,
-                            type: SnackBarType.exotic,
-                          );
-                          vm.showBetterChoicePopup = false;
                         }
-                      });
-                      return const SizedBox.shrink();
-                    },
+                      },
+                    ),
                   ),
-              ],
-            ),
-          );
-        },
-      ),
+                  const SizedBox(height: 12),
+                ],
+              ),
+              // --- Botón Skip arriba a la derecha ---
+              Positioned(
+                top: 12,
+                right: 12,
+                child: ElevatedButton(
+                  onPressed: vm.skipsLeft > 0 && !vm.isRolling && vm.gameStarted
+                      ? vm.skipCountry
+                      : null,
+                  child: Text("Skips: ${vm.skipsLeft}"),
+                ),
+              ),
+              if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup)
+                Builder(
+                  builder: (context) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (vm.betterChoiceMessage != null &&
+                          vm.showBetterChoicePopup) {
+                        CustomSnackBar.show(
+                          context,
+                          message: vm.betterChoiceMessage!,
+                          type: SnackBarType.exotic,
+                        );
+                        vm.showBetterChoicePopup = false;
+                      }
+                    });
+                    return const SizedBox.shrink();
+                  },
+                ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
