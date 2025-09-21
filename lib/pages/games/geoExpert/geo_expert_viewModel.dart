@@ -65,6 +65,13 @@ class GeoExpertViewModel extends ChangeNotifier {
   final ConfettiController confettiController =
       ConfettiController(duration: const Duration(seconds: 3));
 
+  // ---  POPUP better choice ---
+  bool _showBetterChoicePopup = false;
+  String? _betterChoiceMessage;
+
+  bool get showBetterChoicePopup => _showBetterChoicePopup;
+  String? get betterChoiceMessage => _betterChoiceMessage;
+
   GeoExpertViewModel(this.context) {
     _loadCountries();
   }
@@ -180,6 +187,9 @@ class GeoExpertViewModel extends ChangeNotifier {
     assignedRanks[category] = rank;
     assignedCountries[category] = currentCountry;
     totalScore += rank;
+
+    _checkBetterChoicePopup(category);
+
     currentCountry = null;
     notifyListeners();
 
@@ -188,6 +198,36 @@ class GeoExpertViewModel extends ChangeNotifier {
     } else {
       Future.delayed(const Duration(milliseconds: 175), () => startRolling());
     }
+  }
+
+  void _checkBetterChoicePopup(String chosenCategory) {
+    if (currentCountry == null) return;
+    final chosenRank = currentCountry!.rankings[chosenCategory] ?? 100;
+
+    final betterOption = categories.where((c) => assignedRanks[c] == null && c != chosenCategory).map((c) {
+      return {"cat": c, "rank": currentCountry!.rankings[c] ?? 100};
+    }).where((entry) => (entry["rank"] as int) < chosenRank).toList();
+
+    if (betterOption.isNotEmpty) {
+      final best = betterOption.reduce((a, b) => (a["rank"] as int) < (b["rank"] as int) ? a : b);
+      _betterChoiceMessage =
+          "⚡ Podrías haber elegido mejor: ${best["cat"]} (Rank ${best["rank"]})";
+      _showBetterChoicePopup = true;
+      notifyListeners();
+
+      // ocultar popup a los 3 segundos
+      Future.delayed(const Duration(seconds: 3), () {
+        _showBetterChoicePopup = false;
+        _betterChoiceMessage = null;
+        notifyListeners();
+      });
+    }
+  }
+
+  void dismissBetterChoicePopup() {
+    _showBetterChoicePopup = false;
+    _betterChoiceMessage = null;
+    notifyListeners();
   }
 
   void _showGameOver() {
