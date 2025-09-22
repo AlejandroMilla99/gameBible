@@ -539,6 +539,12 @@ abstract class AppLocalizations {
   /// **'Play'**
   String get play;
 
+  /// No description provided for @dailyChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily challenge'**
+  String get dailyChallenge;
+
   /// No description provided for @back.
   ///
   /// In en, this message translates to:

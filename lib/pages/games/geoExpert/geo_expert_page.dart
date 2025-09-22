@@ -6,8 +6,9 @@ import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/dialogs/custom_snackbar.dart';
 
 class GeoExpertPage extends StatefulWidget {
-  const GeoExpertPage({super.key, required this.title});
+  const GeoExpertPage({super.key, required this.title, required this.isDailyMode});
   final String title;
+  final bool isDailyMode;
 
   @override
   State<GeoExpertPage> createState() => _GeoExpertPageState();
@@ -28,7 +29,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.title),
+            title: Text(widget.isDailyMode ? widget.title + " Ranked" : widget.title),
             backgroundColor: AppColors.primary,
             foregroundColor: Colors.white,
             actions: [

@@ -26,7 +26,7 @@ class GamesPage extends StatelessWidget {
         title: loc.truthOrDareTitle,
         description: loc.truthOrDareDesc,
         image: AppImages.truthDare,
-        play: (ctx) {
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
@@ -39,7 +39,7 @@ class GamesPage extends StatelessWidget {
         title: loc.neverHaveIEverTitle,
         description: loc.neverHaveIEverDesc,
         image: AppImages.neverHaveIEver,
-        play: (ctx) {
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
@@ -53,7 +53,7 @@ class GamesPage extends StatelessWidget {
         title: loc.fastQuizTitle,
         description: loc.fastQuizDesc,
         image: AppImages.quickTest,
-        play: (ctx) {
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
@@ -66,7 +66,7 @@ class GamesPage extends StatelessWidget {
         title: loc.emojiChallengeTitle,
         description: loc.emojiChallengeDesc,
         image: AppImages.emojiChallenge,
-        play: (ctx) {
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
@@ -80,11 +80,12 @@ class GamesPage extends StatelessWidget {
         title: loc.geoExpertTitle,
         description: loc.geoExpertDesc,
         image: AppImages.geoExpert,
-        play: (ctx) {
+        hasDailyChallenge: true,
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
-              builder: (_) => GeoExpertPage(title: loc.geoExpertTitle),
+              builder: (_) => GeoExpertPage(title: loc.geoExpertTitle, isDailyMode: dailyMode),
             ),
           );
         },
@@ -93,11 +94,12 @@ class GamesPage extends StatelessWidget {
         title: loc.wordayTitle,
         description: loc.wordayDesc,
         image: AppImages.worday,
-        play: (ctx) {
+        hasDailyChallenge: true,
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
-              builder: (_) => WordayPage(title: loc.wordayTitle),
+              builder: (_) => WordayPage(title: loc.wordayTitle, isDailyMode: dailyMode),
             ),
           );
         },
@@ -106,7 +108,7 @@ class GamesPage extends StatelessWidget {
         title: loc.tabuWordTitle,
         description: loc.tabuWordDesc,
         image: AppImages.taboo,
-        play: (ctx) {
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(
@@ -119,7 +121,7 @@ class GamesPage extends StatelessWidget {
         title: loc.reverseVoice,
         description: loc.reverseVoiceDesc,
         image: AppImages.reverseVoice,
-        play: (ctx) {
+        play: (ctx, {dailyMode = false}) {
           Navigator.push(
             ctx,
             MaterialPageRoute(

@@ -7,7 +7,8 @@ import 'package:gamebible/l10n/app_localizations.dart';
 
 class WordayPage extends StatefulWidget {
   final String title;
-  const WordayPage({super.key, required this.title});
+  final bool isDailyMode;
+  const WordayPage({super.key, required this.title, required this.isDailyMode});
 
   @override
   State<WordayPage> createState() => _WordayPageState();
@@ -36,7 +37,7 @@ class _WordayPageState extends State<WordayPage> {
         builder: (context, vm, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(widget.title),
+              title: Text(widget.isDailyMode ? widget.title + " Ranked" : widget.title),
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               actions: [

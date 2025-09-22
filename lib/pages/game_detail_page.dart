@@ -75,6 +75,24 @@ class GameDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
 
+            // Botón Daily Challenge
+            if (game.hasDailyChallenge == true)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 83, 238, 96),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () => game.play(context, dailyMode: true),
+              child: Text(
+                loc.dailyChallenge, 
+                style: const TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+            
+            const SizedBox(height: AppSpacing.sm),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.secondary,

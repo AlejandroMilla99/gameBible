@@ -235,6 +235,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get play => 'Jugar';
 
   @override
+  String get dailyChallenge => 'Desafío diario';
+
+  @override
   String get back => 'Volver';
 
   @override
