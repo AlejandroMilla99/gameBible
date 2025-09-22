@@ -6,7 +6,6 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import '../../../models/country.dart';
 import '../../../services/country_service.dart';
-import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
 class GeoExpertViewModel extends ChangeNotifier {
@@ -81,8 +80,9 @@ class GeoExpertViewModel extends ChangeNotifier {
   }
 
   String? get betterChoiceMessage => _betterChoiceMessage;
+  final bool isDailyMode;
 
-  GeoExpertViewModel(this.context) {
+  GeoExpertViewModel(this.context, this.isDailyMode) {
     _loadCountries();
   }
 

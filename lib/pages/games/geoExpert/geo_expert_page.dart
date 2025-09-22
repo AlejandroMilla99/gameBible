@@ -21,7 +21,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GeoExpertViewModel(context),
+      create: (_) => GeoExpertViewModel(context, widget.isDailyMode),
       child: Consumer<GeoExpertViewModel>(builder: (context, vm, child) {
         if (vm.isRolling) {
           revealName = false;
