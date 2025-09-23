@@ -904,6 +904,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'⚡You had a better choice: {category} (Rank: {rank})'**
   String geoExpertRecommendation(Object category, Object rank);
+
+  /// No description provided for @geoExpertHistoricalHighScores.
+  ///
+  /// In en, this message translates to:
+  /// **'📊 History'**
+  String get geoExpertHistoricalHighScores;
+
+  /// No description provided for @geoExpertHistoricalHighScoresTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'📊 Score history'**
+  String get geoExpertHistoricalHighScoresTitle;
+
+  /// No description provided for @geoExpertDay.
+  ///
+  /// In en, this message translates to:
+  /// **'📅 Day #{day}'**
+  String geoExpertDay(Object day);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

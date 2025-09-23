@@ -422,4 +422,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String geoExpertRecommendation(Object category, Object rank) {
     return '⚡ Podrías haber elegido mejor: $category (Ranking: $rank)';
   }
+
+  @override
+  String get geoExpertHistoricalHighScores => '📊 Histórico';
+
+  @override
+  String get geoExpertHistoricalHighScoresTitle => '📊 Histórico de puntuaciones';
+
+  @override
+  String geoExpertDay(Object day) {
+    return '📅 Día #$day';
+  }
 }

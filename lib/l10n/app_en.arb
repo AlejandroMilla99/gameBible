@@ -153,8 +153,10 @@
   "geoExpertFinalScoreDaily": "Your total score was:",
   "geoExpertFinalScoreNormal": "Your total score is:",
   "geoExpertShareText": "🌍 Day #1 at GeoExpert\n🏆 Total Score: {displayScore}\n🎯 Show off your geographic knowledge!\n📲 Play now: https://link_to_the_app",
-  "geoExpertRecommendation": "⚡You had a better choice: {category} (Rank: {rank})"
-
+  "geoExpertRecommendation": "⚡You had a better choice: {category} (Rank: {rank})",
+  "geoExpertHistoricalHighScores": "📊 History",
+  "geoExpertHistoricalHighScoresTitle": "📊 Score history",
+  "geoExpertDay": "📅 Day #{day}"
 
 }
 

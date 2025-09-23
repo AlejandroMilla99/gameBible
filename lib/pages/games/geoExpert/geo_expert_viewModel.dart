@@ -486,109 +486,225 @@ Future<void> _saveScore(int score) async {
     _showGameOver();
   }
 
-  void _showGameOver({bool dailyAbandoned = false, int? forcedScore}) {
-    // Save top score if completed normally
-    if (!isDailyMode) {
-      _saveScore(totalScore);
+void _showGameOver({bool dailyAbandoned = false, int? forcedScore}) async {
+  if (!isDailyMode) {
+    _saveScore(totalScore);
+  } else {
+    if (dailyAbandoned) {
+      _saveScore(penaltyScore);
     } else {
-      // In daily mode: if abandoned, use penalty score 800 (as requested).
-      if (dailyAbandoned) {
-        // do NOT save 800 as top score, but show it to the user
-        _saveScore(penaltyScore);
-      } else {
-        // Save completed daily score as top score too
-        if (_dailyAttemptCompleted || forcedScore != null) {
-          _saveScore(forcedScore ?? totalScore);
-        }
+      if (_dailyAttemptCompleted || forcedScore != null) {
+        _saveScore(forcedScore ?? totalScore);
       }
     }
+  }
 
-    confettiController.play();
+  confettiController.play();
 
-    // Build message text depending on daily mode / abandoned / forcedScore
-    final displayScore = forcedScore ?? (dailyAbandoned ? penaltyScore : totalScore);
-    final title = t.gameOver;
+  final displayScore = forcedScore ?? (dailyAbandoned ? penaltyScore : totalScore);
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              backgroundColor: Colors.white,
-              title: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    isDailyMode
-                        ? (dailyAbandoned ? t.geoExpertAbandonTryDaily : t.geoExpertFinalScoreDaily)
-                        : t.geoExpertFinalScoreNormal,
-                    style: const TextStyle(color: Colors.black, fontSize: 16),
+  // 🔥 Nuevo: calcular número de día
+  int dayNumber = 0;
+  if (isDailyMode) {
+    final key = _dailyKeyForTodayCEST(); // YYYY-MM-DD
+    final date = DateTime.parse(key);
+    final startOfYear = DateTime(date.year, 1, 1);
+    dayNumber = date.difference(startOfYear).inDays + 1;
+  }
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            backgroundColor: Colors.white,
+            title: Text(
+              isDailyMode ? t.geoExpertDay(dayNumber) : t.gameOver,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  isDailyMode
+                      ? (dailyAbandoned ? t.geoExpertAbandonTryDaily : t.geoExpertFinalScoreDaily)
+                      : t.geoExpertFinalScoreNormal,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "$displayScore 🏆",
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "$displayScore 🏆",
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
+                ),
+              ],
+            ),
+            actionsAlignment: MainAxisAlignment.center,
+            actions: [
+              if (isDailyMode)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            final shareText = t.geoExpertShareText(displayScore);
+                            SharePlus.instance.share(ShareParams(text: shareText));
+                          },
+                          child: Text(t.share),
+                        ),
+                        const SizedBox(width: 12),
+                        ElevatedButton(
+                          onPressed: () => _showAllScoresDialog(context),
+                          child: Text(t.geoExpertHistoricalHighScores),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              actionsAlignment: MainAxisAlignment.center,
-              actions: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    // If daily mode and user wants to retry (not allowed when daily), treat accordingly:
-                    if (isDailyMode) {
-                      // In daily mode, 'Play Again' should restart only in normal mode.
-                      // We'll call restartGame which resets local state but daily attempt restrictions remain saved.
-                      Navigator.of(context).pop();
-                    } else {
-                      restartGame();
-                    }
-                  },
-                  child: Text(isDailyMode ? t.back : t.playAgain)
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(t.back),
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        restartGame();
+                      },
+                      child: Text(t.playAgain),
+                    ),
+                    const SizedBox(width: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        final shareText = t.geoExpertShareText(displayScore);
+                        SharePlus.instance.share(ShareParams(text: shareText));
+                      },
+                      child: Text(t.share),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    final shareText = t.geoExpertShareText(displayScore);
-                    // Compartir con share_plus
-                    SharePlus.instance.share(ShareParams(text: shareText));
-                  },
-                  child: Text(t.share),
-                ),
-              ],
-            ),
-            ConfettiWidget(
-              confettiController: confettiController,
-              blastDirectionality: BlastDirectionality.explosive,
-              shouldLoop: false,
-              colors: const [
-                Colors.red,
-                Colors.green,
-                Colors.blue,
-                Colors.orange,
-                Colors.purple
-              ],
-            ),
-          ],
-        );
-      },
+            ],
+          ),
+          ConfettiWidget(
+            confettiController: confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            shouldLoop: false,
+            colors: const [
+              Colors.red,
+              Colors.green,
+              Colors.blue,
+              Colors.orange,
+              Colors.purple
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> _showAllScoresDialog(BuildContext context) async {
+  final prefs = await SharedPreferences.getInstance();
+  final year = DateTime.now().year;
+
+  // recorrer desde inicio de año hasta hoy
+  final today = nowProvider();
+  final start = DateTime(year, 9, 22);
+  final daysElapsed = today.difference(start).inDays + 1;
+
+  List<Widget> rows = [];
+  for (int i = 0; i < daysElapsed; i++) {
+    final date = start.add(Duration(days: i));
+    final key = "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    final score = prefs.getInt('daily_score_$key');
+    rows.add(
+      ListTile(
+        leading: Text(t.geoExpertDay(i + 1), style: TextStyle(fontSize: 20),),
+        title: Text(score != null ? "${score} pts 🏆" : "❌",  style: TextStyle(fontSize: 20),),
+      ),
     );
   }
+
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: "AllScores",
+    transitionDuration: const Duration(milliseconds: 400),
+    pageBuilder: (_, __, ___) {
+      return Center(
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                )
+              ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  t.geoExpertHistoricalHighScoresTitle,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const Divider(),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: ListView(
+                      key: ValueKey(rows.length),
+                      children: rows,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(t.back),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+    transitionBuilder: (_, anim, __, child) {
+      return ScaleTransition(
+        scale: CurvedAnimation(parent: anim, curve: Curves.easeOutBack),
+        child: child,
+      );
+    },
+  );
+}
+
 
   @override
   void dispose() {
