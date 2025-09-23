@@ -5,6 +5,7 @@ import 'geo_expert_viewModel.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/dialogs/custom_snackbar.dart';
 import 'package:gamebible/l10n/app_localizations.dart';
+import 'package:gamebible/components/loader.dart';
 
 class GeoExpertPage extends StatefulWidget {
   const GeoExpertPage({super.key, required this.title, required this.isDailyMode});
@@ -17,13 +18,17 @@ class GeoExpertPage extends StatefulWidget {
 
 class _GeoExpertPageState extends State<GeoExpertPage>
     with SingleTickerProviderStateMixin {
-  bool revealName = false; // 🔹 controla si se muestra el nombre o el botón
+  bool revealName = false;
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     return ChangeNotifierProvider(
-      create: (_) => GeoExpertViewModel(context, widget.isDailyMode),
+      create: (_) => GeoExpertViewModel(
+        context,
+        widget.isDailyMode,
+        //now: () => DateTime.utc(2025, 5, 24, 8, 59),
+      ),
       child: Consumer<GeoExpertViewModel>(builder: (context, vm, child) {
         if (vm.isRolling) {
           revealName = false;
@@ -52,7 +57,8 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 children: [
                   const SizedBox(height: 24),
                   Center(
-                    child: Text(t.geoExpertTotalScore(vm.totalScore),
+                    child: Text(
+                      t.geoExpertTotalScore(vm.totalScore),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -76,8 +82,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                   onPressed: vm.startRolling,
                                   child: Text(t.startGame),
                                 )
-                              : const Text("",
-                                  style: TextStyle(fontSize: 16)))
+                              : const Text("", style: TextStyle(fontSize: 16)))
                           : Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -89,13 +94,9 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                 SizedBox(
                                   height: 40,
                                   child: AnimatedSwitcher(
-                                    duration:
-                                        const Duration(milliseconds: 400),
+                                    duration: const Duration(milliseconds: 400),
                                     transitionBuilder: (child, anim) =>
-                                        FadeTransition(
-                                      opacity: anim,
-                                      child: child,
-                                    ),
+                                        FadeTransition(opacity: anim, child: child),
                                     child: (!revealName)
                                         ? ElevatedButton(
                                             key: const ValueKey("button"),
@@ -106,16 +107,14 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                                       revealName = true;
                                                     });
                                                   },
-                                            child:
-                                                Text(t.geoExpertShowName),
+                                            child: Text(t.geoExpertShowName),
                                           )
                                         : Text(
                                             vm.isRolling
                                                 ? ""
                                                 : vm.currentCountry?.name ?? "",
                                             key: const ValueKey("name"),
-                                            style:
-                                                const TextStyle(fontSize: 20),
+                                            style: const TextStyle(fontSize: 20),
                                           ),
                                   ),
                                 ),
@@ -125,163 +124,155 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                   ),
                   const SizedBox(height: 8),
                   Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      itemCount: vm.categories.length + 1,
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
-                      itemBuilder: (context, index) {
-                        if (index < vm.categories.length) {
-                          final cat = vm.categories[index];
-                          final rank = vm.assignedRanks[cat];
-                          final assignedFlag = vm.assignedCountries[cat]?.flag;
-                          final emoji = vm.categoryEmojis[cat] ?? "🔹";
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      child: vm.isLoading
+                          ? const Center(child: Loader(type: LoaderType.geoExpert))
+                          : ListView.separated(
+                              key: const ValueKey("categories"),
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              itemCount: vm.categories.length + 1,
+                              separatorBuilder: (_, __) => const SizedBox(height: 8),
+                              itemBuilder: (context, index) {
+                                if (index < vm.categories.length) {
+                                  final cat = vm.categories[index];
+                                  final rank = vm.assignedRanks[cat];
+                                  final assignedFlag = vm.assignedCountries[cat]?.flag;
+                                  final emoji = vm.categoryEmojis[cat] ?? "🔹";
 
-                          final enabled = (vm.currentCountry != null &&
-                              rank == null &&
-                              !vm.isRolling);
+                                  final enabled = (vm.currentCountry != null &&
+                                      rank == null &&
+                                      !vm.isRolling);
 
-                          List<Color> gradientColors = [
-                            Colors.grey.shade700,
-                            Colors.grey.shade400
-                          ];
-                          if (rank != null) {
-                            if (rank <= 25) {
-                              gradientColors = [
-                                Colors.green.shade300,
-                                Colors.green.shade600
-                              ];
-                            } else if (rank > 25 && rank <= 75) {
-                              gradientColors = [
-                                Colors.orange.shade300,
-                                Colors.orange.shade600
-                              ];
-                            } else if (rank > 75) {
-                              gradientColors = [
-                                Colors.red.shade300,
-                                Colors.red.shade600
-                              ];
-                            }
-                          }
+                                  List<Color> gradientColors = [
+                                    Colors.grey.shade700,
+                                    Colors.grey.shade400
+                                  ];
+                                  if (rank != null) {
+                                    if (rank <= 25) {
+                                      gradientColors = [
+                                        Colors.green.shade300,
+                                        Colors.green.shade600
+                                      ];
+                                    } else if (rank > 25 && rank <= 75) {
+                                      gradientColors = [
+                                        Colors.orange.shade300,
+                                        Colors.orange.shade600
+                                      ];
+                                    } else if (rank > 75) {
+                                      gradientColors = [
+                                        Colors.red.shade300,
+                                        Colors.red.shade600
+                                      ];
+                                    }
+                                  }
 
-                          return AnimatedContainer(
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeInOut,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: gradientColors),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: enabled
-                                    ? () => vm.assignToCategory(cat)
-                                    : null,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 14, horizontal: 12),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(emoji,
-                                              style: const TextStyle(
-                                                  fontSize: 22)),
-                                          const SizedBox(width: 8),
-                                          ConstrainedBox(
-                                            constraints:
-                                                const BoxConstraints(
-                                                    maxWidth: 180),
-                                            child: Text(
-                                              cat,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                  return AnimatedContainer(
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeInOut,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(colors: gradientColors),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(12),
+                                        onTap: enabled
+                                            ? () => vm.assignToCategory(cat)
+                                            : null,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 14, horizontal: 12),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(emoji,
+                                                      style: const TextStyle(fontSize: 22)),
+                                                  const SizedBox(width: 8),
+                                                  ConstrainedBox(
+                                                    constraints: const BoxConstraints(maxWidth: 180),
+                                                    child: Text(
+                                                      cat,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
+                                              if (rank != null || assignedFlag != null)
+                                                Row(
+                                                  children: [
+                                                    if (rank != null)
+                                                      Text(
+                                                        "#$rank",
+                                                        style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    if (assignedFlag != null)
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 6),
+                                                        child: Text(
+                                                          assignedFlag,
+                                                          style: const TextStyle(fontSize: 24),
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      if (rank != null || assignedFlag != null)
-                                        Row(
-                                          children: [
-                                            if (rank != null)
-                                              Text(
-                                                "#$rank",
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            if (assignedFlag != null)
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 6),
-                                                child: Text(
-                                                  assignedFlag,
-                                                  style: const TextStyle(
-                                                      fontSize: 24),
-                                                ),
-                                              ),
-                                          ],
                                         ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  if (vm.gameStarted || vm.currentCountry != null) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      child: AnimatedContainer(
+                                        duration: const Duration(milliseconds: 400),
+                                        curve: Curves.easeInOut,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [Colors.red.shade400, Colors.red.shade700],
+                                          ),
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.transparent,
+                                            shadowColor: Colors.transparent,
+                                            padding: const EdgeInsets.symmetric(vertical: 16),
+                                            textStyle: const TextStyle(fontSize: 18),
+                                          ),
+                                          onPressed: vm.restartGame,
+                                          child: Text(t.resetGame),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                }
+                              },
                             ),
-                          );
-                        } else {
-                          if (vm.gameStarted || vm.currentCountry != null) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.easeInOut,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.red.shade400,
-                                      Colors.red.shade700
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16),
-                                    textStyle: const TextStyle(fontSize: 18),
-                                  ),
-                                  onPressed: vm.restartGame,
-                                  child: Text(t.resetGame),
-                                ),
-                              ),
-                            );
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }
-                      },
                     ),
                   ),
                   const SizedBox(height: 12),
                 ],
               ),
-              // --- Botón Skip arriba a la derecha ---
               Positioned(
                 top: 60,
                 right: 12,
@@ -297,8 +288,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 Builder(
                   builder: (context) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (vm.betterChoiceMessage != null &&
-                          vm.showBetterChoicePopup) {
+                      if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup) {
                         CustomSnackBar.show(
                           context,
                           message: vm.betterChoiceMessage!,
@@ -348,8 +338,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
       pageBuilder: (_, __, ___) {
         return Center(
           child: Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Container(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -360,10 +349,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                     children: [
                       const Text(
                         "🏆 High Scores",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
@@ -430,10 +416,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
 
         return FadeTransition(
           opacity: fade,
-          child: ScaleTransition(
-            scale: scale,
-            child: child,
-          ),
+          child: ScaleTransition(scale: scale, child: child),
         );
       },
     );

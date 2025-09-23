@@ -15,12 +15,14 @@ class GeoExpertViewModel extends ChangeNotifier {
   final Random _random = Random();
   final AudioPlayer _audioPlayer = AudioPlayer();
   Timer? _rollTimer;
+  bool isLoading = true;
 
   bool isRolling = false;
   bool gameStarted = false;
   Country? currentCountry;
   int totalScore = 0;
   int skipsLeft = 3;
+  static const int penaltyScore = 800;
 
   final Map<String, String> _allCategoryEmojis = const {
     "HDI": "🌐",
@@ -61,6 +63,11 @@ class GeoExpertViewModel extends ChangeNotifier {
   Map<String, String> categoryEmojis = {};
   Map<String, String> categoryLabels = {};
 
+  // 🔒 categorías fijas del daily
+  List<String> _dailyCategories = [];
+  Map<String, String> _dailyCategoryEmojis = {};
+  Map<String, String> _dailyCategoryLabels = {};
+
   Map<String, int?> assignedRanks = {};
   Map<String, Country?> assignedCountries = {};
   List<int> topScores = [];
@@ -71,11 +78,9 @@ class GeoExpertViewModel extends ChangeNotifier {
   final ConfettiController confettiController =
       ConfettiController(duration: const Duration(seconds: 3));
 
-  // --- POPUP better choice ---
   bool _showBetterChoicePopup = false;
   String? _betterChoiceMessage;
 
-  // ✅ getter y setter público
   bool get showBetterChoicePopup => _showBetterChoicePopup;
   set showBetterChoicePopup(bool value) {
     _showBetterChoicePopup = value;
@@ -84,23 +89,32 @@ class GeoExpertViewModel extends ChangeNotifier {
 
   String? get betterChoiceMessage => _betterChoiceMessage;
 
-  // --- Daily mode fields ---
   final bool isDailyMode;
   late AppLocalizations t;
   List<Country> _dailySequence = [];
-  int _dailyIndex = 0; // next index to use from sequence
+  int _dailyIndex = 0;
   bool _dailyAttemptStarted = false;
   bool _dailyAttemptCompleted = false;
 
-   final NowProvider nowProvider;
+  final NowProvider nowProvider;
 
-GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
+  GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
       : nowProvider = now ?? DateTime.now {
     t = AppLocalizations.of(context)!;
     _loadCountries();
   }
 
   Future<void> _initGame() async {
+    isLoading = true;
+    if (isDailyMode) {
+      _prepareDailyCategoriesIfNeeded();
+      categories = _dailyCategories;
+      categoryEmojis = _dailyCategoryEmojis;
+      categoryLabels = _dailyCategoryLabels;
+    } else {
+      _selectRandomCategories();
+    }
+
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
     totalScore = 0;
@@ -113,15 +127,14 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
     _dailyAttemptCompleted = false;
     await _loadHighScores();
 
-    // Si es modo diario, intentar restaurar estado anterior (si existe)
     if (isDailyMode) {
       await _restoreDailyStateIfAny();
     }
+    isLoading = false;
   }
 
   Future<void> _loadCountries() async {
     countries = await CountryService.loadCountries();
-    _selectRandomCategories();
     await _initGame();
     notifyListeners();
   }
@@ -147,7 +160,69 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
     }
   }
 
-  String _dailyKeyForTodayCEST() {
+  void _prepareDailyCategoriesIfNeeded() {
+    if (_dailyCategories.isNotEmpty || countries.isEmpty) return;
+
+    final key = _dailyKeyForTodayCEST();
+    final seed = key.hashCode;
+    final rng = Random(seed);
+
+    final allKeys = countries.first.rankings.keys.toList();
+    allKeys.shuffle(rng);
+    _dailyCategories = allKeys.take(8).toList();
+
+    final availableEmojis = _allCategoryEmojis.entries.toList();
+    availableEmojis.shuffle(rng);
+
+    _dailyCategoryEmojis = {};
+    _dailyCategoryLabels = {};
+    for (var i = 0; i < _dailyCategories.length; i++) {
+      final key = _dailyCategories[i];
+      final emoji =
+          _allCategoryEmojis[key] ?? availableEmojis[i % availableEmojis.length].value;
+      _dailyCategoryEmojis[key] = emoji;
+      _dailyCategoryLabels[key] = "$emoji $key";
+    }
+  }
+
+  String _dailyKeyForTodayCEST2() {
+    final nowUtc = nowProvider().toUtc();
+    final nowCest = nowUtc.add(const Duration(hours: 2));
+    DateTime effectiveCest = nowCest;
+    if (nowCest.hour < 8) {
+      effectiveCest = nowCest.subtract(const Duration(days: 1));
+    }
+    final year = effectiveCest.year;
+    final month = effectiveCest.month;
+    final day = effectiveCest.day;
+    return "$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}";
+  }
+
+  void _prepareDailySequenceIfNeeded() {
+    if (!isDailyMode) return;
+    final key = _dailyKeyForTodayCEST();
+
+    if (_dailySequence.isNotEmpty) return;
+
+    final seed = key.hashCode;
+    final rng = Random(seed);
+
+    final temp = List<Country>.from(countries);
+    for (var i = temp.length - 1; i > 0; i--) {
+      final j = rng.nextInt(i + 1);
+      final t = temp[i];
+      temp[i] = temp[j];
+      temp[j] = t;
+    }
+
+    final take = temp.length >= 11 ? 11 : temp.length;
+    _dailySequence = temp.take(take).toList();
+  }
+
+  // ... ⬇️ resto del código se mantiene igual ⬇️ ...
+
+
+    String _dailyKeyForTodayCEST() {
     // Normalizamos día según CEST (UTC+2). La "hora de renovación" es a las 08:00 CEST.
     // Si la hora CEST actual es anterior a las 08:00, consideramos que pertenecemos al día anterior.
     final nowUtc = DateTime.now().toUtc();
@@ -164,31 +239,6 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
     final day = effectiveCest.day;
     // Formato YYYY-MM-DD
     return "$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}";
-  }
-
-  void _prepareDailySequenceIfNeeded() {
-    if (!isDailyMode) return;
-    final key = _dailyKeyForTodayCEST();
-
-    // Si ya calculado para esta sesión no recalcular
-    if (_dailySequence.isNotEmpty) return;
-
-    // Usa seed determinista por día para que todos los jugadores obtengan la misma secuencia
-    final seed = key.hashCode;
-    final rng = Random(seed);
-
-    final temp = List<Country>.from(countries);
-    // Shuffle deterministically
-    for (var i = temp.length - 1; i > 0; i--) {
-      final j = rng.nextInt(i + 1);
-      final t = temp[i];
-      temp[i] = temp[j];
-      temp[j] = t;
-    }
-
-    // Tomamos 11 países: 8 a jugar + 3 "skip options"
-    final take = temp.length >= 11 ? 11 : temp.length;
-    _dailySequence = temp.take(take).toList();
   }
 
   Future<void> _loadHighScores() async {
@@ -251,24 +301,22 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
   }
 
   Future<void> startRolling() async {
-    // If daily mode and there's a stored attempt that was started and not completed
-    // we still allow user to start a new attempt only if they haven't started today.
     if (isDailyMode) {
       _prepareDailySequenceIfNeeded();
-      // if an attempt is already started and not completed, we should show game over instead of starting
-      if (_dailyAttemptStarted && !_dailyAttemptCompleted) {
-        // show game over immediately (abandoned previously)
-        // Show a game over with penalty score 800 (as requested) and do not start a new attempt
-        _showGameOver(dailyAbandoned: true);
-        return;
+
+      // ⚠️ Aquí estaba el bug: no debemos forzar game over si ya está marcado como empezado,
+      // porque puede ser un intento nuevo en el mismo día.
+      // Antes: if (_dailyAttemptStarted && !_dailyAttemptCompleted) { _showGameOver(...); return; }
+
+      // Si es la primera vez del día, marcar como empezado
+      if (!_dailyAttemptStarted) {
+        _dailyAttemptStarted = true;
+        _dailyAttemptCompleted = false;
+        _dailyIndex = 0;
+        skipsLeft = 3;
+        totalScore = 0;
+        _persistDailyState();
       }
-      // Mark attempt as started and persist
-      _dailyAttemptStarted = true;
-      _dailyAttemptCompleted = false;
-      _dailyIndex = 0;
-      skipsLeft = 3;
-      totalScore = 0;
-      _persistDailyState();
     }
 
     isRolling = true;
@@ -280,7 +328,6 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
     await _audioPlayer.play(AssetSource('sounds/roll_sound.mp3'));
 
     _rollTimer?.cancel();
-    // During rolling show random flags for visual effect
     _rollTimer = Timer.periodic(const Duration(milliseconds: 100), (_) {
       currentCountry = countries[_random.nextInt(countries.length)];
       notifyListeners();
@@ -289,13 +336,10 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
     Future.delayed(const Duration(seconds: 2), () async {
       _rollTimer?.cancel();
       await _audioPlayer.stop();
-      // Determine final country
       if (isDailyMode && _dailySequence.isNotEmpty) {
-        // pick from pre-defined sequence at _dailyIndex
         if (_dailyIndex < _dailySequence.length) {
           currentCountry = _dailySequence[_dailyIndex];
         } else {
-          // fallback to random if sequence exhausted
           currentCountry = countries[_random.nextInt(countries.length)];
         }
       } else {
@@ -307,6 +351,7 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
       notifyListeners();
     });
   }
+
 
   void assignToCategory(String category) {
     if (currentCountry == null) return;
@@ -449,6 +494,7 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
       // In daily mode: if abandoned, use penalty score 800 (as requested).
       if (dailyAbandoned) {
         // do NOT save 800 as top score, but show it to the user
+        _saveScore(penaltyScore);
       } else {
         // Save completed daily score as top score too
         if (_dailyAttemptCompleted || forcedScore != null) {
@@ -460,7 +506,7 @@ GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
     confettiController.play();
 
     // Build message text depending on daily mode / abandoned / forcedScore
-    final displayScore = forcedScore ?? (dailyAbandoned ? 800 : totalScore);
+    final displayScore = forcedScore ?? (dailyAbandoned ? penaltyScore : totalScore);
     final title = t.gameOver;
 
     showDialog(
