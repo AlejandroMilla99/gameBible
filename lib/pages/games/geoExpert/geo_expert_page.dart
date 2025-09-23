@@ -7,7 +7,6 @@ import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/dialogs/custom_snackbar.dart';
 import 'package:gamebible/l10n/app_localizations.dart';
 import 'package:gamebible/components/loader.dart';
-import 'package:gamebible/components/corrects_counter.dart';
 
 class GeoExpertPage extends StatefulWidget {
   const GeoExpertPage({super.key, required this.title, required this.isDailyMode});
@@ -29,7 +28,6 @@ class _GeoExpertPageState extends State<GeoExpertPage>
       create: (_) => GeoExpertViewModel(
         context,
         widget.isDailyMode,
-        //now: () => DateTime.utc(2025, 5, 24, 8, 59),
       ),
       child: Consumer<GeoExpertViewModel>(builder: (context, vm, child) {
         if (vm.isRolling) {
@@ -59,64 +57,87 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 children: [
                   const SizedBox(height: 24),
                   Center(
-                    child: CorrectCounter(correctAnswers: vm.totalScore, withReset: false, text: t.geoExpertTotalScore)
-                  ),
+                      child: CorrectCounter(
+                          correctAnswers: vm.totalScore,
+                          withReset: false,
+                          text: t.geoExpertTotalScore)),
                   const SizedBox(height: 12),
                   SizedBox(
                     height: 180,
-                    child: Center(
-                      child: vm.currentCountry == null && !vm.isRolling
-                          ? (!vm.gameStarted
-                              ? ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 40,
-                                      vertical: 20,
-                                    ),
-                                    textStyle: const TextStyle(fontSize: 22),
-                                  ),
-                                  onPressed: vm.startRolling,
-                                  child: Text(t.startGame),
-                                )
-                              : const Text("", style: TextStyle(fontSize: 16)))
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  vm.currentCountry?.flag ?? "",
-                                  style: const TextStyle(fontSize: 80),
-                                ),
-                                const SizedBox(height: 6),
-                                SizedBox(
-                                  height: 40,
-                                  child: AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 400),
-                                    transitionBuilder: (child, anim) =>
-                                        FadeTransition(opacity: anim, child: child),
-                                    child: (!revealName)
-                                        ? ElevatedButton(
-                                            key: const ValueKey("button"),
-                                            onPressed: vm.isRolling
-                                                ? null
-                                                : () {
-                                                    setState(() {
-                                                      revealName = true;
-                                                    });
-                                                  },
-                                            child: Text(t.geoExpertShowName),
-                                          )
-                                        : Text(
-                                            vm.isRolling
-                                                ? ""
-                                                : vm.currentCountry?.name ?? "",
-                                            key: const ValueKey("name"),
-                                            style: const TextStyle(fontSize: 20),
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      return Stack(
+                        children: [
+                          Center(
+                            child: vm.currentCountry == null && !vm.isRolling
+                                ? (!vm.gameStarted
+                                    ? ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 40,
+                                            vertical: 20,
                                           ),
+                                          textStyle: const TextStyle(fontSize: 22),
+                                        ),
+                                        onPressed: vm.startRolling,
+                                        child: Text(t.startGame),
+                                      )
+                                    : const Text("", style: TextStyle(fontSize: 16)))
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        vm.currentCountry?.flag ?? "",
+                                        style: const TextStyle(fontSize: 80),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      SizedBox(
+                                        height: 40,
+                                        child: AnimatedSwitcher(
+                                          duration:
+                                              const Duration(milliseconds: 400),
+                                          transitionBuilder: (child, anim) =>
+                                              FadeTransition(
+                                                  opacity: anim, child: child),
+                                          child: (!revealName)
+                                              ? ElevatedButton(
+                                                  key: const ValueKey("button"),
+                                                  onPressed: vm.isRolling
+                                                      ? null
+                                                      : () {
+                                                          setState(() {
+                                                            revealName = true;
+                                                          });
+                                                        },
+                                                  child: Text(t.geoExpertShowName),
+                                                )
+                                              : Text(
+                                                  vm.isRolling
+                                                      ? ""
+                                                      : vm.currentCountry?.name ?? "",
+                                                  key: const ValueKey("name"),
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
+                                                ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                          ),
+                          if(vm.gameStarted)
+                          Align(
+                            alignment: const FractionalOffset(0.90, 0.35),
+                            child: ElevatedButton(
+                              onPressed: vm.skipsLeft > 0 &&
+                                      !vm.isRolling &&
+                                      vm.gameStarted
+                                  ? vm.skipCountry
+                                  : null,
+                              child: Text("Skips: ${vm.skipsLeft}"),
                             ),
-                    ),
+                          ),
+                        ],
+                      );
+                    }),
                   ),
                   const SizedBox(height: 8),
                   Expanded(
@@ -126,14 +147,17 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                           ? const Center(child: Loader(type: LoaderType.geoExpert))
                           : ListView.separated(
                               key: const ValueKey("categories"),
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
                               itemCount: vm.categories.length + 1,
-                              separatorBuilder: (_, __) => const SizedBox(height: 8),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(height: 8),
                               itemBuilder: (context, index) {
                                 if (index < vm.categories.length) {
                                   final cat = vm.categories[index];
                                   final rank = vm.assignedRanks[cat];
-                                  final assignedFlag = vm.assignedCountries[cat]?.flag;
+                                  final assignedFlag =
+                                      vm.assignedCountries[cat]?.flag;
                                   final emoji = vm.categoryEmojis[cat] ?? "🔹";
 
                                   final enabled = (vm.currentCountry != null &&
@@ -187,14 +211,17 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                               Row(
                                                 children: [
                                                   Text(emoji,
-                                                      style: const TextStyle(fontSize: 22)),
+                                                      style: const TextStyle(
+                                                          fontSize: 22)),
                                                   const SizedBox(width: 8),
                                                   ConstrainedBox(
-                                                    constraints: const BoxConstraints(maxWidth: 180),
+                                                    constraints: const BoxConstraints(
+                                                        maxWidth: 180),
                                                     child: Text(
                                                       cat,
                                                       maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight: FontWeight.bold,
@@ -218,10 +245,13 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                                       ),
                                                     if (assignedFlag != null)
                                                       Padding(
-                                                        padding: const EdgeInsets.only(left: 6),
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                left: 6),
                                                         child: Text(
                                                           assignedFlag,
-                                                          style: const TextStyle(fontSize: 24),
+                                                          style: const TextStyle(
+                                                              fontSize: 24),
                                                         ),
                                                       ),
                                                   ],
@@ -235,13 +265,17 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                 } else {
                                   if (vm.gameStarted || vm.currentCountry != null) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
                                       child: AnimatedContainer(
                                         duration: const Duration(milliseconds: 400),
                                         curve: Curves.easeInOut,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
-                                            colors: [Colors.red.shade400, Colors.red.shade700],
+                                            colors: [
+                                              Colors.red.shade400,
+                                              Colors.red.shade700
+                                            ],
                                           ),
                                           borderRadius: BorderRadius.circular(12),
                                         ),
@@ -250,7 +284,8 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                             foregroundColor: Colors.white,
                                             backgroundColor: Colors.transparent,
                                             shadowColor: Colors.transparent,
-                                            padding: const EdgeInsets.symmetric(vertical: 16),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16),
                                             textStyle: const TextStyle(fontSize: 18),
                                           ),
                                           onPressed: vm.restartGame,
@@ -269,22 +304,12 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                   const SizedBox(height: 12),
                 ],
               ),
-              Positioned(
-                top: 90,
-                right: 20,
-                width: 100,
-                child: ElevatedButton(
-                  onPressed: vm.skipsLeft > 0 && !vm.isRolling && vm.gameStarted
-                      ? vm.skipCountry
-                      : null,
-                  child: Text("Skips: ${vm.skipsLeft}"),
-                ),
-              ),
               if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup)
                 Builder(
                   builder: (context) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (vm.betterChoiceMessage != null && vm.showBetterChoicePopup) {
+                      if (vm.betterChoiceMessage != null &&
+                          vm.showBetterChoicePopup) {
                         CustomSnackBar.show(
                           context,
                           message: vm.betterChoiceMessage!,
@@ -326,6 +351,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
 
   void _showHighScores(BuildContext context, List<int> topScores) {
     showGeneralDialog(
+
       context: context,
       barrierDismissible: true,
       barrierLabel: "HighScores",

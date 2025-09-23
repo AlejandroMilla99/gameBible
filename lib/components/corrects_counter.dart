@@ -37,7 +37,7 @@ class CorrectCounter extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center, // 👈 centra horizontalmente
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
@@ -49,6 +49,7 @@ class CorrectCounter extends StatelessWidget {
                 color: AppColors.textDark,
               ),
             ),
+            const SizedBox(width: 6), // 👈 un pequeño espacio entre texto y número
             ClipRect(
               child: SizedBox(
                 height: 28,
@@ -77,9 +78,9 @@ class CorrectCounter extends StatelessWidget {
               ),
             ),
             if (withReset) ...[
-              const SizedBox(width: 4),
+              const SizedBox(width: 8),
               Baseline(
-                baseline: 20,
+                baseline: 30,
                 baselineType: TextBaseline.alphabetic,
                 child: IconButton(
                   onPressed: onReset,
