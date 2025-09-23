@@ -9,6 +9,8 @@ import '../../../services/country_service.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:gamebible/l10n/app_localizations.dart';
 
+typedef NowProvider = DateTime Function();
+
 class GeoExpertViewModel extends ChangeNotifier {
   final Random _random = Random();
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -90,7 +92,10 @@ class GeoExpertViewModel extends ChangeNotifier {
   bool _dailyAttemptStarted = false;
   bool _dailyAttemptCompleted = false;
 
-  GeoExpertViewModel(this.context, this.isDailyMode) {
+   final NowProvider nowProvider;
+
+GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
+      : nowProvider = now ?? DateTime.now {
     t = AppLocalizations.of(context)!;
     _loadCountries();
   }
@@ -144,12 +149,19 @@ class GeoExpertViewModel extends ChangeNotifier {
 
   String _dailyKeyForTodayCEST() {
     // Normalizamos día según CEST (UTC+2). La "hora de renovación" es a las 08:00 CEST.
-    // Para determinar la "fecha del challenge" tomamos la fecha CEST actual.
+    // Si la hora CEST actual es anterior a las 08:00, consideramos que pertenecemos al día anterior.
     final nowUtc = DateTime.now().toUtc();
     final nowCest = nowUtc.add(const Duration(hours: 2)); // CEST = UTC+2
-    final year = nowCest.year;
-    final month = nowCest.month;
-    final day = nowCest.day;
+
+    DateTime effectiveCest = nowCest;
+    if (nowCest.hour < 8) {
+      // antes de las 08:00 CEST -> corresponde al día anterior
+      effectiveCest = nowCest.subtract(const Duration(days: 1));
+    }
+
+    final year = effectiveCest.year;
+    final month = effectiveCest.month;
+    final day = effectiveCest.day;
     // Formato YYYY-MM-DD
     return "$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}";
   }
