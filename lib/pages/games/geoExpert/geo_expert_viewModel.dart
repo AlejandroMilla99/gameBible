@@ -49,7 +49,8 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Technology": "💻",
     "Cuisine": "🍽️",
     "Coffee": "☕",
-    "Pollution": "🌫️"
+    "Pollution": "🌫️",
+    "LGBTQI rights": "🏳️‍🌈"
   };
 
   late List<Country> countries;
