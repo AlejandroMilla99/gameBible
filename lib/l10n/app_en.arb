@@ -142,7 +142,19 @@
   "record": "Touch for recording",
   "reproduce": "Touch for listening",
 
-  "loading": "Loading..."
+  "loading": "Loading...",
+
+  "geoExpertTotalScore": "Total score: {totalScore}",
+  "startGame": "Start game",
+  "geoExpertShowName": "Show name",
+  "gameOver": "Game over",
+  "share": "Share",
+  "geoExpertAbandonTryDaily": "You have abandoned the attempt. Penalty score:",
+  "geoExpertFinalScoreDaily": "Your total score was:",
+  "geoExpertFinalScoreNormal": "Your total score is:",
+  "geoExpertShareText": "🌍 Day #1 at GeoExpert\n🏆 Total Score: {displayScore}\n🎯 Show off your geographic knowledge!\n📲 Play now: https://link_to_the_app",
+  "geoExpertRecommendation": "⚡You had a better choice: {category} (Rank: {rank})"
+
 
 }
 

@@ -199,7 +199,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get playAgain => 'Jugar de nuevo';
+  String get playAgain => 'Repetir';
 
   @override
   String get nextQuestion => 'Siguiente pregunta';
@@ -386,4 +386,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get loading => 'Cargando...';
+
+  @override
+  String geoExpertTotalScore(Object totalScore) {
+    return 'Puntuación total: $totalScore';
+  }
+
+  @override
+  String get startGame => 'Empezar';
+
+  @override
+  String get geoExpertShowName => 'Revelar nombre';
+
+  @override
+  String get gameOver => 'Fin del juego';
+
+  @override
+  String get share => 'Compartir';
+
+  @override
+  String get geoExpertAbandonTryDaily => 'Has abandonado el intento. Puntuación penal:';
+
+  @override
+  String get geoExpertFinalScoreDaily => 'Tu puntuación total ha sido:';
+
+  @override
+  String get geoExpertFinalScoreNormal => 'Tu puntuación total es:';
+
+  @override
+  String geoExpertShareText(Object displayScore) {
+    return '🌍 Día #1 en GeoExpert\n🏆 Puntuación Total: \$displayScore\n🎯 ¡Demuestra tus conocimientos geográficos!\n📲 Juega ahora: https://link_a_la_app';
+  }
+
+  @override
+  String geoExpertRecommendation(Object category, Object rank) {
+    return '⚡ Podrías haber elegido mejor: $category (Ranking: $rank)';
+  }
 }

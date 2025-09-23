@@ -4,6 +4,7 @@ import 'package:gamebible/constants/app_colors.dart';
 import 'geo_expert_viewModel.dart';
 import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/dialogs/custom_snackbar.dart';
+import 'package:gamebible/l10n/app_localizations.dart';
 
 class GeoExpertPage extends StatefulWidget {
   const GeoExpertPage({super.key, required this.title, required this.isDailyMode});
@@ -20,6 +21,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return ChangeNotifierProvider(
       create: (_) => GeoExpertViewModel(context, widget.isDailyMode),
       child: Consumer<GeoExpertViewModel>(builder: (context, vm, child) {
@@ -50,8 +52,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 children: [
                   const SizedBox(height: 24),
                   Center(
-                    child: Text(
-                      "Total Score: ${vm.totalScore}",
+                    child: Text(t.geoExpertTotalScore(vm.totalScore),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -73,7 +74,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                     textStyle: const TextStyle(fontSize: 22),
                                   ),
                                   onPressed: vm.startRolling,
-                                  child: const Text("Start Game"),
+                                  child: Text(t.startGame),
                                 )
                               : const Text("",
                                   style: TextStyle(fontSize: 16)))
@@ -106,7 +107,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                                     });
                                                   },
                                             child:
-                                                const Text("Revelar nombre"),
+                                                Text(t.geoExpertShowName),
                                           )
                                         : Text(
                                             vm.isRolling
@@ -266,7 +267,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                     textStyle: const TextStyle(fontSize: 18),
                                   ),
                                   onPressed: vm.restartGame,
-                                  child: const Text("Reset Game"),
+                                  child: Text(t.resetGame),
                                 ),
                               ),
                             );
@@ -282,8 +283,9 @@ class _GeoExpertPageState extends State<GeoExpertPage>
               ),
               // --- Botón Skip arriba a la derecha ---
               Positioned(
-                top: 12,
+                top: 60,
                 right: 12,
+                width: 100,
                 child: ElevatedButton(
                   onPressed: vm.skipsLeft > 0 && !vm.isRolling && vm.gameStarted
                       ? vm.skipCountry
@@ -325,6 +327,8 @@ class _GeoExpertPageState extends State<GeoExpertPage>
           "Pulsa empezar a jugar y verás la bandera que representa a tu primer país.",
           "Asigna ese país a la categoría en la que creas que tiene mejor ranking internacional (cuanto más bajo, mejor).",
           "Haz lo mismo con los siguientes países, el juego acabará cuando rellenes todas las categorías.",
+          "Tienes la posibilidad de hacer hasta 3 skips y pasando a un país diferente, úsalos con inteligencia.",
+          "Puedes revelar el nombre del país si no conoces la bandera, o dejarlo oculto para un mayor desafío.",
           "Cuanto menor sea tu puntuación acumulada mejor lo habrás hecho, podrás visualizar tu top 3 en el botón del trofeo en la parte superior derecha."
         ],
         example:

@@ -386,4 +386,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loading => 'Loading...';
+
+  @override
+  String geoExpertTotalScore(Object totalScore) {
+    return 'Total score: $totalScore';
+  }
+
+  @override
+  String get startGame => 'Start game';
+
+  @override
+  String get geoExpertShowName => 'Show name';
+
+  @override
+  String get gameOver => 'Game over';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get geoExpertAbandonTryDaily => 'You have abandoned the attempt. Penalty score:';
+
+  @override
+  String get geoExpertFinalScoreDaily => 'Your total score was:';
+
+  @override
+  String get geoExpertFinalScoreNormal => 'Your total score is:';
+
+  @override
+  String geoExpertShareText(Object displayScore) {
+    return '🌍 Day #1 at GeoExpert\n🏆 Total Score: $displayScore\n🎯 Show off your geographic knowledge!\n📲 Play now: https://link_to_the_app';
+  }
+
+  @override
+  String geoExpertRecommendation(Object category, Object rank) {
+    return '⚡You had a better choice: $category (Rank: $rank)';
+  }
 }

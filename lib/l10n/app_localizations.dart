@@ -844,6 +844,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
+
+  /// No description provided for @geoExpertTotalScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Total score: {totalScore}'**
+  String geoExpertTotalScore(Object totalScore);
+
+  /// No description provided for @startGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Start game'**
+  String get startGame;
+
+  /// No description provided for @geoExpertShowName.
+  ///
+  /// In en, this message translates to:
+  /// **'Show name'**
+  String get geoExpertShowName;
+
+  /// No description provided for @gameOver.
+  ///
+  /// In en, this message translates to:
+  /// **'Game over'**
+  String get gameOver;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @geoExpertAbandonTryDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'You have abandoned the attempt. Penalty score:'**
+  String get geoExpertAbandonTryDaily;
+
+  /// No description provided for @geoExpertFinalScoreDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Your total score was:'**
+  String get geoExpertFinalScoreDaily;
+
+  /// No description provided for @geoExpertFinalScoreNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Your total score is:'**
+  String get geoExpertFinalScoreNormal;
+
+  /// No description provided for @geoExpertShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'🌍 Day #1 at GeoExpert\n🏆 Total Score: {displayScore}\n🎯 Show off your geographic knowledge!\n📲 Play now: https://link_to_the_app'**
+  String geoExpertShareText(Object displayScore);
+
+  /// No description provided for @geoExpertRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'⚡You had a better choice: {category} (Rank: {rank})'**
+  String geoExpertRecommendation(Object category, Object rank);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

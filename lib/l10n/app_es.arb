@@ -66,7 +66,7 @@
   "loseTitle": "😢 Fin del juego 😢",
   "winDescription": "¡Felicidades! La palabra era {word}. Acertaste en {attempts} intentos.",
   "loseDescription": "No acertaste la palabra. La correcta era: {word}",
-  "playAgain": "Jugar de nuevo",
+  "playAgain": "Repetir",
 
 
   "nextQuestion": "Siguiente pregunta",
@@ -141,6 +141,17 @@
   "record": "Pulsa para grabar",
   "reproduce": "Pulsa para reproducir",
 
-  "loading": "Cargando..."
+  "loading": "Cargando...",
+
+  "geoExpertTotalScore": "Puntuación total: {totalScore}",
+  "startGame": "Empezar",
+  "geoExpertShowName": "Revelar nombre",
+  "gameOver": "Fin del juego",
+  "share": "Compartir",
+  "geoExpertAbandonTryDaily": "Has abandonado el intento. Puntuación penal:",
+  "geoExpertFinalScoreDaily": "Tu puntuación total ha sido:",
+  "geoExpertFinalScoreNormal": "Tu puntuación total es:",
+  "geoExpertShareText": "🌍 Día #1 en GeoExpert\n🏆 Puntuación Total: $displayScore\n🎯 ¡Demuestra tus conocimientos geográficos!\n📲 Juega ahora: https://link_a_la_app",
+  "geoExpertRecommendation": "⚡ Podrías haber elegido mejor: {category} (Ranking: {rank})"
   
 }
