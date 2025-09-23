@@ -219,9 +219,6 @@ class GeoExpertViewModel extends ChangeNotifier {
     _dailySequence = temp.take(take).toList();
   }
 
-  // ... ⬇️ resto del código se mantiene igual ⬇️ ...
-
-
     String _dailyKeyForTodayCEST() {
     // Normalizamos día según CEST (UTC+2). La "hora de renovación" es a las 08:00 CEST.
     // Si la hora CEST actual es anterior a las 08:00, consideramos que pertenecemos al día anterior.
@@ -241,24 +238,27 @@ class GeoExpertViewModel extends ChangeNotifier {
     return "$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}";
   }
 
-  Future<void> _loadHighScores() async {
-    final prefs = await SharedPreferences.getInstance();
-    final scores = prefs.getStringList('geoExpertScores') ?? [];
-    topScores = scores.map((s) => int.tryParse(s) ?? 0).toList();
-    topScores.sort((a, b) => a.compareTo(b));
-    if (topScores.length > 3) topScores = topScores.sublist(0, 3);
-    notifyListeners();
-  }
+Future<void> _loadHighScores() async {
+  final prefs = await SharedPreferences.getInstance();
+  final key = isDailyMode ? 'geoExpertScores_daily' : 'geoExpertScores_normal';
+  final scores = prefs.getStringList(key) ?? [];
+  topScores = scores.map((s) => int.tryParse(s) ?? 0).toList();
+  topScores.sort((a, b) => a.compareTo(b));
+  if (topScores.length > 3) topScores = topScores.sublist(0, 3);
+  notifyListeners();
+}
 
-  Future<void> _saveScore(int score) async {
-    final prefs = await SharedPreferences.getInstance();
-    topScores.add(score);
-    topScores.sort((a, b) => a.compareTo(b));
-    if (topScores.length > 3) topScores = topScores.sublist(0, 3);
-    await prefs.setStringList(
-        'geoExpertScores', topScores.map((e) => e.toString()).toList());
-    notifyListeners();
-  }
+Future<void> _saveScore(int score) async {
+  final prefs = await SharedPreferences.getInstance();
+  final key = isDailyMode ? 'geoExpertScores_daily' : 'geoExpertScores_normal';
+  topScores.add(score);
+  topScores.sort((a, b) => a.compareTo(b));
+  if (topScores.length > 3) topScores = topScores.sublist(0, 3);
+  await prefs.setStringList(
+      key, topScores.map((e) => e.toString()).toList());
+  notifyListeners();
+}
+
 
   void restartGame() {
     _selectRandomCategories();
