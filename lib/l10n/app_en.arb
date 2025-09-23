@@ -100,7 +100,7 @@
   "tabuWordTitle": "Taboo Word",
   "tabuWordDesc": "Describe the word to your friends without using a forbidden word list.",
 
-  "correctAnswers": "Correct",
+  "correctAnswers": "Corrects: ",
   "reset": "Reset",
 
   "startWatch": "Start",
@@ -144,7 +144,7 @@
 
   "loading": "Loading...",
 
-  "geoExpertTotalScore": "Total score: {totalScore}",
+  "geoExpertTotalScore": "Total score: ",
   "startGame": "Start game",
   "geoExpertShowName": "Show name",
   "gameOver": "Game over",

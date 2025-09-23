@@ -100,7 +100,7 @@
   "tabuWordTitle": "Palabra tabú",
   "tabuWordDesc": "Describe la palabra a tus amigos sin usar una lista de palabras prohibidas",
 
-  "correctAnswers": "Aciertos",
+  "correctAnswers": "Aciertos: ",
   "reset": "Restablecer",
 
   "startWatch": "Iniciar",
@@ -143,7 +143,7 @@
 
   "loading": "Cargando...",
 
-  "geoExpertTotalScore": "Puntuación total: {totalScore}",
+  "geoExpertTotalScore": "Puntuación total: ",
   "startGame": "Empezar",
   "geoExpertShowName": "Revelar nombre",
   "gameOver": "Fin del juego",

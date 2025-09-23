@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamebible/components/corrects_counter.dart';
 import 'package:provider/provider.dart';
 import 'package:gamebible/constants/app_colors.dart';
 import 'geo_expert_viewModel.dart';
@@ -6,6 +7,7 @@ import 'package:gamebible/components/dialogs/game_info_dialog.dart';
 import 'package:gamebible/components/dialogs/custom_snackbar.dart';
 import 'package:gamebible/l10n/app_localizations.dart';
 import 'package:gamebible/components/loader.dart';
+import 'package:gamebible/components/corrects_counter.dart';
 
 class GeoExpertPage extends StatefulWidget {
   const GeoExpertPage({super.key, required this.title, required this.isDailyMode});
@@ -57,13 +59,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 children: [
                   const SizedBox(height: 24),
                   Center(
-                    child: Text(
-                      t.geoExpertTotalScore(vm.totalScore),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: CorrectCounter(correctAnswers: vm.totalScore, withReset: false, text: t.geoExpertTotalScore)
                   ),
                   const SizedBox(height: 12),
                   SizedBox(
@@ -274,8 +270,8 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                 ],
               ),
               Positioned(
-                top: 60,
-                right: 12,
+                top: 90,
+                right: 20,
                 width: 100,
                 child: ElevatedButton(
                   onPressed: vm.skipsLeft > 0 && !vm.isRolling && vm.gameStarted

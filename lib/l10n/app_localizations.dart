@@ -638,7 +638,7 @@ abstract class AppLocalizations {
   /// No description provided for @correctAnswers.
   ///
   /// In en, this message translates to:
-  /// **'Correct'**
+  /// **'Corrects: '**
   String get correctAnswers;
 
   /// No description provided for @reset.
@@ -848,8 +848,8 @@ abstract class AppLocalizations {
   /// No description provided for @geoExpertTotalScore.
   ///
   /// In en, this message translates to:
-  /// **'Total score: {totalScore}'**
-  String geoExpertTotalScore(Object totalScore);
+  /// **'Total score: '**
+  String get geoExpertTotalScore;
 
   /// No description provided for @startGame.
   ///

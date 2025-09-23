@@ -4,21 +4,27 @@ import '../constants/app_colors.dart';
 
 class CorrectCounter extends StatelessWidget {
   final int correctAnswers;
-  final VoidCallback onReset;
+  final VoidCallback? onReset;
+  final bool withReset;
+  final String? text;
 
   const CorrectCounter({
     super.key,
     required this.correctAnswers,
-    required this.onReset,
+    this.onReset,
+    this.withReset = true,
+    this.text,
   });
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
+    final displayText = text ?? loc.correctAnswers;
 
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        width: 216,
         decoration: BoxDecoration(
           color: AppColors.primary.withOpacity(0.1),
           borderRadius: BorderRadius.circular(12),
@@ -36,7 +42,7 @@ class CorrectCounter extends StatelessWidget {
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              '${loc.correctAnswers}: ',
+              displayText,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -70,19 +76,21 @@ class CorrectCounter extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 4),
-            Baseline(
-              baseline: 20,
-              baselineType: TextBaseline.alphabetic,
-              child: IconButton(
-                onPressed: onReset,
-                icon: const Icon(Icons.refresh, color: AppColors.textDark),
-                tooltip: loc.reset,
-                visualDensity: VisualDensity.compact,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+            if (withReset) ...[
+              const SizedBox(width: 4),
+              Baseline(
+                baseline: 20,
+                baselineType: TextBaseline.alphabetic,
+                child: IconButton(
+                  onPressed: onReset,
+                  icon: const Icon(Icons.refresh, color: AppColors.textDark),
+                  tooltip: loc.reset,
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),

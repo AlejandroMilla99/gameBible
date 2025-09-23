@@ -283,7 +283,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tabuWordDesc => 'Describe la palabra a tus amigos sin usar una lista de palabras prohibidas';
 
   @override
-  String get correctAnswers => 'Aciertos';
+  String get correctAnswers => 'Aciertos: ';
 
   @override
   String get reset => 'Restablecer';
@@ -388,9 +388,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get loading => 'Cargando...';
 
   @override
-  String geoExpertTotalScore(Object totalScore) {
-    return 'Puntuación total: $totalScore';
-  }
+  String get geoExpertTotalScore => 'Puntuación total: ';
 
   @override
   String get startGame => 'Empezar';
