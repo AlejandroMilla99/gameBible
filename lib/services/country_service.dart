@@ -70,6 +70,9 @@ class CountryService {
 
         for (var country in data) {
           final name = country["name"]?["common"] ?? "Unknown";
+          final es_name = country["es_name"]?["common"] ?? "Unknown";
+          final capital = country["capital"]?["common"] ?? "Unknown";
+          final capital_es = country["capital_es"]?["common"] ?? "Unknown";
           final flag = country["flag"] ?? "🏳️";
           final iso3 = country["cca3"]; // For World Bank queries
           final population = (country["population"] ?? 0);
@@ -102,6 +105,9 @@ class CountryService {
             Country(
               name: name,
               flag: flag,
+              es_name: es_name,
+              capital: capital,
+              capital_es: capital_es,
               rankings: {
                 "GDP": gdpRank,
                 "Population": population % 50,

@@ -32,7 +32,7 @@ class GeoExpertViewModel extends ChangeNotifier {
     "Biggest area": "🌍",
     "Smallest area": "🗺️",
     "Happiness": "😊",
-    "Life Expectancy": "⏳",
+    "Life expectancy": "⏳",
     "Safety": "🛡️",
     "Ecofriendly": "🌱",
     "Football": "⚽",
@@ -62,7 +62,7 @@ class GeoExpertViewModel extends ChangeNotifier {
   List<String> categories = [];
   Map<String, String> categoryEmojis = {};
   Map<String, String> categoryLabels = {};
-
+  List<String> currentCategoriesES = [];
   // 🔒 categorías fijas del daily
   List<String> _dailyCategories = [];
   Map<String, String> _dailyCategoryEmojis = {};
@@ -91,6 +91,7 @@ class GeoExpertViewModel extends ChangeNotifier {
 
   final bool isDailyMode;
   late AppLocalizations t;
+  late String locale;
   List<Country> _dailySequence = [];
   int _dailyIndex = 0;
   bool _dailyAttemptStarted = false;
@@ -101,6 +102,7 @@ class GeoExpertViewModel extends ChangeNotifier {
   GeoExpertViewModel(this.context, this.isDailyMode, {NowProvider? now})
       : nowProvider = now ?? DateTime.now {
     t = AppLocalizations.of(context)!;
+    locale = AppLocalizations.of(context)!.localeName;
     _loadCountries();
   }
 
@@ -114,6 +116,10 @@ class GeoExpertViewModel extends ChangeNotifier {
     } else {
       _selectRandomCategories();
     }
+
+      if (locale == "es") {
+        _buildCurrentCategoriesES();
+      }
 
     assignedRanks = {for (var c in categories) c: null};
     assignedCountries = {for (var c in categories) c: null};
@@ -132,6 +138,107 @@ class GeoExpertViewModel extends ChangeNotifier {
     }
     isLoading = false;
   }
+
+void _buildCurrentCategoriesES() {
+  currentCategoriesES = [];
+  for (var key in categories) {
+    switch (key) {
+      case "HDI":
+        currentCategoriesES.add("IDH");
+        break;
+      case "Population":
+        currentCategoriesES.add("Población");
+        break;
+      case "GDP nominal":
+        currentCategoriesES.add("PIB nominal");
+        break;
+      case "GDP per capita":
+        currentCategoriesES.add("PIB per cápita");
+        break;
+      case "Biggest area":
+        currentCategoriesES.add("Área más grande");
+        break;
+      case "Smallest area":
+        currentCategoriesES.add("Área más pequeña");
+        break;
+      case "Happiness":
+        currentCategoriesES.add("Felicidad");
+        break;
+      case "Life expectancy":
+        currentCategoriesES.add("Esperanza de vida");
+        break;
+      case "Safety":
+        currentCategoriesES.add("Seguridad");
+        break;
+      case "Ecofriendly":
+        currentCategoriesES.add("Ecológico");
+        break;
+      case "Football":
+        currentCategoriesES.add("Fútbol");
+        break;
+      case "Basketball":
+        currentCategoriesES.add("Baloncesto");
+        break;
+      case "Olympic medals":
+        currentCategoriesES.add("Medallas olímpicas");
+        break;
+      case "Crime":
+        currentCategoriesES.add("Crimen");
+        break;
+      case "Healthcare":
+        currentCategoriesES.add("Sanidad");
+        break;
+      case "Education":
+        currentCategoriesES.add("Educación");
+        break;
+      case "Hottest":
+        currentCategoriesES.add("Más cálido");
+        break;
+      case "Coldest":
+        currentCategoriesES.add("Más frío");
+        break;
+      case "Weather":
+        currentCategoriesES.add("Clima");
+        break;
+      case "Coastline":
+        currentCategoriesES.add("Costa");
+        break;
+      case "Corruption":
+        currentCategoriesES.add("Corrupción");
+        break;
+      case "Poverty":
+        currentCategoriesES.add("Pobreza");
+        break;
+      case "Tourism":
+        currentCategoriesES.add("Turismo");
+        break;
+      case "Military":
+        currentCategoriesES.add("Militar");
+        break;
+      case "Mobile users":
+        currentCategoriesES.add("Usuarios móviles");
+        break;
+      case "Technology":
+        currentCategoriesES.add("Tecnología");
+        break;
+      case "Cuisine":
+        currentCategoriesES.add("Gastronomía");
+        break;
+      case "Coffee":
+        currentCategoriesES.add("Café");
+        break;
+      case "Pollution":
+        currentCategoriesES.add("Contaminación");
+        break;
+      case "LGBTQI rights":
+        currentCategoriesES.add("Derechos LGBTQI");
+        break;
+      default:
+        currentCategoriesES.add(key);
+    }
+  }
+}
+
 
   Future<void> _loadCountries() async {
     countries = await CountryService.loadCountries();
@@ -398,34 +505,45 @@ Future<void> _saveScore(int score) async {
     }
   }
 
-  void _checkBetterChoicePopup(String chosenCategory) {
-    if (currentCountry == null) return;
-    final chosenRank = currentCountry!.rankings[chosenCategory] ?? 100;
+void _checkBetterChoicePopup(String chosenCategory) {
+  if (currentCountry == null) return;
+  final chosenRank = currentCountry!.rankings[chosenCategory] ?? 100;
 
-    final betterOption = categories
-        .where((c) => assignedRanks[c] == null && c != chosenCategory)
-        .map((c) {
-      return {"cat": c, "rank": currentCountry!.rankings[c] ?? 100};
-    }).where((entry) => (entry["rank"] as int) < chosenRank)
+  final betterOption = categories
+      .where((c) => assignedRanks[c] == null && c != chosenCategory)
+      .map((c) {
+        return {"cat": c, "rank": currentCountry!.rankings[c] ?? 100};
+      })
+      .where((entry) => (entry["rank"] as int) < chosenRank)
       .toList();
 
-    if (betterOption.isNotEmpty) {
-      final best = betterOption.reduce(
-          (a, b) => (a["rank"] as int) < (b["rank"] as int) ? a : b);
-      _betterChoiceMessage = t.geoExpertRecommendation(best["cat"] ?? "", best["rank"] ?? "");
-      _showBetterChoicePopup = true;
-      notifyListeners();
+  if (betterOption.isNotEmpty) {
+    final best = betterOption.reduce(
+      (a, b) => (a["rank"] as int) < (b["rank"] as int) ? a : b,
+    );
 
-      // ✅ Ocultar popup a los 3 segundos solo si sigue visible
-      Future.delayed(const Duration(seconds: 3), () {
-        if (_showBetterChoicePopup) {
-          _showBetterChoicePopup = false;
-          _betterChoiceMessage = null;
-          notifyListeners();
-        }
-      });
+    String bestCat = best["cat"].toString();
+    if (locale == "es") {
+      final index = categories.indexOf(bestCat);
+      if (index != -1 && index < currentCategoriesES.length) {
+        bestCat = currentCategoriesES[index];
+      }
     }
+
+    _betterChoiceMessage = t.geoExpertRecommendation(bestCat, best["rank"] ?? "");
+    _showBetterChoicePopup = true;
+    notifyListeners();
+
+    Future.delayed(const Duration(seconds: 3), () {
+      if (_showBetterChoicePopup) {
+        _showBetterChoicePopup = false;
+        _betterChoiceMessage = null;
+        notifyListeners();
+      }
+    });
   }
+}
+
 
   void dismissBetterChoicePopup() {
     _showBetterChoicePopup = false;

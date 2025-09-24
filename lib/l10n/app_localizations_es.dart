@@ -388,7 +388,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get loading => 'Cargando...';
 
   @override
-  String get geoExpertTotalScore => 'Puntuación total: ';
+  String get geoExpertTotalScore => 'Puntuación: ';
 
   @override
   String get startGame => 'Empezar';

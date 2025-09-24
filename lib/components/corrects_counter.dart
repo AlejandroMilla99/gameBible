@@ -24,7 +24,7 @@ class CorrectCounter extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        width: 216,
+        width: 250,
         decoration: BoxDecoration(
           color: AppColors.primary.withOpacity(0.1),
           borderRadius: BorderRadius.circular(12),
@@ -37,7 +37,7 @@ class CorrectCounter extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center, // 👈 centra horizontalmente
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
@@ -49,7 +49,7 @@ class CorrectCounter extends StatelessWidget {
                 color: AppColors.textDark,
               ),
             ),
-            const SizedBox(width: 6), // 👈 un pequeño espacio entre texto y número
+            const SizedBox(width: 6),
             ClipRect(
               child: SizedBox(
                 height: 28,

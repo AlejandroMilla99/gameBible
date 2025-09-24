@@ -151,7 +151,7 @@ class _SnackBarWidgetState extends State<_SnackBarWidget>
                                 color: widget.type == SnackBarType.warning
                                     ? Colors.black
                                     : Colors.white,
-                                fontSize: 14),
+                                fontSize: 16),
                           ),
                         ),
                         const SizedBox(width: 8),

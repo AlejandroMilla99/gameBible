@@ -24,6 +24,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final locale = AppLocalizations.of(context)!.localeName;
     return ChangeNotifierProvider(
       create: (_) => GeoExpertViewModel(
         context,
@@ -113,7 +114,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                               : Text(
                                                   vm.isRolling
                                                       ? ""
-                                                      : vm.currentCountry?.name ?? "",
+                                                      : (locale == "es" ? vm.currentCountry?.es_name ?? "" : vm.currentCountry?.name ?? ""),
                                                   key: const ValueKey("name"),
                                                   style: const TextStyle(
                                                       fontSize: 20),
@@ -218,7 +219,7 @@ class _GeoExpertPageState extends State<GeoExpertPage>
                                                     constraints: const BoxConstraints(
                                                         maxWidth: 180),
                                                     child: Text(
-                                                      cat,
+                                                      locale == "es" ? vm.currentCategoriesES[index] : cat,
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
